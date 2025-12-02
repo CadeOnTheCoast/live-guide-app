@@ -1,3 +1,5 @@
+// ---------- Generators & datasource ----------
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -7,36 +9,572 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Department {
-  id        Int       @id @default(autoincrement())
-  name      String    @unique
-  people    Person[]
-  projects  Project[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+// ---------- Enums ----------
+
+enum ProjectStatus {
+  PLANNING
+  ACTIVE
+  PAUSED
+  COMPLETED
 }
+
+enum ObjectiveStatus {
+  ON_TRACK
+  AT_RISK
+  ACHIEVED
+  NOT_PURSUED
+}
+
+enum KeyResultStatus {
+  GREEN
+  YELLOW
+  RED
+}
+
+enum MilestoneCategory {
+  LEGISLATIVE
+  LEGAL
+  REGULATORY
+  COMMUNITY
+  INTERNAL
+  OTHER
+}
+
+enum MilestoneStatus {
+  PLANNED
+  AT_RISK
+  COMPLETED
+  CANCELLED
+}
+
+enum ActivityStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  BLOCKED
+  COMPLETED
+}
+
+enum StakeholderType {
+  INFLUENCER
+  OPPONENT
+  ALLY
+  MEDIA_OUTLET
+  COMMUNITY_LEADER
+  REGULATOR_STAFF
+  DONOR
+  OTHER
+}
+
+enum RelationshipType {
+  FORMAL_AUTHORITY
+  PERSONAL_CONNECTION
+  DONOR_RELATIONSHIP
+  STAFF_TO_BOSS
+  MEDIA_RELATIONSHIP
+  COMMUNITY_TRUST
+  OTHER
+}
+
+enum RelationshipDirection {
+  ONE_WAY
+  MUTUAL
+}
+
+enum PowerRating {
+  HIGH
+  MEDIUM
+  LOW
+}
+
+enum PressureCorner {
+  INFLUENCE
+  LEGAL
+  GRASSROOTS
+  MEDIA
+}
+
+enum CommsItemType {
+  STORY
+  OP_ED
+  PRESS_RELEASE
+  EMAIL_CAMPAIGN
+  SOCIAL_CAMPAIGN
+  EVENT
+  PRESENTATION
+  TOOLKIT
+  OTHER
+}
+
+enum CommsItemStatus {
+  IDEA
+  PLANNED
+  IN_PROGRESS
+  PUBLISHED
+  CANCELLED
+}
+
+enum AudienceType {
+  EXTERNAL
+  INTERNAL
+  COMMUNITY
+  POLICYMAKER
+  MEDIA
+  OTHER
+}
+
+enum CallToActionStatus {
+  ACTIVE
+  RETIRED
+  PLANNED
+}
+
+// ---------- Core org models ----------
 
 model Person {
-  id            Int        @id @default(autoincrement())
-  firstName     String
-  lastName      String
-  email         String     @unique
-  departmentId  Int?
-  department    Department @relation(fields: [departmentId], references: [id])
-  projectsOwned Project[]  @relation("ProjectOwner")
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
+  id                   String           @id @default(cuid())
+  name                 String
+  email                String           @unique
+  isActive             Boolean          @default(true)
+
+  defaultDepartmentId  String?
+  defaultDepartment    Department?      @relation(fields: [defaultDepartmentId], references: [id])
+
+  // Back-relations
+  primaryProjects      Project[]        @relation("ProjectPrimaryOwner")
+  roleAssignments      RoleAssignment[]
+  keyResultsOwned      KeyResult[]      @relation("KeyResultOwner")
+  activitiesOwned      Activity[]       @relation("ActivityOwner")
+  pressureAssetsOwned  PressureAsset[]  @relation("PressureAssetOwner")
+  commsItemsOwned      CommsItem[]      @relation("CommsItemOwner")
+  commsProfilesLead    CommsProfile[]   @relation("CommsProfileLead")
+  commsProfilesBackup  CommsProfile[]   @relation("CommsProfileBackup")
+  staffAllocations     StaffAllocation[]
+
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
 }
 
+model Department {
+  id               String        @id @default(cuid())
+  name             String
+  code             String        @unique
+
+  people           Person[]
+  activities       Activity[]
+  keyResults       KeyResult[]
+  milestones       Milestone[]
+  staffAllocations StaffAllocation[]
+
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+}
+
+model RoleAssignment {
+  id         String   @id @default(cuid())
+  projectId  String
+  personId   String
+  role       String   // e.g. "project_manager", "comms_lead"
+
+  project    Project  @relation(fields: [projectId], references: [id])
+  person     Person   @relation(fields: [personId], references: [id])
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+// ---------- Project, objectives, KRs, pushes, activities ----------
+
 model Project {
-  id           Int         @id @default(autoincrement())
-  name         String
-  status       String      @default("Planned")
-  startDate    DateTime?
-  departmentId Int?
-  department   Department? @relation(fields: [departmentId], references: [id])
-  ownerId      Int?
-  owner        Person?     @relation("ProjectOwner", fields: [ownerId], references: [id])
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
+  id                      String          @id @default(cuid())
+  name                    String
+  slug                    String          @unique
+  description             String?
+  caseForChangeSummary    String?
+  caseForChangePageUrl    String?         // link to case-for-change dashboard / image
+  status                  ProjectStatus   @default(ACTIVE)
+  startDate               DateTime?
+  endDate                 DateTime?
+
+  primaryOwnerId          String?
+  primaryOwner            Person?         @relation("ProjectPrimaryOwner", fields: [primaryOwnerId], references: [id])
+
+  asanaProjectGid         String?
+
+  pushes                  Push[]
+  objectives              Objective[]
+  keyResults              KeyResult[]
+  milestones              Milestone[]
+  activities              Activity[]
+  commsProfile            CommsProfile?
+  commsItems              CommsItem[]
+  budgetLines             BudgetLine[]
+  staffAllocations        StaffAllocation[]
+  decisionMakers          DecisionMaker[]
+  stakeholders            Stakeholder[]
+  pressureAssets          PressureAsset[]
+  keyMessages             KeyMessage[]
+  callsToAction           CallToAction[]
+  commsFrames             CommsFrame[]
+  commsFaqs               CommsFaq[]
+
+  createdAt               DateTime        @default(now())
+  updatedAt               DateTime        @updatedAt
+}
+
+model Objective {
+  id              String           @id @default(cuid())
+  projectId       String
+  title           String
+  description     String?
+  timeframeStart  DateTime?
+  timeframeEnd    DateTime?
+  status          ObjectiveStatus  @default(ON_TRACK)
+
+  asanaTaskGid    String?
+
+  project         Project          @relation(fields: [projectId], references: [id])
+  keyResults      KeyResult[]
+  pushes          Push[]
+  milestones      Milestone[]
+
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+}
+
+model KeyResult {
+  id              String            @id @default(cuid())
+  projectId       String
+  objectiveId     String
+  code            String            // "KR1", "KR2", etc.
+  title           String
+  description     String?
+  targetValue     String?           // can be numeric or text; keep flexible
+  unit            String?           // "%", "#", "Yes/No", etc.
+  currentValue    String?
+  status          KeyResultStatus   @default(GREEN)
+  dueDate         DateTime?
+  isPrimary       Boolean           @default(false)
+
+  ownerId         String?
+  departmentId    String?
+  asanaTaskGid    String?
+
+  project         Project           @relation(fields: [projectId], references: [id])
+  objective       Objective         @relation(fields: [objectiveId], references: [id])
+  owner           Person?           @relation("KeyResultOwner", fields: [ownerId], references: [id])
+  department      Department?       @relation(fields: [departmentId], references: [id])
+
+  activities      Activity[]
+
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+}
+
+model Push {
+  id               String      @id @default(cuid())
+  projectId        String
+  sequenceIndex    Int
+  name             String      // e.g. "Push 2 - 12/1/25 - 2/1/26"
+  startDate        DateTime
+  endDate          DateTime
+  highLevelSummary String?
+
+  objectiveId      String?
+  objective        Objective?  @relation(fields: [objectiveId], references: [id])
+
+  project          Project     @relation(fields: [projectId], references: [id])
+  activities       Activity[]
+  commsItems       CommsItem[]
+  milestones       Milestone[]
+
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+}
+
+model Activity {
+  id                 String        @id @default(cuid())
+  projectId          String
+  pushId             String
+  title              String
+  description        String?
+  startDate          DateTime?
+  dueDate            DateTime?
+  status             ActivityStatus @default(NOT_STARTED)
+
+  ownerId            String?
+  departmentId       String?
+  relatedKrId        String?
+  relatedMilestoneId String?
+  asanaTaskGid       String?
+
+  project            Project       @relation(fields: [projectId], references: [id])
+  push               Push          @relation(fields: [pushId], references: [id])
+  owner              Person?       @relation("ActivityOwner", fields: [ownerId], references: [id])
+  department         Department?   @relation(fields: [departmentId], references: [id])
+  relatedKr          KeyResult?    @relation(fields: [relatedKrId], references: [id])
+  relatedMilestone   Milestone?    @relation(fields: [relatedMilestoneId], references: [id])
+
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+}
+
+// ---------- Milestones ----------
+
+model Milestone {
+  id                  String            @id @default(cuid())
+  projectId           String
+  title               String
+  description         String?
+  date                DateTime
+  isMajor             Boolean           @default(false)
+  category            MilestoneCategory @default(OTHER)
+  status              MilestoneStatus   @default(PLANNED)
+
+  leadDepartmentId    String?
+  relatedObjectiveId  String?
+  pushId              String?
+  asanaTaskGid        String?
+
+  project             Project           @relation(fields: [projectId], references: [id])
+  leadDepartment      Department?       @relation(fields: [leadDepartmentId], references: [id])
+  relatedObjective    Objective?        @relation(fields: [relatedObjectiveId], references: [id])
+  push                Push?             @relation(fields: [pushId], references: [id])
+
+  activities          Activity[]
+  pressureAssets      PressureAsset[]
+  commsItems          CommsItem[]
+
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+}
+
+// ---------- Pressure box / power map ----------
+
+model DecisionMaker {
+  id             String         @id @default(cuid())
+  projectId      String
+  name           String
+  title          String?
+  organization   String?
+  jurisdiction   String?
+  priorityLevel  String?       // "high", "medium", "low"
+  stance         String?       // "supportive", "neutral", "opposed", "unknown"
+  notes          String?
+
+  project        Project        @relation(fields: [projectId], references: [id])
+  pressureAssets PressureAsset[]
+  relationshipsFrom Relationship[] @relation("DecisionMakerFrom")
+  relationshipsTo   Relationship[] @relation("DecisionMakerTo")
+
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+}
+
+model Stakeholder {
+  id             String           @id @default(cuid())
+  projectId      String
+  name           String
+  stakeholderType StakeholderType
+  organization   String?
+  notes          String?
+
+  project        Project          @relation(fields: [projectId], references: [id])
+  relationshipsFrom Relationship[] @relation("StakeholderFrom")
+  relationshipsTo   Relationship[] @relation("StakeholderTo")
+
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+}
+
+model Relationship {
+  id               String               @id @default(cuid())
+  projectId        String
+  fromDecisionId   String?
+  fromStakeholderId String?
+  toDecisionId     String?
+  toStakeholderId  String?
+  relationshipType RelationshipType
+  direction        RelationshipDirection
+  strength         PowerRating
+  notes            String?
+
+  project          Project             @relation(fields: [projectId], references: [id])
+
+  fromDecision     DecisionMaker?      @relation("DecisionMakerFrom", fields: [fromDecisionId], references: [id])
+  toDecision       DecisionMaker?      @relation("DecisionMakerTo",   fields: [toDecisionId],   references: [id])
+  fromStakeholder  Stakeholder?        @relation("StakeholderFrom",   fields: [fromStakeholderId], references: [id])
+  toStakeholder    Stakeholder?        @relation("StakeholderTo",     fields: [toStakeholderId],   references: [id])
+
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+}
+
+model PressureAsset {
+  id               String        @id @default(cuid())
+  projectId        String
+  decisionMakerId  String
+  corner           PressureCorner
+  title            String
+  description      String?
+  status           String?       // "not_started", "planned", "active", "spent", "blocked"
+  powerRating      PowerRating   @default(MEDIUM)
+  weight           Float         @default(1.0)
+
+  ownerId          String?
+  relatedMilestoneId String?
+
+  project          Project       @relation(fields: [projectId], references: [id])
+  decisionMaker    DecisionMaker @relation(fields: [decisionMakerId], references: [id])
+  owner            Person?       @relation("PressureAssetOwner", fields: [ownerId], references: [id])
+  relatedMilestone Milestone?    @relation(fields: [relatedMilestoneId], references: [id])
+
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+}
+
+// ---------- Comms profile, messages, CTAs, frames, FAQs, items ----------
+
+model CommsProfile {
+  id                 String        @id @default(cuid())
+  projectId          String        @unique
+  commsLeadId        String?
+  backupLeadId       String?
+  approvalRequired   Boolean       @default(false)
+  approverNotes      String?
+  localNarrative     String?
+  messagingWatchouts String?
+  riskAndMinefields  String?
+  generalNotes       String?
+
+  project            Project       @relation(fields: [projectId], references: [id])
+  commsLead          Person?       @relation("CommsProfileLead", fields: [commsLeadId], references: [id])
+  backupLead         Person?       @relation("CommsProfileBackup", fields: [backupLeadId], references: [id])
+
+  keyMessages        KeyMessage[]
+  callsToAction      CallToAction[]
+  commsFrames        CommsFrame[]
+  commsFaqs          CommsFaq[]
+
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+}
+
+model KeyMessage {
+  id              String        @id @default(cuid())
+  projectId       String
+  commsProfileId  String
+  priorityOrder   Int           @default(0)
+  audience        AudienceType  @default(EXTERNAL)
+  text            String
+
+  project         Project       @relation(fields: [projectId], references: [id])
+  commsProfile    CommsProfile  @relation(fields: [commsProfileId], references: [id])
+
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+model CallToAction {
+  id              String             @id @default(cuid())
+  projectId       String
+  commsProfileId  String
+  description     String
+  url             String?
+  status          CallToActionStatus @default(ACTIVE)
+
+  project         Project            @relation(fields: [projectId], references: [id])
+  commsProfile    CommsProfile       @relation(fields: [commsProfileId], references: [id])
+
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+}
+
+model CommsFrame {
+  id              String        @id @default(cuid())
+  projectId       String
+  commsProfileId  String
+  title           String
+  frame           String
+  whyItWorks      String?
+
+  project         Project       @relation(fields: [projectId], references: [id])
+  commsProfile    CommsProfile  @relation(fields: [commsProfileId], references: [id])
+
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+model CommsFaq {
+  id              String        @id @default(cuid())
+  projectId       String
+  commsProfileId  String
+  question        String
+  answer          String
+  priorityOrder   Int           @default(0)
+
+  project         Project       @relation(fields: [projectId], references: [id])
+  commsProfile    CommsProfile  @relation(fields: [commsProfileId], references: [id])
+
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+model CommsItem {
+  id                String          @id @default(cuid())
+  projectId         String
+  title             String
+  type              CommsItemType
+  plannedDate       DateTime?
+  actualDate        DateTime?
+  status            CommsItemStatus @default(IDEA)
+  notes             String?
+  linkUrl           String?
+
+  ownerId           String?
+  relatedMilestoneId String?
+  relatedPushId     String?
+
+  project           Project         @relation(fields: [projectId], references: [id])
+  owner             Person?         @relation("CommsItemOwner", fields: [ownerId], references: [id])
+  relatedMilestone  Milestone?      @relation(fields: [relatedMilestoneId], references: [id])
+  relatedPush       Push?           @relation(fields: [relatedPushId], references: [id])
+
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+}
+
+// ---------- Budget & staff ----------
+
+model BudgetLine {
+  id            String   @id @default(cuid())
+  projectId     String
+  category      String   // "staff_time", "legal", etc.
+  description   String
+  amount        Decimal  @db.Decimal(10, 2)
+  currency      String   @default("USD")
+  period        String   // e.g. "2026-Q2", "2025-10"
+  fundingSource String?
+  isActual      Boolean  @default(false)
+
+  project       Project  @relation(fields: [projectId], references: [id])
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model StaffAllocation {
+  id            String     @id @default(cuid())
+  projectId     String
+  personId      String
+  departmentId  String?
+  period        String     // "2026-01", "2026-Q2", etc.
+  hours         Float
+  notes         String?
+
+  project       Project    @relation(fields: [projectId], references: [id])
+  person        Person     @relation(fields: [personId], references: [id])
+  department    Department? @relation(fields: [departmentId], references: [id])
+
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
 }

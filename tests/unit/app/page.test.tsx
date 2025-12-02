@@ -16,22 +16,27 @@ describe("Home page", () => {
     const Page = await import("@/app/page");
     const sampleProjects = [
       {
-        id: 1,
+        id: "proj-1",
         name: "Sample Project",
-        status: "Active",
-        department: { id: 1, name: "PM", createdAt: new Date(), updatedAt: new Date() },
-        owner: {
-          id: 1,
-          firstName: "Alex",
-          lastName: "Rivera",
+        slug: "sample-project",
+        status: "ACTIVE",
+        primaryOwner: {
+          id: "person-1",
+          name: "Alex Rivera",
           email: "alex.rivera@example.com",
-          departmentId: 1,
+          isActive: true,
+          defaultDepartmentId: "dept-1",
+          defaultDepartment: {
+            id: "dept-1",
+            name: "Project Management",
+            code: "PM",
+            createdAt: new Date(),
+            updatedAt: new Date()
+          },
           createdAt: new Date(),
           updatedAt: new Date()
         },
         startDate: new Date("2024-01-01"),
-        departmentId: 1,
-        ownerId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       }
@@ -44,7 +49,8 @@ describe("Home page", () => {
 
     expect(findManyMock).toHaveBeenCalled();
     expect(screen.getByText("Sample Project")).toBeInTheDocument();
-    expect(screen.getByText("Active")).toBeInTheDocument();
-    expect(screen.getByText("PM")).toBeInTheDocument();
+    expect(screen.getByText("ACTIVE")).toBeInTheDocument();
+    expect(screen.getByText("Alex Rivera")).toBeInTheDocument();
+    expect(screen.getByText("Project Management")).toBeInTheDocument();
   });
 });
