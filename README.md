@@ -47,3 +47,15 @@ Database-aware tests are skipped unless `DATABASE_URL` is set and the database h
 - `src/server` – Prisma client
 - `prisma` – Prisma schema and seed script
 - `tests` – Vitest unit/component tests
+
+## Auth & Supabase setup
+
+The app uses Supabase magic-link authentication restricted to Mobile Baykeeper email domains.
+
+1. Create a Supabase project at https://supabase.com/ and copy the project URL and anon key.
+2. Configure environment variables (see `.env.example`):
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - `ALLOWED_EMAIL_DOMAINS` (comma-separated list like `mobilebaykeeper.org`)
+3. Start the dev server and open `/login` to request a magic link. Only emails from allowed domains can sign in.
+4. The `/projects` area is authenticated; anonymous visitors are redirected to `/login`.
