@@ -219,6 +219,8 @@ model Project {
   staffAllocations        StaffAllocation[]
   decisionMakers          DecisionMaker[]
   stakeholders            Stakeholder[]
+  roleAssignments         RoleAssignment[]
+  relationships           Relationship[]
   pressureAssets          PressureAsset[]
   keyMessages             KeyMessage[]
   callsToAction           CallToAction[]
@@ -237,6 +239,7 @@ model Objective {
   timeframeStart  DateTime?
   timeframeEnd    DateTime?
   status          ObjectiveStatus  @default(ON_TRACK)
+  isCurrent       Boolean          @default(true)
 
   asanaTaskGid    String?
 

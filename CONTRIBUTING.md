@@ -26,6 +26,7 @@ helpers in `src/components/admin` like `SharedCheckbox` and `SharedTextarea`.
 ## Prisma schema expectations
 - `prisma/schema.prisma` contains the canonical Live Guide schema. Do not modify models, fields, enums, or relations without explicit product/architecture approval.
 - Any schema changes must go through review and be reflected in migrations and seeds.
+- Each project should have at most one Objective with `isCurrent = true`; the overview page reads this record for the active plan and actions that set a current objective must unset the flag on siblings.
 
 ## Roles
 - People have a `role` (`ADMIN`, `EDITOR`, `VIEWER`) set in the database/seed for now.
