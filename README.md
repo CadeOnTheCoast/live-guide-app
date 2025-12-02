@@ -26,6 +26,7 @@ A Next.js + Prisma + Postgres dashboard for Mobile Baykeeper projects. The app u
    npm run dev
    ```
 6. Open http://localhost:3000 to view the landing page listing projects.
+7. Admin tools live under `/admin` and require a signed-in Person with the `ADMIN` role.
 
 ## Scripts
 - `npm run dev` – start the Next.js dev server

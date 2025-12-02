@@ -8,6 +8,9 @@
 - `prisma` – Prisma schema and seed script
 - `tests` – Vitest unit and component tests
 
+Shared UI controls follow the shadcn style in `src/components/ui` (e.g., `Button`, `Input`, `Select`). Admin forms also reuse
+helpers in `src/components/admin` like `SharedCheckbox` and `SharedTextarea`.
+
 ## Development workflow
 1. Install dependencies with `npm install`.
 2. Copy `.env.example` to `.env` and set `DATABASE_URL` for your Postgres instance.
