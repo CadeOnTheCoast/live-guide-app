@@ -37,10 +37,12 @@ export async function upsertDepartment(prevState: DepartmentFormState, formData:
   }
 
   try {
+    const data = { name: name!, code: code! };
+
     if (id) {
-      await db.department.update({ where: { id }, data: { name, code } });
+      await db.department.update({ where: { id }, data });
     } else {
-      await db.department.create({ data: { name, code } });
+      await db.department.create({ data });
     }
   } catch (error: unknown) {
     if (error instanceof PrismaClientKnownRequestError && error.code === "P2002") {

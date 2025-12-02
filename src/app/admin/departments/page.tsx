@@ -5,10 +5,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import DepartmentDeleteButton from "@/components/admin/DepartmentDeleteButton";
 
-type DepartmentRow = Awaited<ReturnType<typeof db.department.findMany>>[number];
+type DepartmentRow = {
+  id: string;
+  name: string;
+  code: string;
+  _count: { people: number };
+};
 
 export default async function DepartmentsPage() {
-  const departments = await db.department.findMany({
+  const departments: DepartmentRow[] = await db.department.findMany({
     orderBy: { name: "asc" },
     select: {
       id: true,
