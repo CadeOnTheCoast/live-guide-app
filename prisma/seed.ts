@@ -12,22 +12,26 @@ const people = [
   {
     name: "Alex Rivera",
     email: "alex.rivera@example.com",
-    departmentCode: "PM"
+    departmentCode: "PM",
+    role: "ADMIN" as const
   },
   {
     name: "Jordan Lee",
     email: "jordan.lee@example.com",
-    departmentCode: "GA"
+    departmentCode: "GA",
+    role: "EDITOR" as const
   },
   {
     name: "Taylor Morgan",
     email: "taylor.morgan@example.com",
-    departmentCode: "CE"
+    departmentCode: "CE",
+    role: "VIEWER" as const
   },
   {
     name: "Sam Carter",
     email: "sam.carter@example.com",
-    departmentCode: "COMMS"
+    departmentCode: "COMMS",
+    role: "VIEWER" as const
   }
 ];
 
@@ -84,11 +88,13 @@ export async function seed() {
         where: { email: person.email },
         update: {
           name: person.name,
-          defaultDepartmentId: department?.id
+          defaultDepartmentId: department?.id,
+          role: person.role
         },
         create: {
           name: person.name,
           email: person.email,
+          role: person.role,
           defaultDepartment: department ? { connect: { id: department.id } } : undefined
         }
       });
