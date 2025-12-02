@@ -32,6 +32,7 @@ A Next.js + Prisma + Postgres dashboard for Mobile Baykeeper projects. The app u
 - `npm run build` – build for production
 - `npm run start` – start production server
 - `npm run lint` – run ESLint
+- `npm run typecheck` – run TypeScript checks with `tsc --noEmit`
 - `npm run test` – run Vitest unit and component tests
 - `npm run prisma:migrate` – run `prisma migrate dev`
 - `npm run prisma:generate` – generate Prisma client

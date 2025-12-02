@@ -1,94 +1,119 @@
 import { db } from "../src/server/db";
 
-const departments = ["PM", "GA", "CE", "Comms", "F&R"];
+const departments = [
+  { code: "PM", name: "Project Management" },
+  { code: "GA", name: "Government Affairs" },
+  { code: "CE", name: "Conservation & Ecology" },
+  { code: "COMMS", name: "Communications" },
+  { code: "FR", name: "Fundraising & Resources" }
+];
 
 const people = [
   {
-    firstName: "Alex",
-    lastName: "Rivera",
+    name: "Alex Rivera",
     email: "alex.rivera@example.com",
-    department: "PM"
+    departmentCode: "PM"
   },
   {
-    firstName: "Jordan",
-    lastName: "Lee",
+    name: "Jordan Lee",
     email: "jordan.lee@example.com",
-    department: "GA"
+    departmentCode: "GA"
   },
   {
-    firstName: "Taylor",
-    lastName: "Morgan",
+    name: "Taylor Morgan",
     email: "taylor.morgan@example.com",
-    department: "CE"
+    departmentCode: "CE"
+  },
+  {
+    name: "Sam Carter",
+    email: "sam.carter@example.com",
+    departmentCode: "COMMS"
   }
 ];
 
-const projects = [
+type ProjectSeed = {
+  name: string;
+  slug: string;
+  status: "PLANNING" | "ACTIVE" | "PAUSED" | "COMPLETED";
+  startDate?: Date;
+  ownerEmail: string;
+};
+
+const projects: ProjectSeed[] = [
   {
     name: "Watershed Restoration",
-    status: "In Progress",
+    slug: "watershed-restoration",
+    status: "ACTIVE",
     startDate: new Date("2024-01-15"),
-    department: "PM",
     ownerEmail: "alex.rivera@example.com"
   },
   {
     name: "Community Outreach",
-    status: "Planned",
+    slug: "community-outreach",
+    status: "PLANNING",
     startDate: new Date("2024-03-01"),
-    department: "Comms",
     ownerEmail: "jordan.lee@example.com"
   },
   {
     name: "Habitat Monitoring",
-    status: "Active",
+    slug: "habitat-monitoring",
+    status: "ACTIVE",
     startDate: new Date("2024-02-10"),
-    department: "CE",
     ownerEmail: "taylor.morgan@example.com"
   }
 ];
 
 export async function seed() {
   const departmentRecords = await Promise.all(
-    departments.map((name) =>
+    departments.map(({ code, name }) =>
       db.department.upsert({
-        where: { name },
-        update: {},
-        create: { name }
+        where: { code },
+        update: { name },
+        create: { code, name }
       })
     )
   );
+
+  const departmentByCode = Object.fromEntries(departmentRecords.map((dept) => [dept.code, dept]));
 
   const peopleRecords = await Promise.all(
-    people.map((person) =>
-      db.person.upsert({
+    people.map((person) => {
+      const department = departmentByCode[person.departmentCode];
+
+      return db.person.upsert({
         where: { email: person.email },
-        update: {},
+        update: {
+          name: person.name,
+          defaultDepartmentId: department?.id
+        },
         create: {
-          firstName: person.firstName,
-          lastName: person.lastName,
+          name: person.name,
           email: person.email,
-          department: {
-            connect: { name: person.department }
-          }
+          defaultDepartment: department ? { connect: { id: department.id } } : undefined
         }
-      })
-    )
+      });
+    })
   );
 
+  const peopleByEmail = Object.fromEntries(peopleRecords.map((personRecord) => [personRecord.email, personRecord]));
+
   for (const project of projects) {
+    const primaryOwner = peopleByEmail[project.ownerEmail];
+
     await db.project.upsert({
-      where: { name: project.name },
-      update: {},
-      create: {
+      where: { slug: project.slug },
+      update: {
         name: project.name,
         status: project.status,
         startDate: project.startDate,
-        department: {
-          connect: { name: project.department }
-        },
-        owner: {
-          connect: { email: project.ownerEmail }
-        }
+        primaryOwner: primaryOwner ? { connect: { id: primaryOwner.id } } : undefined
+      },
+      create: {
+        name: project.name,
+        slug: project.slug,
+        status: project.status,
+        startDate: project.startDate,
+        primaryOwner: primaryOwner ? { connect: { id: primaryOwner.id } } : undefined
       }
     });
   }

@@ -16,6 +16,9 @@
 5. Start the dev server with `npm run dev` and open `http://localhost:3000`.
 6. Run checks before opening a PR:
    - `npm run lint`
+   - `npm run typecheck`
    - `npm run test`
 
-Future modules will add pages under `/projects/[id]/overview`, `/projects/[id]/pushes`, and related routes—follow the same folder and component patterns introduced here.
+## Prisma schema expectations
+- `prisma/schema.prisma` contains the canonical Live Guide schema. Do not modify models, fields, enums, or relations without explicit product/architecture approval.
+- Any schema changes must go through review and be reflected in migrations and seeds.

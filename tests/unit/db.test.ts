@@ -1,15 +1,13 @@
-import { describe, expect, it, beforeAll, afterAll } from "vitest";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
+
+import { db } from "@/server/db";
+import { seed } from "../../prisma/seed";
 
 const hasDatabaseUrl = Boolean(process.env.DATABASE_URL);
 const describeDb = hasDatabaseUrl ? describe : describe.skip;
 
 describeDb("database seeding", () => {
-  let db: Awaited<ReturnType<typeof import("@/server/db")>>["db"];
-  let seed: (typeof import("../../prisma/seed"))["seed"];
-
   beforeAll(async () => {
-    ({ db } = await import("@/server/db"));
-    ({ seed } = await import("../../prisma/seed"));
     await seed();
   });
 
@@ -18,10 +16,10 @@ describeDb("database seeding", () => {
   });
 
   it("creates base departments", async () => {
-    const departments = await db.department.findMany({ select: { name: true } });
-    const departmentNames = departments.map((department) => department.name);
-    ["PM", "GA", "CE", "Comms", "F&R"].forEach((name) => {
-      expect(departmentNames).toContain(name);
+    const departments = await db.department.findMany({ select: { code: true } });
+    const departmentCodes = departments.map((department: { code: string }) => department.code);
+    ["PM", "GA", "CE", "COMMS", "FR"].forEach((code) => {
+      expect(departmentCodes).toContain(code);
     });
   });
 

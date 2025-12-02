@@ -3,12 +3,25 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
-export async function getProjects() {
-  return db.project.findMany({
+type ProjectRow = {
+  id: string;
+  name: string;
+  status: string;
+  startDate: Date | null;
+  primaryOwner: {
+    name: string;
+    defaultDepartment: { name: string } | null;
+  } | null;
+};
+
+export async function getProjects(): Promise<ProjectRow[]> {
+  const projects = await db.project.findMany({
     take: 10,
     orderBy: { createdAt: "desc" },
-    include: { department: true, owner: true }
+    include: { primaryOwner: { include: { defaultDepartment: true } } }
   });
+
+  return projects as unknown as ProjectRow[];
 }
 
 export default async function HomePage() {
@@ -33,8 +46,8 @@ export default async function HomePage() {
                 <TableRow>
                   <TableHead>Name</TableHead>
                   <TableHead>Status</TableHead>
-                  <TableHead>Department</TableHead>
                   <TableHead>Owner</TableHead>
+                  <TableHead>Owner Department</TableHead>
                   <TableHead>Start Date</TableHead>
                 </TableRow>
               </TableHeader>
@@ -45,10 +58,8 @@ export default async function HomePage() {
                     <TableCell>
                       <Badge variant="secondary">{project.status}</Badge>
                     </TableCell>
-                    <TableCell>{project.department?.name ?? "—"}</TableCell>
-                    <TableCell>
-                      {project.owner ? `${project.owner.firstName} ${project.owner.lastName}` : "—"}
-                    </TableCell>
+                    <TableCell>{project.primaryOwner?.name ?? "—"}</TableCell>
+                    <TableCell>{project.primaryOwner?.defaultDepartment?.name ?? "—"}</TableCell>
                     <TableCell>
                       {project.startDate
                         ? new Intl.DateTimeFormat("en", { dateStyle: "medium" }).format(project.startDate)
