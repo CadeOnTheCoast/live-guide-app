@@ -1,0 +1,21 @@
+# Contributing
+
+## Folder structure
+- `src/app` – App Router routes, including `layout.tsx` and the landing page `page.tsx`
+- `src/components` – shared UI components; shadcn/ui primitives live in `src/components/ui`
+- `src/lib` – shared utilities (e.g., `cn`)
+- `src/server` – server helpers such as the Prisma client in `db.ts`
+- `prisma` – Prisma schema and seed script
+- `tests` – Vitest unit and component tests
+
+## Development workflow
+1. Install dependencies with `npm install`.
+2. Copy `.env.example` to `.env` and set `DATABASE_URL` for your Postgres instance.
+3. Apply migrations and generate the client: `npx prisma migrate dev`.
+4. Seed baseline data: `npm run prisma:seed`.
+5. Start the dev server with `npm run dev` and open `http://localhost:3000`.
+6. Run checks before opening a PR:
+   - `npm run lint`
+   - `npm run test`
+
+Future modules will add pages under `/projects/[id]/overview`, `/projects/[id]/pushes`, and related routes—follow the same folder and component patterns introduced here.

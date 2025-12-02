@@ -1,0 +1,13 @@
+node_modules
+.next
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+.prisma
+coverage
+.vscode
+.DS_Store
+.npm
+.idea
