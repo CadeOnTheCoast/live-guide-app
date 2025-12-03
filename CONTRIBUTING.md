@@ -33,3 +33,12 @@ helpers in `src/components/admin` like `SharedCheckbox` and `SharedTextarea`.
 ## Roles
 - People have a `role` (`ADMIN`, `EDITOR`, `VIEWER`) set in the database/seed for now.
 - Permission helpers live in `src/server/permissions.ts`.
+
+## Timeline module notes
+- Milestone colors map to categories: LEGISLATIVE (`bg-amber-500`), LEGAL (`bg-indigo-500`), REGULATORY (`bg-blue-500`),
+  COMMUNITY (`bg-emerald-500`), INTERNAL (`bg-slate-500`), OTHER (`bg-gray-500`). Keep the palette aligned if new categories
+  are introduced.
+- The year filter on the timeline page is client-side. The server returns all milestones for a project and the component
+  narrows the set using the start/end year inputs.
+- Asana links for milestones use the placeholder pattern `https://app.asana.com/0/${asanaTaskGid}` until a project-specific
+  workspace URL is provided.
