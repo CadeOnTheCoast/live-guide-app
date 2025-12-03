@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Push } from "@prisma/client";
 import { ObjectiveFormDialog } from "@/components/projects/ObjectiveFormDialog";
 import { KeyResultRowForm } from "@/components/projects/KeyResultRowForm";
 import { ProjectHeader } from "@/components/projects/ProjectHeader";
@@ -13,6 +12,7 @@ import { getCurrentObjectiveForProject } from "@/server/objectives";
 import { canEditProject } from "@/server/permissions";
 import { getProjectOverviewBySlug } from "@/server/projects";
 import { db } from "@/server/db";
+import { getCurrentPushForProject } from "@/server/pushes";
 
 const OBJECTIVE_STATUS_STYLES: Record<string, string> = {
   ON_TRACK: "bg-emerald-100 text-emerald-800",
@@ -31,20 +31,6 @@ function sortByKeyResultCode(a: { code: string }, b: { code: string }) {
   return parseNumber(a.code) - parseNumber(b.code);
 }
 
-function getCurrentPush(pushes: Push[]) {
-  const today = new Date();
-  const current = pushes
-    .filter((push) => push.startDate <= today && push.endDate >= today)
-    .sort((a, b) => {
-      if (a.startDate.getTime() === b.startDate.getTime()) {
-        return (b.sequenceIndex ?? 0) - (a.sequenceIndex ?? 0);
-      }
-      return b.startDate.getTime() - a.startDate.getTime();
-    });
-
-  return current[0] ?? null;
-}
-
 export default async function ProjectOverviewPage({ params }: { params: { projectSlug: string } }) {
   const { person } = await getUserOrRedirect();
   const project = await getProjectOverviewBySlug(params.projectSlug);
@@ -59,7 +45,7 @@ export default async function ProjectOverviewPage({ params }: { params: { projec
 
   const canEdit = canEditProject(person?.role);
   const sortedKeyResults = currentObjective?.keyResults ? [...currentObjective.keyResults].sort(sortByKeyResultCode) : [];
-  const currentPush = getCurrentPush(project.pushes ?? []);
+  const currentPush = getCurrentPushForProject(project.pushes ?? []);
 
   return (
     <div className="space-y-6">
