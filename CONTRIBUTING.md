@@ -33,3 +33,8 @@ helpers in `src/components/admin` like `SharedCheckbox` and `SharedTextarea`.
 ## Roles
 - People have a `role` (`ADMIN`, `EDITOR`, `VIEWER`) set in the database/seed for now.
 - Permission helpers live in `src/server/permissions.ts`.
+
+## Timeline module notes
+- Milestone markers in the timeline arc are colored by `MilestoneCategory` (see `MilestoneArc.tsx`), and the legend reflects the same mapping.
+- Year filtering is client-side: the server returns all milestones for a project and the UI narrows them to the selected start/end years.
+- Asana links in milestone details use the placeholder pattern `https://app.asana.com/0/${asanaTaskGid}` until a project-specific domain is provided.
