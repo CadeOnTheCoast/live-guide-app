@@ -4,12 +4,14 @@ import { createSupabaseRouteHandlerClient } from "@/lib/supabase/server";
 const DEFAULT_NEXT = "/projects";
 
 export async function GET(request: NextRequest) {
-  const requestUrl = new URL(request.url);
-  const code = requestUrl.searchParams.get("code");
-  const next = requestUrl.searchParams.get("next") ?? DEFAULT_NEXT;
+  const url = new URL(request.url);
+  const code = url.searchParams.get("code");
+  const next = url.searchParams.get("next") ?? DEFAULT_NEXT;
 
   if (!code) {
-    const loginUrl = buildLoginUrl(requestUrl, next, "missing_code");
+    const loginUrl = new URL("/login", url.origin);
+    loginUrl.searchParams.set("next", next);
+    loginUrl.searchParams.set("error", "missing_code");
     return NextResponse.redirect(loginUrl);
   }
 
@@ -17,21 +19,13 @@ export async function GET(request: NextRequest) {
   const { error } = await supabase.auth.exchangeCodeForSession(code);
 
   if (error) {
-    const loginUrl = buildLoginUrl(requestUrl, next, "auth_failed");
+    console.error("Supabase exchangeCodeForSession error:", error);
+    const loginUrl = new URL("/login", url.origin);
+    loginUrl.searchParams.set("next", next);
+    loginUrl.searchParams.set("error", "auth_failed");
     return NextResponse.redirect(loginUrl);
   }
 
-  const redirectUrl = new URL(next, requestUrl.origin);
+  const redirectUrl = new URL(next, url.origin);
   return NextResponse.redirect(redirectUrl.toString());
-}
-
-function buildLoginUrl(currentUrl: URL, next: string, error?: string) {
-  const loginUrl = new URL("/login", currentUrl.origin);
-  if (next) {
-    loginUrl.searchParams.set("next", next);
-  }
-  if (error) {
-    loginUrl.searchParams.set("error", error);
-  }
-  return loginUrl.toString();
 }

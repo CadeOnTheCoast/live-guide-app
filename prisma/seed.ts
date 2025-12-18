@@ -1,4 +1,6 @@
-import { db } from "../src/server/db";
+import { PrismaClient } from "@prisma/client";
+
+const db = new PrismaClient();
 
 const departments = [
   { code: "PM", name: "Project Management" },
@@ -130,7 +132,9 @@ export async function seed() {
 async function run() {
   try {
     const result = await seed();
-    console.log(`Seeded ${result.departments} departments, ${result.people} people, ${result.projects} projects.`);
+    console.log(
+      `Seeded ${result.departments} departments, ${result.people} people, ${result.projects} projects.`
+    );
   } catch (e) {
     console.error(e);
     process.exit(1);
@@ -139,6 +143,4 @@ async function run() {
   }
 }
 
-if (require.main === module) {
-  run();
-}
+run();
