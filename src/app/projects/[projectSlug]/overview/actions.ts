@@ -1,5 +1,4 @@
 "use server";
-
 import { revalidatePath } from "next/cache";
 import { ObjectiveStatus, KeyResultStatus } from "@prisma/client";
 import { db } from "@/server/db";
@@ -27,9 +26,9 @@ export type ObjectiveFormState = {
   success?: boolean;
 };
 
-export function getObjectiveInitialState(): ObjectiveFormState {
-  return { errors: {} };
-}
+export const objectiveInitialState: ObjectiveFormState = {
+  errors: {}
+};
 
 export async function upsertObjective(prevState: ObjectiveFormState, formData: FormData) {
   const { person } = await getUserOrRedirect();
@@ -112,9 +111,9 @@ export type KeyResultFormState = {
   success?: boolean;
 };
 
-export function getKeyResultInitialState(): KeyResultFormState {
-  return { errors: {} };
-}
+export const keyResultInitialState: KeyResultFormState = {
+  errors: {}
+};
 
 export async function upsertKeyResult(prevState: KeyResultFormState, formData: FormData) {
   const { person } = await getUserOrRedirect();
