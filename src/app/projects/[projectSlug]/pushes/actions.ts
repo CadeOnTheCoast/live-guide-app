@@ -27,9 +27,7 @@ export type PushFormState = {
   success?: boolean;
 };
 
-export function getPushInitialState(): PushFormState {
-  return { errors: {}, success: false };
-}
+export const pushInitialState: PushFormState = { errors: {}, success: false };
 
 export async function upsertPush(prevState: PushFormState, formData: FormData) {
   const { person } = await getUserOrRedirect();
@@ -136,9 +134,7 @@ export type ActivityFormState = {
   success?: boolean;
 };
 
-export function getActivityInitialState(): ActivityFormState {
-  return { errors: {}, success: false };
-}
+export const activityInitialState: ActivityFormState = { errors: {}, success: false };
 
 export async function upsertActivity(prevState: ActivityFormState, formData: FormData) {
   const { person } = await getUserOrRedirect();

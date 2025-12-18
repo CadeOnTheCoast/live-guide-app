@@ -15,9 +15,7 @@ export type MilestoneFormState = {
   success?: boolean;
 };
 
-export function getMilestoneInitialState(): MilestoneFormState {
-  return { errors: {}, success: false };
-}
+export const milestoneInitialState: MilestoneFormState = { errors: {}, success: false };
 
 function parseDate(value: string | undefined | null) {
   if (!value) return null;

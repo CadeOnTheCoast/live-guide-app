@@ -13,9 +13,7 @@ export type DepartmentFormState = {
   formError?: string;
 };
 
-export function getDepartmentInitialState(): DepartmentFormState {
-  return { errors: {} };
-}
+export const departmentInitialState: DepartmentFormState = { errors: {} };
 
 export async function upsertDepartment(prevState: DepartmentFormState, formData: FormData) {
   const id = formData.get("id")?.toString();
@@ -60,9 +58,7 @@ export type DeleteDepartmentState = {
   formError?: string;
 };
 
-export function getDeleteDepartmentInitialState(): DeleteDepartmentState {
-  return {};
-}
+export const deleteDepartmentInitialState: DeleteDepartmentState = {};
 
 export async function deleteDepartment(prevState: DeleteDepartmentState, formData: FormData) {
   const id = formData.get("id")?.toString();

@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { MilestoneCategory, MilestoneStatus } from "@prisma/client";
 import { useFormState } from "react-dom";
-import { upsertMilestone, getMilestoneInitialState, MilestoneFormState } from "@/app/projects/[projectSlug]/timeline/actions";
+import { milestoneInitialState, upsertMilestone, MilestoneFormState } from "@/app/projects/[projectSlug]/timeline/actions";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -25,7 +25,7 @@ type MilestoneFormProps = {
 };
 
 export function MilestoneForm({ projectId, slug, open, onOpenChange, defaultValues, departments, objectives, pushes }: MilestoneFormProps) {
-  const [state, formAction] = useFormState<MilestoneFormState, FormData>(upsertMilestone, getMilestoneInitialState());
+  const [state, formAction] = useFormState<MilestoneFormState, FormData>(upsertMilestone, milestoneInitialState);
   const statusOptions = Object.values(MilestoneStatus) as MilestoneStatus[];
   const categoryOptions = Object.values(MilestoneCategory) as MilestoneCategory[];
 

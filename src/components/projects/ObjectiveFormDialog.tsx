@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useFormState } from "react-dom";
 import { ObjectiveStatus } from "@prisma/client";
-import { ObjectiveFormState, getObjectiveInitialState, upsertObjective } from "@/app/projects/[projectSlug]/overview/actions";
+import { ObjectiveFormState, objectiveInitialState, upsertObjective } from "@/app/projects/[projectSlug]/overview/actions";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -34,7 +34,7 @@ export type ObjectiveFormDialogProps = {
 
 export function ObjectiveFormDialog({ projectId, slug, triggerLabel, objective }: ObjectiveFormDialogProps) {
   const [open, setOpen] = useState(false);
-  const [state, formAction] = useFormState<ObjectiveFormState, FormData>(upsertObjective, getObjectiveInitialState());
+  const [state, formAction] = useFormState<ObjectiveFormState, FormData>(upsertObjective, objectiveInitialState);
 
   useEffect(() => {
     if (state.success) {

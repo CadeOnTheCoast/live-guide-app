@@ -17,9 +17,7 @@ export type ProjectFormState = {
 export const PROJECT_STATUS_OPTIONS = ["PLANNING", "ACTIVE", "PAUSED", "COMPLETED"] as const;
 type ProjectStatus = (typeof PROJECT_STATUS_OPTIONS)[number];
 
-export function getProjectInitialState(): ProjectFormState {
-  return { errors: {} };
-}
+export const projectInitialState: ProjectFormState = { errors: {} };
 
 function parseDate(value: string | undefined | null) {
   if (!value) return null;

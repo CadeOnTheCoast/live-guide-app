@@ -4,14 +4,14 @@ import { useFormState } from "react-dom";
 import { Button } from "@/components/ui/button";
 import {
   deleteDepartment,
-  getDeleteDepartmentInitialState,
+  deleteDepartmentInitialState,
   type DeleteDepartmentState
 } from "@/app/admin/departments/actions";
 
 export default function DepartmentDeleteButton({ departmentId }: { departmentId: string }) {
   const [state, formAction] = useFormState<DeleteDepartmentState, FormData>(
     deleteDepartment,
-    getDeleteDepartmentInitialState()
+    deleteDepartmentInitialState
   );
 
   return (

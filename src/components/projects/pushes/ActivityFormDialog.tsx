@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 import { ActivityStatus } from "@prisma/client";
-import { getActivityInitialState, type ActivityFormState, upsertActivity } from "@/app/projects/[projectSlug]/pushes/actions";
+import { activityInitialState, type ActivityFormState, upsertActivity } from "@/app/projects/[projectSlug]/pushes/actions";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -32,7 +32,7 @@ export function ActivityFormDialog({
   keyResults
 }: ActivityFormDialogProps) {
   const [open, setOpen] = useState(false);
-  const [state, formAction] = useFormState<ActivityFormState, FormData>(upsertActivity, getActivityInitialState());
+  const [state, formAction] = useFormState<ActivityFormState, FormData>(upsertActivity, activityInitialState);
 
   useEffect(() => {
     if (state.success) {
