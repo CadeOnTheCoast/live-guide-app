@@ -63,7 +63,7 @@ export function ObjectiveFormDialog({ projectId, slug, triggerLabel, objective }
               Title
             </label>
             <Input id="title" name="title" defaultValue={objective?.title ?? ""} required />
-            {state.errors.title && <p className="text-sm text-destructive">{state.errors.title}</p>}
+            {state.errors?.title && <p className="text-sm text-destructive">{state.errors.title}</p>}
           </div>
           <div className="space-y-2">
             <label className="text-sm font-medium" htmlFor="description">
@@ -83,7 +83,7 @@ export function ObjectiveFormDialog({ projectId, slug, triggerLabel, objective }
                 Timeframe end
               </label>
               <Input id="timeframeEnd" name="timeframeEnd" type="date" defaultValue={toDateInputValue(objective?.timeframeEnd)} />
-              {state.errors.timeframe && <p className="text-sm text-destructive">{state.errors.timeframe}</p>}
+              {state.errors?.timeframe && <p className="text-sm text-destructive">{state.errors.timeframe}</p>}
             </div>
           </div>
           <div className="space-y-2">
@@ -97,7 +97,7 @@ export function ObjectiveFormDialog({ projectId, slug, triggerLabel, objective }
                 </option>
               ))}
             </Select>
-            {state.errors.status && <p className="text-sm text-destructive">{state.errors.status}</p>}
+            {state.errors?.status && <p className="text-sm text-destructive">{state.errors.status}</p>}
           </div>
           {state.formError && <p className="text-sm text-destructive">{state.formError}</p>}
           <DialogFooter>
