@@ -1,4 +1,3 @@
-"use server";
 import { revalidatePath } from "next/cache";
 import { ObjectiveStatus, KeyResultStatus } from "@prisma/client";
 import { db } from "@/server/db";
@@ -31,6 +30,8 @@ export const objectiveInitialState: ObjectiveFormState = {
 };
 
 export async function upsertObjective(prevState: ObjectiveFormState, formData: FormData) {
+  "use server";
+
   const { person } = await getUserOrRedirect();
 
   if (!canEditProject(person?.role)) {
@@ -116,6 +117,8 @@ export const keyResultInitialState: KeyResultFormState = {
 };
 
 export async function upsertKeyResult(prevState: KeyResultFormState, formData: FormData) {
+  "use server";
+
   const { person } = await getUserOrRedirect();
 
   if (!canEditProject(person?.role)) {
@@ -212,6 +215,8 @@ export async function upsertKeyResult(prevState: KeyResultFormState, formData: F
 export type CycleStatusState = { formError?: string; nextStatus?: KeyResultStatus };
 
 export async function cycleKeyResultStatus(prevState: CycleStatusState, formData: FormData) {
+  "use server";
+
   const { person } = await getUserOrRedirect();
 
   if (!canEditProject(person?.role)) {

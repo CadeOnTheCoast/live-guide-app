@@ -75,7 +75,12 @@ export function KeyResultRowForm({
 
   return (
     <>
-      <form id={formId} action={formAction} className="hidden">
+      <form
+        id={formId}
+        action={formAction}
+        className="hidden"
+        suppressHydrationWarning
+      >
         <input type="hidden" name="projectId" value={projectId} />
         <input type="hidden" name="objectiveId" value={objectiveId} />
         <input type="hidden" name="slug" value={slug} />
