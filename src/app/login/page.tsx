@@ -7,6 +7,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
+export function buildEmailRedirectTo(next: string, origin?: string) {
+  const normalizedOrigin = (
+    process.env.NEXT_PUBLIC_SITE_URL || origin || "http://localhost:3000"
+  ).replace(/\/$/, "");
+  return `${normalizedOrigin}/auth/callback?next=${encodeURIComponent(next || "/projects")}`;
+}
+
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState<string | null>(null);
@@ -14,6 +21,7 @@ export default function LoginPage() {
   const searchParams = useSearchParams();
 
   const unauthError = useMemo(() => searchParams.get("error"), [searchParams]);
+  const next = useMemo(() => searchParams.get("next") ?? "/projects", [searchParams]);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -25,7 +33,7 @@ export default function LoginPage() {
       const { error: signInError } = await supabase.auth.signInWithOtp({
         email,
         options: {
-          emailRedirectTo: `${window.location.origin}/projects`
+          emailRedirectTo: buildEmailRedirectTo(next, window.location.origin)
         }
       });
 
