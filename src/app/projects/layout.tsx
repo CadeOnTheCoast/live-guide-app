@@ -4,7 +4,7 @@ import AppTopBar from "@/components/layout/AppTopBar";
 import { getUserOrRedirect } from "@/server/auth";
 
 export default async function ProjectsLayout({ children }: { children: ReactNode }) {
-  await getUserOrRedirect();
+  await getUserOrRedirect("/projects");
 
   return (
     <div className="flex min-h-screen bg-background text-foreground">

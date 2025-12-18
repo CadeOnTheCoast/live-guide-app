@@ -57,6 +57,8 @@ The app uses Supabase magic-link authentication restricted to Mobile Baykeeper e
 2. Configure environment variables (see `.env.example`):
    - `NEXT_PUBLIC_SUPABASE_URL`
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - `NEXT_PUBLIC_SITE_URL` (defaults to `http://localhost:3000` for dev)
    - `ALLOWED_EMAIL_DOMAINS` (comma-separated list like `mobilebaykeeper.org`)
-3. Start the dev server and open `/login` to request a magic link. Only emails from allowed domains can sign in.
-4. The `/projects` area is authenticated; anonymous visitors are redirected to `/login`.
+3. In the Supabase dashboard, set **Site URL** to `http://localhost:3000` (or your deployed URL) and add `http://localhost:3000/auth/callback` to **Redirect URLs**.
+4. Start the dev server and open `/login` to request a magic link. Only emails from allowed domains can sign in. The link returns to `/auth/callback`, exchanges the code for a session, then redirects to `/projects` (or the `next` query param).
+5. The `/projects` and `/admin` areas are authenticated; anonymous visitors are redirected to `/login` with a `next` parameter so they can return after signing in.
