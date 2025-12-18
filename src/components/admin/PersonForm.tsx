@@ -8,7 +8,7 @@ import { Select } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/admin/SharedCheckbox";
 import type { PersonFormState } from "@/app/admin/people/actions";
-import { getPersonInitialState, upsertPerson } from "@/app/admin/people/actions";
+import { personInitialState, upsertPerson } from "@/app/admin/people/actions";
 
 type DepartmentOption = { id: string; name: string };
 
@@ -25,7 +25,7 @@ type PersonFormProps = {
 };
 
 export default function PersonForm({ person, departments }: PersonFormProps) {
-  const [state, formAction] = useFormState<PersonFormState, FormData>(upsertPerson, getPersonInitialState());
+  const [state, formAction] = useFormState<PersonFormState, FormData>(upsertPerson, personInitialState);
 
   const roleOptions = useMemo(
     () => [

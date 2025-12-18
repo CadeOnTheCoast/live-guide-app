@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useFormState } from "react-dom";
 import { Push } from "@prisma/client";
-import { getPushInitialState, type PushFormState, upsertPush } from "@/app/projects/[projectSlug]/pushes/actions";
+import { pushInitialState, type PushFormState, upsertPush } from "@/app/projects/[projectSlug]/pushes/actions";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -27,7 +27,7 @@ type PushFormDialogProps = {
 
 export function PushFormDialog({ projectId, slug, objectives, push, defaultSequenceIndex = 1, currentObjectiveId }: PushFormDialogProps) {
   const [open, setOpen] = useState(false);
-  const [state, formAction] = useFormState<PushFormState, FormData>(upsertPush, getPushInitialState());
+  const [state, formAction] = useFormState<PushFormState, FormData>(upsertPush, pushInitialState);
 
   useEffect(() => {
     if (state.success) {

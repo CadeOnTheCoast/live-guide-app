@@ -2,12 +2,12 @@
 
 import { useFormState } from "react-dom";
 import { Button } from "@/components/ui/button";
-import { getPersonActiveInitialState, setPersonActive, type PersonActiveState } from "@/app/admin/people/actions";
+import { personActiveInitialState, setPersonActive, type PersonActiveState } from "@/app/admin/people/actions";
 
 export default function PersonActiveToggle({ personId, isActive }: { personId: string; isActive: boolean }) {
   const [state, formAction] = useFormState<PersonActiveState, FormData>(
     setPersonActive,
-    getPersonActiveInitialState()
+    personActiveInitialState
   );
 
   return (

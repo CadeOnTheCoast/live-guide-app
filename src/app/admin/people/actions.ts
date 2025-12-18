@@ -17,9 +17,7 @@ export type PersonFormState = {
 const USER_ROLES = ["ADMIN", "EDITOR", "VIEWER"] as const;
 type UserRole = (typeof USER_ROLES)[number];
 
-export function getPersonInitialState(): PersonFormState {
-  return { errors: {} };
-}
+export const personInitialState: PersonFormState = { errors: {} };
 
 function isValidEmail(email: string) {
   return /.+@.+\..+/.test(email);
@@ -81,9 +79,7 @@ export async function upsertPerson(prevState: PersonFormState, formData: FormDat
 
 export type PersonActiveState = { formError?: string };
 
-export function getPersonActiveInitialState(): PersonActiveState {
-  return {};
-}
+export const personActiveInitialState: PersonActiveState = {};
 
 export async function setPersonActive(prevState: PersonActiveState, formData: FormData) {
   const id = formData.get("id")?.toString();

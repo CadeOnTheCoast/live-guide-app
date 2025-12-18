@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  getDepartmentInitialState,
+  departmentInitialState,
   upsertDepartment,
   type DepartmentFormState
 } from "@/app/admin/departments/actions";
@@ -17,7 +17,7 @@ type DepartmentFormProps = {
 export default function DepartmentForm({ department }: DepartmentFormProps) {
   const [state, formAction] = useFormState<DepartmentFormState, FormData>(
     upsertDepartment,
-    getDepartmentInitialState()
+    departmentInitialState
   );
 
   return (

@@ -49,6 +49,11 @@ Database-aware tests are skipped unless `DATABASE_URL` is set and the database h
 - `prisma` – Prisma schema and seed script
 - `tests` – Vitest unit/component tests
 
+## Server actions conventions
+- Place `"use server";` at the top of dedicated server action modules.
+- Export initial form state values as constants (not functions) and reuse them with `useFormState`.
+- Avoid inline `"use server"` directives inside functions or exporting synchronous functions from server action modules.
+
 ## Auth & Supabase setup
 
 The app uses Supabase magic-link authentication restricted to Mobile Baykeeper email domains.

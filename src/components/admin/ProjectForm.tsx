@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Select } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { ProjectFormState } from "@/app/admin/projects/actions";
-import { getProjectInitialState, upsertProject } from "@/app/admin/projects/actions";
+import { projectInitialState, upsertProject } from "@/app/admin/projects/actions";
 import { Textarea } from "@/components/admin/SharedTextarea";
 
 function slugify(value: string) {
@@ -40,7 +40,7 @@ type ProjectFormProps = {
 };
 
 export default function ProjectForm({ project, people, statusOptions, defaultStatus }: ProjectFormProps) {
-  const [state, formAction] = useFormState<ProjectFormState, FormData>(upsertProject, getProjectInitialState());
+  const [state, formAction] = useFormState<ProjectFormState, FormData>(upsertProject, projectInitialState);
   const [name, setName] = useState(project?.name ?? "");
   const [slug, setSlug] = useState(project?.slug ?? "");
 
