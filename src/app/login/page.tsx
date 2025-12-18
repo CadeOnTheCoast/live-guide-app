@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
-function buildEmailRedirectTo(next: string, origin?: string) {
+export function buildEmailRedirectTo(next: string, origin?: string) {
   const base =
     (process.env.NEXT_PUBLIC_SITE_URL || origin || "http://localhost:3000").replace(/\/$/, "");
   const safeNext = next || "/projects";
