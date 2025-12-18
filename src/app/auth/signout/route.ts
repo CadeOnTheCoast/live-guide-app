@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+import { createSupabaseRouteHandlerClient } from "@/lib/supabase/server";
 
 export async function POST(request: Request) {
-  const supabase = createRouteHandlerClient({ cookies });
+  const supabase = createSupabaseRouteHandlerClient();
   await supabase.auth.signOut();
 
   return NextResponse.redirect(new URL("/login", request.url));

@@ -11,7 +11,7 @@ const adminLinks = [
 ];
 
 export default async function AdminLayout({ children }: { children: ReactNode }) {
-  const { user, person } = await getUserOrRedirect();
+  const { user, person } = await getUserOrRedirect("/admin");
 
   if (!canManageAdminArea(person?.role)) {
     redirect("/projects");
