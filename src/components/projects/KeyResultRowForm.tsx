@@ -88,7 +88,7 @@ export function KeyResultRowForm({
           ) : (
             <span className="font-medium">{keyResult?.code}</span>
           )}
-          {state.errors.code && <p className="text-xs text-destructive">{state.errors.code}</p>}
+          {state.errors?.code && <p className="text-xs text-destructive">{state.errors.code}</p>}
         </TableCell>
         <TableCell className="align-top">
           {canEdit ? (
@@ -96,7 +96,7 @@ export function KeyResultRowForm({
           ) : (
             <div className="font-medium">{keyResult?.title}</div>
           )}
-          {state.errors.title && <p className="text-xs text-destructive">{state.errors.title}</p>}
+          {state.errors?.title && <p className="text-xs text-destructive">{state.errors.title}</p>}
         </TableCell>
         <TableCell className="align-top">
           {canEdit ? (
@@ -180,7 +180,7 @@ export function KeyResultRowForm({
           ) : (
             "—"
           )}
-          {state.errors.dueDate && <p className="text-xs text-destructive">{state.errors.dueDate}</p>}
+          {state.errors?.dueDate && <p className="text-xs text-destructive">{state.errors.dueDate}</p>}
         </TableCell>
         {canEdit && (
           <TableCell className="align-top text-right">

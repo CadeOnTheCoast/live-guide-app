@@ -1,2 +1,0 @@
-# This file keeps track of the migration provider.
-provider = "postgresql"
