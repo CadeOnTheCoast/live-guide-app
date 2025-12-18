@@ -1,0 +1,13 @@
+project_slug,milestone_order,milestone_title,milestone_description,due_date,due_quarter,department_code,push_number,is_critical,status
+oyster-planting,1,Field survey: Heron Bay site notes captured,Ground-truthing notes collected (tide/wind/salinity/clarity; flagged silted areas; recommended placement zones and sanctuary approach).,2025-05-04,Q2 2025,FR,,TRUE,DONE
+oyster-planting,2,Digital survey of feasible planting locations completed,Digitally surveyed feasible planting locations from Mississippi Sound to Fort Morgan via aerial imagery.,2025-08-11,Q3 2025,FR,,TRUE,DONE
+oyster-planting,3,Oyster needs calculated for plots to reach target density,Calculated oysters needed to stock plots to ~50 oysters/m².,2025-08-11,Q3 2025,FR,,TRUE,DONE
+oyster-planting,4,Apply for USACE permit coverage (Nationwide),Prepare and submit USACE permitting approach for intertidal/tidal-creek planting footprint (as described in plan).,2025-12-31,Q4 2025,PM,,TRUE,
+oyster-planting,5,Pilot intertidal/tidal-creek plantings in Little Bay & Lightning Point,"Pilot projects beginning in July; intertidal focus to reduce anoxia and predation risks, allow frequent checks.",2025-09-30,Q3 2025,FR,,TRUE,
+oyster-planting,6,Initiate Portersville Bay surveys,Begin field surveys to confirm suitability and refine planting map/plot list.,2025-12-31,Q4 2025,FR,,TRUE,
+oyster-planting,7,Begin planting: Heron Bay A–C,Start deployments in Heron Bay sections A–C as initial prioritized plantings.,2025-12-31,Q4 2025,FR,,TRUE,
+oyster-planting,8,Survey Fort Morgan locations,Complete survey work needed to support later Fort Morgan planting phase.,2025-12-31,Q4 2025,FR,,FALSE,
+oyster-planting,9,"Survey additional locations (East Fowl River, Eastern Shore, Weeks Bay, Oyster Bay)",Run surveys on additional candidate locations listed in plan.,2027-12-31,Q4 2027,FR,,FALSE,
+oyster-planting,10,Begin planting: Heron Bay C–E and Goat Island,Scale plantings into additional Heron Bay sections and Goat Island.,2028-12-31,Q4 2028,FR,,FALSE,
+oyster-planting,11,Evaluate intertidal plantings for success; continue adaptive restocking,Assess survivorship/recruitment and maintain target densities where feasible.,2029-12-31,Q4 2029,FR,,TRUE,
+oyster-planting,12,Bay-wide 2030 target achieved (oysters deployed + performance standards),"By end of 2030: ~10M oysters deployed and network performance targets (survival, year-classes, recruitment) assessed.",2030-12-31,Q4 2030,PM,,TRUE,

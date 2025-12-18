@@ -38,7 +38,7 @@ export default async function ProjectLayout({
         {tabs.map((tab) => (
           <Link
             key={tab.slug}
-            href={`/projects/${project.slug}/${tab.slug}`}
+            href={`/projects/${project.slug}/${tab.slug}` as any}
             className="rounded-md px-3 py-1 hover:bg-muted"
           >
             {tab.label}

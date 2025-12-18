@@ -28,7 +28,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
           {adminLinks.map((link) => (
             <Link
               key={link.href}
-              href={link.href}
+              href={link.href as any}
               className="flex items-center justify-between rounded-md px-3 py-2 hover:bg-muted"
             >
               <span>{link.label}</span>

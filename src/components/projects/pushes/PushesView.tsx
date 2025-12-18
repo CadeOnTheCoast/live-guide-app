@@ -16,10 +16,27 @@ const STATUS_COLUMNS: ActivityStatus[] = [
   ActivityStatus.COMPLETED
 ];
 
-function formatDate(date?: Date | string | null) {
-  if (!date) return "—";
-  const parsed = new Date(date);
-  return isNaN(parsed.getTime()) ? "—" : new Intl.DateTimeFormat("en", { dateStyle: "medium" }).format(parsed);
+function formatDateUTC(date: Date): string {
+  const month = date.getUTCMonth() + 1;
+  const day = date.getUTCDate();
+  const year = date.getUTCFullYear() % 100;
+
+  const pad = (n: number) => n.toString().padStart(2, "0");
+
+  return `${pad(month)}/${pad(day)}/${pad(year)}`;
+}
+function formatDate(date: Date): string {
+  return formatDateUTC(date);
+}
+export function formatPushName(push: {
+  sequence: number;
+  startDate: Date;
+  endDate: Date;
+}): string {
+  const startLabel = formatDateUTC(push.startDate);
+  const endLabel = formatDateUTC(push.endDate);
+
+  return `Push ${push.sequence} - ${startLabel} - ${endLabel}`;
 }
 
 function isCurrentPush(push: Push) {
@@ -285,7 +302,8 @@ function ActivityCard({ activity, slug, people, canEdit }: ActivityCardProps) {
       <div className="space-y-1 text-sm text-muted-foreground">
         <p>Owner: {activity.owner?.name ?? "Unassigned"}</p>
         <p>Department: {activity.department?.code ?? "—"}</p>
-        <p>Due: {formatDate(activity.dueDate)}</p>
+        <p>Due: {activity.dueDate ? formatDate(activity.dueDate) : "No due date"}
+        </p>
         {activity.relatedKr && (
           <p>
             KR: {activity.relatedKr.code} – {activity.relatedKr.title}

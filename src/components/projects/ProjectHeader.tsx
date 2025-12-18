@@ -30,7 +30,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
       <div className="flex flex-wrap gap-2 text-sm">
         {asanaLink && (
           <Link
-            href={asanaLink}
+            href={asanaLink as any}
             className="rounded-md border px-3 py-2 hover:bg-muted"
             target="_blank"
             rel="noreferrer"
@@ -40,7 +40,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
         )}
         {project.caseForChangePageUrl && (
           <Link
-            href={project.caseForChangePageUrl}
+            href={project.caseForChangePageUrl as any}
             className="rounded-md border px-3 py-2 hover:bg-muted"
             target="_blank"
             rel="noreferrer"

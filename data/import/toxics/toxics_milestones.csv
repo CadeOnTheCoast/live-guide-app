@@ -1,0 +1,6 @@
+project_slug,milestone_order,milestone_title,milestone_description,due_date,due_quarter,department_code,push_number,is_critical,status
+claiborne-millers-ferry-dam-impact-assessment,1,Environmental Impact Assessment Report,"Report detailing environmental impacts (sediment transport, water quality, habitats). Timeline appears in multiple drafts (Q2 2025 in one draft; Q4 2027 in another).",,Q2 2025 / Q4 2027,FR,,TRUE,
+claiborne-millers-ferry-dam-impact-assessment,2,Economic Impact Report,Report detailing economic impacts of the dams and their removal.,,Q2 2025,PM,,FALSE,
+claiborne-millers-ferry-dam-impact-assessment,3,Community Profiles / Socio-Economic Impact Study,Study assessing socio-economic implications for local communities.,,Q1 2026,CE,,FALSE,
+claiborne-millers-ferry-dam-impact-assessment,4,Political Feasibility Report,Report evaluating political climate and strategies to garner support.,,Q2 2026,GA,,TRUE,
+claiborne-millers-ferry-dam-impact-assessment,5,Track Claiborne spillway structural damage assessment/repair planning,USACE reported spillway abutment wall collapse and ongoing investigation/repair planning (operations not impacted per story).,,,PM,,FALSE,

@@ -25,7 +25,12 @@ type MilestoneFormProps = {
 };
 
 export function MilestoneForm({ projectId, slug, open, onOpenChange, defaultValues, departments, objectives, pushes }: MilestoneFormProps) {
-  const [state, formAction] = useFormState<MilestoneFormState, FormData>(upsertMilestone, milestoneInitialState);
+  const [state, formAction] = useFormState<MilestoneFormState, FormData>(
+    upsertMilestone,
+    milestoneInitialState
+  );
+
+  const errors = state?.errors ?? {};
   const statusOptions = Object.values(MilestoneStatus) as MilestoneStatus[];
   const categoryOptions = Object.values(MilestoneCategory) as MilestoneCategory[];
 
@@ -46,7 +51,10 @@ export function MilestoneForm({ projectId, slug, open, onOpenChange, defaultValu
         <form action={formAction} className="space-y-4">
           <input type="hidden" name="projectId" value={projectId} />
           <input type="hidden" name="slug" value={slug} />
-          {defaultValues?.id && <input type="hidden" name="milestoneId" value={defaultValues.id} />}
+          {defaultValues?.id && (
+            <input type="hidden" name="milestoneId" value={defaultValues.id} />
+          )}
+
           <Card>
             <CardHeader>
               <CardTitle>Details</CardTitle>
@@ -54,28 +62,70 @@ export function MilestoneForm({ projectId, slug, open, onOpenChange, defaultValu
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="title">Title *</Label>
-                <Input id="title" name="title" defaultValue={defaultValues?.title ?? ""} />
-                {state.errors.title && <p className="text-sm text-destructive">{state.errors.title}</p>}
+                <Input
+                  id="title"
+                  name="title"
+                  defaultValue={defaultValues?.title ?? ""}
+                />
+                {errors.title && (
+                  <p className="text-sm text-destructive">
+                    {Array.isArray(errors.title)
+                      ? errors.title.join(", ")
+                      : errors.title}
+                  </p>
+                )}
               </div>
+
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label htmlFor="date">Date *</Label>
-                  <Input id="date" name="date" type="date" defaultValue={defaultValues ? formatInputDate(defaultValues.date) : ""} />
-                  {state.errors.date && <p className="text-sm text-destructive">{state.errors.date}</p>}
+                  <Input
+                    id="date"
+                    name="date"
+                    type="date"
+                    defaultValue={
+                      defaultValues ? formatInputDate(defaultValues.date) : ""
+                    }
+                  />
+                  {errors.date && (
+                    <p className="text-sm text-destructive">
+                      {Array.isArray(errors.date)
+                        ? errors.date.join(", ")
+                        : errors.date}
+                    </p>
+                  )}
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="asanaTaskGid">Asana task GID</Label>
-                  <Input id="asanaTaskGid" name="asanaTaskGid" defaultValue={defaultValues?.asanaTaskGid ?? ""} />
+                  <Input
+                    id="asanaTaskGid"
+                    name="asanaTaskGid"
+                    defaultValue={defaultValues?.asanaTaskGid ?? ""}
+                  />
                 </div>
               </div>
+
               <div className="space-y-2">
                 <Label htmlFor="description">Description</Label>
-                <Textarea id="description" name="description" rows={3} defaultValue={defaultValues?.description ?? ""} />
+                <Textarea
+                  id="description"
+                  name="description"
+                  rows={3}
+                  defaultValue={defaultValues?.description ?? ""}
+                />
               </div>
+
               <div className="grid gap-4 sm:grid-cols-3">
                 <div className="space-y-2">
                   <Label htmlFor="category">Category</Label>
-                  <Select id="category" name="category" defaultValue={defaultValues?.category ?? MilestoneCategory.OTHER}>
+                  <Select
+                    id="category"
+                    name="category"
+                    defaultValue={
+                      (defaultValues?.category as MilestoneCategory) ??
+                      MilestoneCategory.OTHER
+                    }
+                  >
                     {categoryOptions.map((category) => (
                       <option key={category} value={category}>
                         {category}
@@ -85,7 +135,14 @@ export function MilestoneForm({ projectId, slug, open, onOpenChange, defaultValu
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="status">Status</Label>
-                  <Select id="status" name="status" defaultValue={defaultValues?.status ?? MilestoneStatus.PLANNED}>
+                  <Select
+                    id="status"
+                    name="status"
+                    defaultValue={
+                      (defaultValues?.status as MilestoneStatus) ??
+                      MilestoneStatus.PLANNED
+                    }
+                  >
                     {statusOptions.map((status) => (
                       <option key={status} value={status}>
                         {status}
@@ -104,10 +161,15 @@ export function MilestoneForm({ projectId, slug, open, onOpenChange, defaultValu
                   <Label htmlFor="isMajor">Major milestone</Label>
                 </div>
               </div>
+
               <div className="grid gap-4 sm:grid-cols-3">
                 <div className="space-y-2">
                   <Label htmlFor="leadDepartmentId">Lead department</Label>
-                  <Select id="leadDepartmentId" name="leadDepartmentId" defaultValue={defaultValues?.leadDepartmentId ?? ""}>
+                  <Select
+                    id="leadDepartmentId"
+                    name="leadDepartmentId"
+                    defaultValue={defaultValues?.leadDepartmentId ?? ""}
+                  >
                     <option value="">Unassigned</option>
                     {departments.map((dept) => (
                       <option key={dept.id} value={dept.id}>
@@ -133,7 +195,11 @@ export function MilestoneForm({ projectId, slug, open, onOpenChange, defaultValu
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="pushId">Push</Label>
-                  <Select id="pushId" name="pushId" defaultValue={defaultValues?.pushId ?? ""}>
+                  <Select
+                    id="pushId"
+                    name="pushId"
+                    defaultValue={defaultValues?.pushId ?? ""}
+                  >
                     <option value="">None</option>
                     {pushes.map((push) => (
                       <option key={push.id} value={push.id}>
@@ -145,8 +211,12 @@ export function MilestoneForm({ projectId, slug, open, onOpenChange, defaultValu
               </div>
             </CardContent>
             <CardFooter className="flex items-center justify-between">
-              {state.formError && <p className="text-sm text-destructive">{state.formError}</p>}
-              <Button type="submit">{isEditing ? "Update" : "Create"} milestone</Button>
+              {state.formError && (
+                <p className="text-sm text-destructive">{state.formError}</p>
+              )}
+              <Button type="submit">
+                {isEditing ? "Update" : "Create"} milestone
+              </Button>
             </CardFooter>
           </Card>
         </form>

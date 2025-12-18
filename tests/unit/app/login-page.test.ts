@@ -1,5 +1,5 @@
 import { describe, expect, it, afterEach } from "vitest";
-import { buildEmailRedirectTo } from "@/app/login/page";
+import { buildEmailRedirectTo } from "@/app/login/helpers";
 
 describe("buildEmailRedirectTo", () => {
   const originalSiteUrl = process.env.NEXT_PUBLIC_SITE_URL;

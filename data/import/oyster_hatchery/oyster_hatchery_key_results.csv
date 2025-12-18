@@ -1,0 +1,4 @@
+project_slug,objective_title,kr_code,kr_title,kr_description,target_value,unit,current_value,status,owner_email,department_code,due_date
+oyster-hatchery,"Build a hatchery, nursery, and grow-out system in Mobile Bay",KR1,"Operational nursery produces 500,000 oysters/year",,500000,oysters/year,,,,,
+oyster-hatchery,"Build a hatchery, nursery, and grow-out system in Mobile Bay",KR2,"Operational hatchery produces 30,000,000 eyed larvae/year",,30000000,eyed larvae/year,,,,,
+oyster-hatchery,"Build a hatchery, nursery, and grow-out system in Mobile Bay",KR3,Revenue exceeds cost of program,,Revenue > cost,$,,,,,

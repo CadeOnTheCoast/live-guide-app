@@ -6,13 +6,16 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src")
-    }
+      "@": path.resolve(__dirname, "./src"),
+    },
   },
   test: {
     environment: "jsdom",
     globals: true,
-    setupFiles: ["./tests/setup.ts"],
-    include: ["tests/**/*.{test,spec}.{ts,tsx}"]
-  }
+    setupFiles: [
+      "./tests/setup.ts",       // your existing jest-dom setup
+      "./tests/setupTests.ts",  // the new useFormState mock
+    ],
+    include: ["tests/**/*.{test,spec}.{ts,tsx}"],
+  },
 });

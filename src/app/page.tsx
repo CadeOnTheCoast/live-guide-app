@@ -14,7 +14,7 @@ type ProjectRow = {
   } | null;
 };
 
-export async function getProjects(): Promise<ProjectRow[]> {
+ async function getProjects(): Promise<ProjectRow[]> {
   const projects = await db.project.findMany({
     take: 10,
     orderBy: { createdAt: "desc" },

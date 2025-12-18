@@ -9,14 +9,24 @@ function formatDateSegment(date: Date | string) {
   }).format(parsed);
 }
 
-export function formatPushName({
-  sequenceIndex,
-  startDate,
-  endDate
-}: Pick<Push, "sequenceIndex" | "startDate" | "endDate">) {
-  const start = formatDateSegment(startDate);
-  const end = formatDateSegment(endDate);
-  return `Push ${sequenceIndex} - ${start} - ${end}`;
+function formatShortDateUTC(date: Date): string {
+  const month = date.getUTCMonth() + 1;
+  const day = date.getUTCDate();
+  const year = date.getUTCFullYear() % 100;
+
+  const pad = (n: number) => n.toString().padStart(2, "0");
+
+  return `${pad(month)}/${pad(day)}/${pad(year)}`;
+}
+
+export function formatPushName(push: {
+  sequenceIndex: number;
+  startDate: Date;
+  endDate: Date;
+}): string {
+  return `Push ${push.sequenceIndex} - ${formatShortDateUTC(
+    push.startDate,
+  )} - ${formatShortDateUTC(push.endDate)}`;
 }
 
 export function getCurrentPushForProject(pushes: Push[]) {

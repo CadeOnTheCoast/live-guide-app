@@ -157,7 +157,9 @@ describeDb("Project pushes page", () => {
 
     render(element);
 
-    expect(screen.getByText(/Push 1 -/)).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: /Push 1 -/ }),
+    ).toBeInTheDocument();
 
     const inProgressLabel = screen.getByText("IN PROGRESS", { selector: "p" });
     const inProgressColumn = inProgressLabel.closest("div")?.parentElement as HTMLElement;

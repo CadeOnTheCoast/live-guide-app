@@ -6,14 +6,7 @@ import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-
-export function buildEmailRedirectTo(next: string, origin?: string) {
-  const base =
-    (process.env.NEXT_PUBLIC_SITE_URL || origin || "http://localhost:3000").replace(/\/$/, "");
-  const safeNext = next || "/projects";
-  return `${base}/auth/callback?next=${encodeURIComponent(safeNext)}`;
-}
-
+import { buildEmailRedirectTo } from "./helpers";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState<string | null>(null);

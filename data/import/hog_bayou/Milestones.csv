@@ -1,0 +1,9 @@
+project_slug,milestone_order,milestone_title,milestone_description,due_date,due_quarter,department_code,push_number,is_critical,status
+hog-bayou,1,Case for Change v1 finalized (technical + narrative),"Internal v1 that summarizes key pathways/risks, data gaps, and a recommended campaign strategy.",2024-10-15,Q4 2024,PM,,TRUE,DONE
+hog-bayou,2,Submit coalition comments on draft corrective action/post-closure permit,"Finalize and submit permit comments (technical + legal) with clear asks (surface water sampling, emerging contaminants, HHRA/PPP).",2024-11-05,Q4 2024,GA,,TRUE,DONE
+hog-bayou,3,Decision-maker map + pressure box v1 complete,"Identify key decision makers, pressure sources, and opponents; assign ownership and next steps.",2024-12-15,Q4 2024,GA,,TRUE,DONE
+hog-bayou,4,Secure agency commitment to surface-water sampling requirement,Written commitment (ADEM/EPA or permit language) to implement surface-water sampling in Barge Canal/Hog Bayou pathway.,2025-03-31,Q1 2025,GA,,TRUE,IN_PROGRESS
+hog-bayou,5,Field plan executed: sampling event(s) completed and QA/QC validated,Complete at least one sampling round; results validated; summary shared with partners and decision makers.,2025-06-30,Q2 2025,CE,,TRUE,NOT_STARTED
+hog-bayou,6,Publish results + recommended corrective action pathway,Public-facing memo + internal technical appendix; includes next permitting/legal actions and community asks.,2025-09-30,Q3 2025,PM,,TRUE,NOT_STARTED
+hog-bayou,7,Final permit/corrective action decision includes measurable protections,Final conditions adopted (monitoring + reporting + enforceable corrective actions) with clear metrics and timelines.,2026-03-31,Q1 2026,GA,,TRUE,NOT_STARTED
+hog-bayou,8,Community access roadmap for Hog Bayou (concept to commitments),"Define feasible access options (easements/blueway/park concept), responsible parties, and a funding approach.",2026-06-30,Q2 2026,CE,,FALSE,NOT_STARTED
