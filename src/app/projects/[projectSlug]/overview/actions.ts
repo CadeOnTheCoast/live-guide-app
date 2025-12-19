@@ -1,9 +1,12 @@
+"use server";
+
 import { revalidatePath } from "next/cache";
 import { ObjectiveStatus, KeyResultStatus } from "@prisma/client";
 import { db } from "@/server/db";
 import { getUserOrRedirect } from "@/server/auth";
 import { canEditProject } from "@/server/permissions";
 import { getNextKeyResultStatus } from "@/lib/key-result-status";
+import type { CycleStatusState, KeyResultFormState, ObjectiveFormState } from "./formState";
 
 function parseDate(value: string | undefined | null) {
   if (!value) return null;
@@ -15,23 +18,7 @@ function getOverviewPath(slug?: string | null) {
   return slug ? `/projects/${slug}/overview` : "/projects";
 }
 
-export type ObjectiveFormState = {
-  errors: {
-    title?: string;
-    timeframe?: string;
-    status?: string;
-  };
-  formError?: string;
-  success?: boolean;
-};
-
-export const objectiveInitialState: ObjectiveFormState = {
-  errors: {}
-};
-
 export async function upsertObjective(prevState: ObjectiveFormState, formData: FormData) {
-  "use server";
-
   const { person } = await getUserOrRedirect();
 
   if (!canEditProject(person?.role)) {
@@ -101,24 +88,7 @@ export async function upsertObjective(prevState: ObjectiveFormState, formData: F
   return { errors: {}, success: true };
 }
 
-export type KeyResultFormState = {
-  errors: {
-    code?: string;
-    title?: string;
-    objective?: string;
-    dueDate?: string;
-  };
-  formError?: string;
-  success?: boolean;
-};
-
-export const keyResultInitialState: KeyResultFormState = {
-  errors: {}
-};
-
 export async function upsertKeyResult(prevState: KeyResultFormState, formData: FormData) {
-  "use server";
-
   const { person } = await getUserOrRedirect();
 
   if (!canEditProject(person?.role)) {
@@ -212,11 +182,7 @@ export async function upsertKeyResult(prevState: KeyResultFormState, formData: F
   return { errors: {}, success: true };
 }
 
-export type CycleStatusState = { formError?: string; nextStatus?: KeyResultStatus };
-
 export async function cycleKeyResultStatus(prevState: CycleStatusState, formData: FormData) {
-  "use server";
-
   const { person } = await getUserOrRedirect();
 
   if (!canEditProject(person?.role)) {
