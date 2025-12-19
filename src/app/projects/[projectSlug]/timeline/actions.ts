@@ -5,17 +5,7 @@ import { MilestoneCategory, MilestoneStatus } from "@prisma/client";
 import { db } from "@/server/db";
 import { getUserOrRedirect } from "@/server/auth";
 import { canEditProject } from "@/server/permissions";
-
-export type MilestoneFormState = {
-  errors: {
-    title?: string;
-    date?: string;
-  };
-  formError?: string;
-  success?: boolean;
-};
-
-export const milestoneInitialState: MilestoneFormState = { errors: {}, success: false };
+import type { MilestoneFormState } from "./formState";
 
 function parseDate(value: string | undefined | null) {
   if (!value) return null;

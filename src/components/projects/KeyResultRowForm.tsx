@@ -3,13 +3,12 @@
 import { useId } from "react";
 import { useFormState } from "react-dom";
 import { KeyResultStatus } from "@prisma/client";
+import { cycleKeyResultStatus, upsertKeyResult } from "@/app/projects/[projectSlug]/overview/actions";
 import {
-  cycleKeyResultStatus,
-  keyResultInitialState,
+  keyResultFormInitialState,
   type CycleStatusState,
-  type KeyResultFormState,
-  upsertKeyResult
-} from "@/app/projects/[projectSlug]/overview/actions";
+  type KeyResultFormState
+} from "@/app/projects/[projectSlug]/overview/formState";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
@@ -68,7 +67,7 @@ export function KeyResultRowForm({
   canEdit
 }: KeyResultRowFormProps) {
   const formId = useId();
-  const [state, formAction] = useFormState<KeyResultFormState, FormData>(upsertKeyResult, keyResultInitialState);
+  const [state, formAction] = useFormState<KeyResultFormState, FormData>(upsertKeyResult, keyResultFormInitialState);
   const [cycleState, cycleAction] = useFormState<CycleStatusState, FormData>(cycleKeyResultStatus, {});
 
   const defaultStatus = keyResult?.status ?? KeyResultStatus.GREEN;

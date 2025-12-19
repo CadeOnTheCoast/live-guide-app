@@ -3,7 +3,8 @@
 import { useEffect } from "react";
 import { MilestoneCategory, MilestoneStatus } from "@prisma/client";
 import { useFormState } from "react-dom";
-import { milestoneInitialState, upsertMilestone, MilestoneFormState } from "@/app/projects/[projectSlug]/timeline/actions";
+import { upsertMilestone } from "@/app/projects/[projectSlug]/timeline/actions";
+import { milestoneInitialState, type MilestoneFormState } from "@/app/projects/[projectSlug]/timeline/formState";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
