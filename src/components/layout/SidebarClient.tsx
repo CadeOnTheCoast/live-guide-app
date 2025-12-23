@@ -2,7 +2,7 @@
 
 import { useSidebar } from "./SidebarContext";
 import { cn } from "@/lib/utils";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronRight, ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ReactNode } from "react";
 

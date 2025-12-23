@@ -12,8 +12,9 @@ import { canEditProject } from "@/server/permissions";
 import { getProjectOverviewBySlug } from "@/server/projects";
 import { getCurrentPushForProject } from "@/server/pushes";
 import { upsertObjective } from "./actions";
-import { ArrowRight, Target, Zap, LayoutDashboard, MessageSquare, History } from "lucide-react";
+import { ArrowRight, Target, Zap, LayoutDashboard, MessageSquare } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { HistoryDebriefCard } from "@/components/projects/HistoryDebriefCard";
 
 const OBJECTIVE_STATUS_STYLES: Record<string, string> = {
   ON_TRACK: "bg-emerald-500/10 text-emerald-600 border-emerald-500/20",
@@ -226,10 +227,10 @@ export default async function ProjectOverviewPage({ params }: { params: { projec
           <CardContent className="pt-6">
             {project.commsProfile?.keyMessages.length ? (
               <div className="space-y-4">
-                {project.commsProfile.keyMessages.map((msg: { id: string; text: string }) => (
+                {project.commsProfile.keyMessages.map((msg: { id: string; message: string }) => (
                   <div key={msg.id} className="flex gap-3">
                     <div className="mt-1.5 h-1.5 w-1.5 rounded-full bg-brand-teal shrink-0" />
-                    <p className="text-sm text-brand-charcoal/80 leading-relaxed">{msg.text}</p>
+                    <p className="text-sm text-brand-charcoal/80 leading-relaxed">{msg.message}</p>
                   </div>
                 ))}
               </div>
@@ -240,33 +241,7 @@ export default async function ProjectOverviewPage({ params }: { params: { projec
         </Card>
 
         {/* History Debrief */}
-        <Card className="border-brand-sky/20 shadow-sm overflow-hidden">
-          <CardHeader className="flex flex-row items-center justify-between border-b border-brand-sky/10 bg-brand-charcoal text-white pb-4">
-            <div className="flex items-center gap-2.5">
-              <div className="h-8 w-8 rounded-lg bg-white/10 flex items-center justify-center text-brand-sky">
-                <History className="h-4 w-4" />
-              </div>
-              <div>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-brand-sky/60">Legacy Context</p>
-                <CardTitle className="font-rajdhani text-xl">History Debrief</CardTitle>
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent className="pt-6">
-            {project.historyDebrief ? (
-              <div className="prose prose-sm max-w-none text-brand-charcoal/80 bg-brand-sky/5 p-4 rounded-lg border border-brand-sky/10">
-                {project.historyDebrief.split('\n').map((para, i) => (
-                  <p key={i} className={i > 0 ? "mt-2" : ""}>{para}</p>
-                ))}
-              </div>
-            ) : (
-              <p className="text-sm text-muted-foreground italic py-4">No historical debrief provided yet.</p>
-            )}
-            {canEdit && !project.historyDebrief && (
-              <p className="text-[10px] text-muted-foreground italic mt-2">Tip: Add the history debrief in Project Settings.</p>
-            )}
-          </CardContent>
-        </Card>
+        <HistoryDebriefCard historyDebrief={project.historyDebrief} canEdit={canEdit} />
       </div>
     </div>
   );

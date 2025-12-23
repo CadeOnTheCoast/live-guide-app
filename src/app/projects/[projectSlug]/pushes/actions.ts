@@ -207,7 +207,8 @@ export async function upsertActivity(prevState: ActivityFormState, formData: For
     }
   }
 
-  const data = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const data: any = {
     projectId,
     pushId,
     title: title!,

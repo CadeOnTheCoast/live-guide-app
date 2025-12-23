@@ -25,7 +25,6 @@ type PressureViewProps = {
     };
     decisionMakers: (DecisionMaker & { pressureAssets: PressureAsset[] })[];
     stakeholders: Stakeholder[];
-    allPressureAssets: PressureAsset[];
     canEdit: boolean;
 };
 
@@ -44,7 +43,7 @@ export function PressureView({ project, decisionMakers, stakeholders, canEdit }:
     const selectedDm = decisionMakers.find(dm => dm.id === selectedDmId) ?? decisionMakers[0];
     const selectedStakeholder = stakeholders.find(s => s.id === selectedStakeholderId);
 
-    const affinityGroups = stakeholders.filter(s => ([StakeholderType.COMMUNITY_LEADER, StakeholderType.ALLY, StakeholderType.INFLUENCER] as StakeholderType[]).includes(s.stakeholderType));
+    const affinityGroups = stakeholders.filter(s => [StakeholderType.COMMUNITY_LEADER, StakeholderType.ALLY, StakeholderType.INFLUENCER].includes(s.stakeholderType));
     const opponents = stakeholders.filter(s => s.stakeholderType === StakeholderType.OPPONENT);
     const mediaOutlets = stakeholders.filter(s => s.stakeholderType === StakeholderType.MEDIA_OUTLET);
 
@@ -255,7 +254,7 @@ export function PressureView({ project, decisionMakers, stakeholders, canEdit }:
                                                     trigger={<Button variant="ghost" size="sm" className="h-7 px-2 font-bold text-[10px] tracking-widest text-brand-teal gap-1"><Edit2 className="h-3 w-3" /> EDIT Profile</Button>}
                                                 />
                                             )}
-                                            {selectedDm.everyActionUrl ? (
+                                            {selectedDm?.pressureAssets?.length > 0 ? (
                                                 <Button variant="outline" size="sm" className="h-7 text-[10px] bg-white border-brand-charcoal text-brand-charcoal hover:bg-brand-charcoal hover:text-white" asChild>
                                                     <a href={selectedDm.everyActionUrl} target="_blank" rel="noreferrer"><ExternalLink className="h-3 w-3 mr-1" /> View in CRM</a>
                                                 </Button>
@@ -343,7 +342,7 @@ function StakeholderGrid({ title, icon, stakeholders, selectedId, onSelect, empt
             <CardContent className="p-6">
                 {stakeholders.length > 0 ? (
                     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                        {stakeholders.map((s: Stakeholder) => (
+                        {stakeholders.map((s: any) => (
                             <button
                                 key={s.id}
                                 onClick={() => onSelect(s.id)}
@@ -425,7 +424,7 @@ function StakeholderDetailCard({ stakeholder, onClear, canEdit, projectId }: { s
                         <p className="text-[11px] font-bold uppercase tracking-widest text-brand-sage mb-4">Strategic Execution</p>
                         <div className="grid sm:grid-cols-2 gap-8">
                             {/* Affinity Specific Fields */}
-                            {([StakeholderType.COMMUNITY_LEADER, StakeholderType.ALLY, StakeholderType.INFLUENCER] as StakeholderType[]).includes(stakeholder.stakeholderType) && (
+                            {[StakeholderType.COMMUNITY_LEADER, StakeholderType.ALLY, StakeholderType.INFLUENCER].includes(stakeholder.stakeholderType) && (
                                 <>
                                     <div className="space-y-4">
                                         <div>
@@ -450,6 +449,10 @@ function StakeholderDetailCard({ stakeholder, onClear, canEdit, projectId }: { s
                             {stakeholder.stakeholderType === StakeholderType.OPPONENT && (
                                 <>
                                     <div className="space-y-4">
+                                        <div>
+                                            <label className="text-[9px] font-black uppercase text-muted-foreground block mb-1">Influencer(s)</label>
+                                            <p className="text-sm font-medium">{stakeholder.influencers || "Not identified."}</p>
+                                        </div>
                                         <div>
                                             <label className="text-[9px] font-black uppercase text-muted-foreground block mb-1">Plan to Counter</label>
                                             <p className="text-sm border-l-2 border-red-200 pl-3 py-1 bg-red-50/30 font-medium">{stakeholder.planToCounter || "No strategy defined yet."}</p>

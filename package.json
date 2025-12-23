@@ -15,7 +15,8 @@
     "prisma:migrate": "prisma migrate dev",
     "prisma:generate": "prisma generate",
     "prisma:seed": "prisma db seed",
-    "import-dashboard-data": "tsx scripts/import-dashboard-data.ts"
+    "import-dashboard-data": "tsx scripts/import-dashboard-data.ts",
+    "db:backup": "./scripts/backup.sh"
   },
   "dependencies": {
     "@prisma/client": "^5.16.1",

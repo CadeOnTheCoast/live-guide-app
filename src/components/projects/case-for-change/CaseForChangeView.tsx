@@ -3,21 +3,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ProjectHeader } from "@/components/projects/ProjectHeader";
 
-type CaseForChangeViewProps = {
-    project: {
-        id: string;
-        name: string;
-        slug: string;
-        status: string;
-        primaryOwnerName?: string | null;
-        asanaProjectGid: string | null;
-        caseForChangePageUrl: string | null;
-        caseForChangeSummary?: string | null;
-    };
-    canEdit: boolean;
-};
-
-export function CaseForChangeView({ project }: CaseForChangeViewProps) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function CaseForChangeView({ project }: { project: any }) {
     return (
         <div className="space-y-6">
             <ProjectHeader
