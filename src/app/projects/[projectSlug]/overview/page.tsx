@@ -13,6 +13,7 @@ import { canEditProject } from "@/server/permissions";
 import { getProjectOverviewBySlug } from "@/server/projects";
 import { db } from "@/server/db";
 import { getCurrentPushForProject } from "@/server/pushes";
+import { cycleKeyResultStatus, upsertKeyResult, upsertObjective } from "./actions";
 
 const OBJECTIVE_STATUS_STYLES: Record<string, string> = {
   ON_TRACK: "bg-emerald-100 text-emerald-800",
@@ -70,6 +71,7 @@ export default async function ProjectOverviewPage({ params }: { params: { projec
               projectId={project.id}
               slug={project.slug}
               triggerLabel={currentObjective ? "Edit objective" : "Create objective"}
+              action={upsertObjective}
               objective={currentObjective}
             />
           )}
@@ -96,7 +98,9 @@ export default async function ProjectOverviewPage({ params }: { params: { projec
                 <p className="text-sm font-medium">No objective defined yet.</p>
                 <p className="text-sm text-muted-foreground">Set a current objective to anchor this project.</p>
               </div>
-              {canEdit && <ObjectiveFormDialog projectId={project.id} slug={project.slug} triggerLabel="Create objective" />}
+              {canEdit && (
+                <ObjectiveFormDialog projectId={project.id} slug={project.slug} triggerLabel="Create objective" action={upsertObjective} />
+              )}
             </div>
           )}
         </CardContent>
@@ -143,6 +147,8 @@ export default async function ProjectOverviewPage({ params }: { params: { projec
                       projectId={project.id}
                       objectiveId={currentObjective.id}
                       slug={project.slug}
+                      upsertAction={upsertKeyResult}
+                      cycleStatusAction={cycleKeyResultStatus}
                       people={people}
                       departments={departments}
                       keyResult={keyResult}
@@ -155,6 +161,8 @@ export default async function ProjectOverviewPage({ params }: { params: { projec
                       projectId={project.id}
                       objectiveId={currentObjective.id}
                       slug={project.slug}
+                      upsertAction={upsertKeyResult}
+                      cycleStatusAction={cycleKeyResultStatus}
                       people={people}
                       departments={departments}
                       isNew

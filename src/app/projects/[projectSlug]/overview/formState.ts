@@ -30,3 +30,5 @@ export const keyResultFormInitialState: KeyResultFormState = {
 };
 
 export type CycleStatusState = { formError?: string; nextStatus?: KeyResultStatus };
+
+export const cycleStatusInitialState: CycleStatusState = {};

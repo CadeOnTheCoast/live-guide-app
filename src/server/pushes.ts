@@ -1,14 +1,5 @@
 import { Push } from "@prisma/client";
 
-function formatDateSegment(date: Date | string) {
-  const parsed = new Date(date);
-  return new Intl.DateTimeFormat("en", {
-    month: "2-digit",
-    day: "2-digit",
-    year: "2-digit"
-  }).format(parsed);
-}
-
 function formatShortDateUTC(date: Date): string {
   const month = date.getUTCMonth() + 1;
   const day = date.getUTCDate();

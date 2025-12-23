@@ -4,11 +4,8 @@ import { useFormState } from "react-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  departmentInitialState,
-  upsertDepartment,
-  type DepartmentFormState
-} from "@/app/admin/departments/actions";
+import { departmentInitialState, type DepartmentFormState } from "@/app/admin/departments/formState";
+import { upsertDepartment } from "@/app/admin/departments/actions";
 
 type DepartmentFormProps = {
   department?: { id: string; name: string; code: string } | null;

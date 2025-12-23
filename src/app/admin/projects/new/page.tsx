@@ -2,7 +2,7 @@ import Link from "next/link";
 import ProjectForm from "@/components/admin/ProjectForm";
 import { Button } from "@/components/ui/button";
 import { db } from "@/server/db";
-import { PROJECT_STATUS_OPTIONS } from "@/app/admin/projects/actions";
+import { PROJECT_STATUS_OPTIONS } from "@/app/admin/projects/formState";
 
 export default async function NewProjectPage() {
   const people = await db.person.findMany({ orderBy: { name: "asc" }, select: { id: true, name: true } });

@@ -6,8 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { ProjectFormState } from "@/app/admin/projects/actions";
-import { projectInitialState, upsertProject } from "@/app/admin/projects/actions";
+import { projectInitialState, type ProjectFormState } from "@/app/admin/projects/formState";
+import { upsertProject } from "@/app/admin/projects/actions";
 import { Textarea } from "@/components/admin/SharedTextarea";
 
 function slugify(value: string) {

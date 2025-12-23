@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 
 type ProjectHeaderProps = {
@@ -29,24 +28,24 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
       </div>
       <div className="flex flex-wrap gap-2 text-sm">
         {asanaLink && (
-          <Link
-            href={asanaLink as any}
+          <a
+            href={asanaLink}
             className="rounded-md border px-3 py-2 hover:bg-muted"
             target="_blank"
             rel="noreferrer"
           >
             Open Asana project
-          </Link>
+          </a>
         )}
         {project.caseForChangePageUrl && (
-          <Link
-            href={project.caseForChangePageUrl as any}
+          <a
+            href={project.caseForChangePageUrl}
             className="rounded-md border px-3 py-2 hover:bg-muted"
             target="_blank"
             rel="noreferrer"
           >
             Case for change
-          </Link>
+          </a>
         )}
       </div>
     </div>

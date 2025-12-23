@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import ProjectForm from "@/components/admin/ProjectForm";
 import { Button } from "@/components/ui/button";
 import { db } from "@/server/db";
-import { PROJECT_STATUS_OPTIONS } from "@/app/admin/projects/actions";
+import { PROJECT_STATUS_OPTIONS } from "@/app/admin/projects/formState";
 
 export default async function EditProjectPage({ params }: { params: { id: string } }) {
   const project = await db.project.findUnique({
@@ -40,12 +40,12 @@ export default async function EditProjectPage({ params }: { params: { id: string
           <Link href="/admin/projects">Back to list</Link>
         </Button>
       </div>
-        <ProjectForm
-          project={project}
-          people={people}
+      <ProjectForm
+        project={project}
+        people={people}
         statusOptions={PROJECT_STATUS_OPTIONS}
         defaultStatus={PROJECT_STATUS_OPTIONS.find((value) => value === "ACTIVE") ?? PROJECT_STATUS_OPTIONS[0]}
-        />
+      />
     </div>
   );
 }

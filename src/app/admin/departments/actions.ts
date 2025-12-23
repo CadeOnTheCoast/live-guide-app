@@ -4,16 +4,7 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { db } from "@/server/db";
-
-export type DepartmentFormState = {
-  errors: {
-    name?: string;
-    code?: string;
-  };
-  formError?: string;
-};
-
-export const departmentInitialState: DepartmentFormState = { errors: {} };
+import type { DeleteDepartmentState, DepartmentFormState } from "./formState";
 
 export async function upsertDepartment(prevState: DepartmentFormState, formData: FormData) {
   const id = formData.get("id")?.toString();
@@ -53,12 +44,6 @@ export async function upsertDepartment(prevState: DepartmentFormState, formData:
   revalidatePath("/projects");
   redirect("/admin/departments");
 }
-
-export type DeleteDepartmentState = {
-  formError?: string;
-};
-
-export const deleteDepartmentInitialState: DeleteDepartmentState = {};
 
 export async function deleteDepartment(prevState: DeleteDepartmentState, formData: FormData) {
   const id = formData.get("id")?.toString();
