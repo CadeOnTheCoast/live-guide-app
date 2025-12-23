@@ -19,7 +19,10 @@ export default async function EditProjectPage({ params }: { params: { id: string
       startDate: true,
       endDate: true,
       primaryOwnerId: true,
-      asanaProjectGid: true
+      asanaWorkspaceGid: true,
+      asanaProjectGid: true,
+      asanaTeamGid: true,
+      historyDebrief: true
     }
   });
 

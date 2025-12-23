@@ -29,24 +29,36 @@ const baseMilestone: MilestoneWithRelations = {
   push: null
 };
 
+const mockKeyResults = [
+  { id: "kr1", code: "KR1", title: "Key Result 1", date: new Date("2026-06-01"), departmentId: "d1" }
+];
+
 describe("Milestone visualization", () => {
   it("renders one marker per milestone with major styling", () => {
     render(
       <MilestoneArc
         milestones={[
-          baseMilestone,
-          { ...baseMilestone, id: "2", isMajor: false, category: MilestoneCategory.COMMUNITY, date: new Date("2026-06-01") },
+          { ...baseMilestone, leadDepartment: { id: "d1", name: "Gov Affairs", code: "GA" }, date: new Date("2026-01-01") },
+          { ...baseMilestone, id: "2", isMajor: false, leadDepartment: { id: "d2", name: "Communications", code: "COMMS" }, date: new Date("2026-03-01") },
           { ...baseMilestone, id: "3", isMajor: false, category: MilestoneCategory.INTERNAL, date: new Date("2027-01-10") }
         ]}
+        keyResults={mockKeyResults}
         startDate={new Date("2026-01-01")}
         endDate={new Date("2027-12-31")}
       />
     );
 
     const markers = screen.getAllByTestId("milestone-marker");
-    expect(markers).toHaveLength(3);
-    expect(markers[0].querySelector("span")?.className).toContain("h-4");
-    expect(markers[1].querySelector("span")?.className).toContain("bg-amber-500");
+    expect(markers).toHaveLength(4);
+
+    // Items are sorted by date: 
+    // 1. Kickoff (2026-01-01) - Major
+    // 2. KR (2026-06-01)
+    // 3. Milestone 2 (2026-06-01) - bg-amber-500
+    // 4. Milestone 3 (2027-01-10)
+
+    expect(markers[0].querySelector("button")?.className).toContain("h-5"); // Major
+    expect(markers[1].querySelector("button")?.className).toContain("bg-amber-500"); // COMMS
   });
 
   it("shows detail panel content for a selected milestone", () => {
@@ -69,6 +81,7 @@ describe("Milestone visualization", () => {
           relatedKrId: null,
           relatedMilestoneId: "1",
           asanaTaskGid: null,
+          asanaSectionGid: null,
           createdAt: new Date(),
           updatedAt: new Date()
         }

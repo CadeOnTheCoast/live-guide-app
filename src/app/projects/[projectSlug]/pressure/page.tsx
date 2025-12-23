@@ -1,9 +1,45 @@
-import { getProjectBySlug } from "@/server/projects";
+import { notFound } from "next/navigation";
+import { db } from "@/server/db";
+import { getUserOrRedirect } from "@/server/auth";
+import { canEditProject } from "@/server/permissions";
+import { PressureView } from "@/components/projects/pressure/PressureView";
 
 export default async function ProjectPressurePage({ params }: { params: { projectSlug: string } }) {
-  const project = await getProjectBySlug(params.projectSlug);
+  const { person } = await getUserOrRedirect();
 
-  if (!project) return null;
+  const project = await db.project.findUnique({
+    where: { slug: params.projectSlug },
+    include: {
+      decisionMakers: {
+        include: {
+          pressureAssets: {
+            include: {
+              owner: { select: { name: true } }
+            }
+          }
+        }
+      },
+      pressureAssets: {
+        include: {
+          decisionMaker: true,
+          owner: { select: { name: true } }
+        }
+      },
+      stakeholders: true
+    }
+  });
 
-  return <div className="text-lg font-semibold">Pressure for {project.name}</div>;
+  if (!project) return notFound();
+
+  const canEdit = canEditProject(person?.role);
+
+  return (
+    <PressureView
+      project={project}
+      decisionMakers={project.decisionMakers}
+      stakeholders={project.stakeholders}
+      allPressureAssets={project.pressureAssets}
+      canEdit={canEdit}
+    />
+  );
 }

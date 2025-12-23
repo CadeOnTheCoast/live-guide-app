@@ -1,8 +1,13 @@
 ﻿project_slug,milestone_order,milestone_title,milestone_description,due_date,due_quarter,department_code,push_number,is_critical,status
-prichard-wastewater,1,Immediate communication and education campaign (package built + deployed),"Develop and distribute educational content (fact sheets, infographics, videos) and hold community meetings to discuss issues and distribute materials.",9/30/24,Q3 2024,COMMS,,TRUE,DONE
-prichard-wastewater,2,Neutral education campaign on master plan options (comparative analysis + forums),"Prepare comparative analysis of master plan options, develop materials explaining options, and host public forums/listening sessions to gather feedback.",12/31/24,Q4 2024,COMMS,,TRUE,IN_PROGRESS
-prichard-wastewater,3,Funding report completed (sources + strategy),"Compile available funding sources (federal/state/private), pros/cons, and strategic recommendations for how to pursue and advocate for funding.",3/31/25,Q1 2025,GA,,TRUE,NOT_STARTED
-prichard-wastewater,4,Community profiles completed (story + impact),Develop community profiles to illustrate impacts and ensure community voices are understood and represented in advocacy.,3/31/25,Q1 2025,CE,,FALSE,NOT_STARTED
-prichard-wastewater,5,Referendum preparation (materials + town halls),"Develop advocacy campaign materials and plan/host town halls and informational sessions, including financial implications and referendum process.",6/30/25,Q2 2025,CE,,TRUE,NOT_STARTED
-prichard-wastewater,6,Public pressure campaign launched,"Launch public awareness campaign, develop materials (brochures, social posts), organize demonstrations, and drive media coverage.",9/30/25,Q3 2025,COMMS,,TRUE,NOT_STARTED
-prichard-wastewater,7,Post-referendum review + initiate funding application processes,Review and adjust project plans based on referendum results and initiate funding application processes.,3/31/26,Q1 2026,GA,,TRUE,NOT_STARTED
+prichard-wastewater,0,Distribute test kits,Distribute test kits,2025-09-30,Q3 2025,CE,1,TRUE,PLANNED
+prichard-wastewater,1,Community debriefs,Community debriefs on early testing,2025-12-31,Q4 2025,CE,1,TRUE,PLANNED
+prichard-wastewater,2,ADEM TMF Mtg.,TMF pathway meeting conducted with ADEM staff; meeting minutes sent,2026-01-15,Q1 2026,GA,1,TRUE,PLANNED
+prichard-wastewater,3,Listening Session,Listening Session #1 held with >=50 attendees (opt-in list captured),2025-06-30,Q4 2025,CE,1,TRUE,PLANNED
+prichard-wastewater,4,>=$10M committed,"Secure >=$10M in funding commitments for near-term spill-prevention up",2026-09-30,Q3 2026,GA,1,TRUE,PLANNED
+prichard-wastewater,5,ADEM leadership mtg.,ADEM leadership meeting held,2026-03-30,Q1 2026,GA,1,TRUE,PLANNED
+prichard-wastewater,6,TMF Decision,TMF Requirement Path delivered by ADEM,2026-06-30,Q2 2026,GA,1,TRUE,PLANNED
+prichard-wastewater,7,>$10M awarded,>$10m in funding actually awarded to the utility,2026-12-31,Q4 2026,GA,1,TRUE,PLANNED
+prichard-wastewater,8,Critical projects begin,Funded projects equal to identified critical projects and are in construction,2027-06-30,Q2 2027,PM,1,TRUE,PLANNED
+prichard-wastewater,9,WQ Impact Report,Water-quality impact report completed and published,2028-12-01,Q4 2028,FR,1,FALSE,PLANNED
+prichard-wastewater,10,Compliance Achieved,Outfall bacteria compliance window closes with all samples in-limit,2027-09-30,Q3 2027,FR,1,TRUE,PLANNED
+prichard-wastewater,11,>=0.5M gal spill decrease,Achieve >=0.5M gallon annual reduction in sewage spills (baseline -> 2027),2028-06-15,Q2 2028,PM,1,TRUE,PLANNED

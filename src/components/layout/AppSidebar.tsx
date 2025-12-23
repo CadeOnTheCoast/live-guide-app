@@ -1,5 +1,6 @@
 import { db } from "@/server/db";
 import SidebarProjectListClient from "@/components/layout/SidebarProjectListClient";
+import SidebarClient from "./SidebarClient";
 
 export default async function AppSidebar() {
   const projects = await db.project.findMany({
@@ -9,12 +10,8 @@ export default async function AppSidebar() {
   });
 
   return (
-    <aside className="hidden w-64 border-r bg-card px-4 py-6 md:block">
-      <div className="mb-4 space-y-1">
-        <div className="text-lg font-semibold">Projects</div>
-        <p className="text-sm text-muted-foreground">Choose a project to view details.</p>
-      </div>
+    <SidebarClient>
       <SidebarProjectListClient projects={projects} />
-    </aside>
+    </SidebarClient>
   );
 }

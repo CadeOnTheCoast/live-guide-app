@@ -4,26 +4,38 @@
 
 :root {
   --background: 210 20% 98%;
-  --foreground: 215 25% 15%;
-  --primary: 221 83% 53%;
+  --foreground: 151 14% 19%; /* Brand Charcoal */
+  --primary: 188 41% 42%; /* Brand Teal */
   --primary-foreground: 210 20% 98%;
-  --secondary: 214 32% 91%;
-  --secondary-foreground: 215 25% 15%;
+  --secondary: 166 12% 40%; /* Brand Sage */
+  --secondary-foreground: 210 20% 98%;
   --muted: 210 16% 93%;
   --muted-foreground: 216 15% 52%;
-  --accent: 210 20% 95%;
-  --accent-foreground: 215 25% 15%;
+  --accent: 204 76% 80%; /* Brand Sky */
+  --accent-foreground: 188 41% 42%;
   --border: 214 32% 91%;
   --input: 214 32% 91%;
-  --ring: 221 83% 53%;
+  --ring: 188 41% 42%;
   --card: 0 0% 100%;
-  --card-foreground: 215 25% 15%;
+  --card-foreground: 151 14% 19%;
   --radius: 0.75rem;
+
+  /* Brand Colors Raw */
+  --brand-sky: 204 76% 80%;
+  --brand-sage: 166 12% 40%;
+  --brand-mint: 153 38% 67%;
+  --brand-teal: 188 41% 42%;
+  --brand-charcoal: 151 14% 19%;
 }
 
 body {
   background: hsl(var(--background));
   color: hsl(var(--foreground));
+  font-family: var(--font-montserrat), sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, .font-rajdhani {
+  font-family: var(--font-rajdhani), sans-serif;
 }
 
 *, *::before, *::after {

@@ -27,10 +27,11 @@ export default async function ProjectTimelinePage({ params }: { params: { projec
 
   if (!project) return notFound();
 
-  const [departments, objectives, pushes] = await Promise.all([
+  const [departments, objectives, pushes, keyResults] = await Promise.all([
     db.department.findMany({ orderBy: { code: "asc" }, select: { id: true, name: true, code: true } }),
     db.objective.findMany({ where: { projectId: project.id }, select: { id: true, title: true } }),
-    db.push.findMany({ where: { projectId: project.id }, orderBy: { startDate: "asc" }, select: { id: true, name: true, startDate: true, endDate: true } })
+    db.push.findMany({ where: { projectId: project.id }, orderBy: { startDate: "asc" }, select: { id: true, name: true, startDate: true, endDate: true } }),
+    db.keyResult.findMany({ where: { projectId: project.id }, select: { id: true, code: true, title: true, dueDate: true, departmentId: true, status: true } })
   ]);
 
   const canEdit = canEditProject(person?.role);
@@ -43,10 +44,16 @@ export default async function ProjectTimelinePage({ params }: { params: { projec
         slug: project.slug,
         status: project.status,
         primaryOwnerName: project.primaryOwner?.name ?? null,
-        asanaProjectGid: (project as { asanaProjectGid?: string | null }).asanaProjectGid ?? null,
-        caseForChangePageUrl: (project as { caseForChangePageUrl?: string | null }).caseForChangePageUrl ?? null
+        asanaProjectGid: project.asanaProjectGid ?? null,
+        asanaUrl: project.asanaUrl ?? null,
+        teamsUrl: project.teamsUrl ?? null,
+        projectFolderUrl: project.projectFolderUrl ?? null,
+        projectNotesUrl: project.projectNotesUrl ?? null,
+        caseForChangePageUrl: project.caseForChangePageUrl ?? null,
+        badges: project.badges ?? []
       }}
       milestones={project.milestones}
+      keyResults={keyResults.filter(kr => kr.dueDate !== null).map(kr => ({ ...kr, date: kr.dueDate! }))}
       canEdit={canEdit}
       departments={departments}
       objectives={objectives}

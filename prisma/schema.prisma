@@ -5,8 +5,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 // ---------- Enums ----------
@@ -35,6 +36,7 @@ enum KeyResultStatus {
   GREEN
   YELLOW
   RED
+  ACHIEVED
 }
 
 enum MilestoneCategory {
@@ -49,6 +51,7 @@ enum MilestoneCategory {
 enum MilestoneStatus {
   PLANNED
   AT_RISK
+  OFF_TRACK
   COMPLETED
   CANCELLED
 }
@@ -197,6 +200,7 @@ model Project {
   name                    String
   slug                    String          @unique
   description             String?
+  historyDebrief          String?
   caseForChangeSummary    String?
   caseForChangePageUrl    String?         // link to case-for-change dashboard / image
   status                  ProjectStatus   @default(ACTIVE)
@@ -206,7 +210,14 @@ model Project {
   primaryOwnerId          String?
   primaryOwner            Person?         @relation("ProjectPrimaryOwner", fields: [primaryOwnerId], references: [id])
 
+  asanaWorkspaceGid       String?
   asanaProjectGid         String?
+  asanaTeamGid            String?
+  asanaUrl               String?
+  teamsUrl               String?
+  projectFolderUrl       String?
+  projectNotesUrl       String?
+  badges                 String[] @default([])
 
   pushes                  Push[]
   objectives              Objective[]
@@ -279,6 +290,8 @@ model KeyResult {
 
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
+
+  @@unique([projectId, objectiveId, code])
 }
 
 model Push {
@@ -289,6 +302,7 @@ model Push {
   startDate        DateTime
   endDate          DateTime
   highLevelSummary String?
+  asanaProjectGid  String?
 
   objectiveId      String?
   objective        Objective?  @relation(fields: [objectiveId], references: [id])
@@ -370,6 +384,10 @@ model DecisionMaker {
   jurisdiction   String?
   priorityLevel  String?       // "high", "medium", "low"
   stance         String?       // "supportive", "neutral", "opposed", "unknown"
+  reason         String?
+  pressurePoints String?
+  influencers    String?
+  everyActionUrl String?
   notes          String?
 
   project        Project        @relation(fields: [projectId], references: [id])
@@ -387,6 +405,13 @@ model Stakeholder {
   name           String
   stakeholderType StakeholderType
   organization   String?
+  reason          String?
+  captains        String?
+  planToEducate   String?
+  planToCounter   String?
+  audience        String?
+  plan            String?
+  everyActionUrl  String?
   notes          String?
 
   project        Project          @relation(fields: [projectId], references: [id])

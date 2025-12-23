@@ -13,6 +13,9 @@ import {
   ObjectiveStatus,
   KeyResultStatus,
   MilestoneStatus,
+  ActivityStatus,
+  AudienceType,
+  CallToActionStatus,
   UserRole,
 } from "@prisma/client";
 
@@ -23,10 +26,15 @@ type SheetType =
   | "keyResults"
   | "pushes"
   | "milestones"
+  | "activities"
   | "decisionMakers"
   | "pressureSources"
   | "opponents"
-  | "commsPlan"
+  | "commsProfile"
+  | "keyMessages"
+  | "ctas"
+  | "commsFrames"
+  | "faqs"
   | "budget"
   | "staffAllocation";
 
@@ -58,10 +66,15 @@ const SHEET_TOKENS: Record<SheetType, RegExp[]> = {
   keyResults: [/key_results?/i, /keyresults/i],
   pushes: [/pushes?/i],
   milestones: [/milestones?/i],
+  activities: [/activities/i, /tasks/i],
   decisionMakers: [/decision_makers?/i, /decisionmakers?/i],
   pressureSources: [/pressure_sources?/i, /pressuresources?/i],
   opponents: [/opponents?/i],
-  commsPlan: [/comms_plan/i, /commsplan/i],
+  commsProfile: [/comms_profile/i],
+  keyMessages: [/key_messages/i],
+  ctas: [/ctas/i, /calls_to_action/i],
+  commsFrames: [/comms_frames/i],
+  faqs: [/faqs/i],
   budget: [/budget/i],
   staffAllocation: [/staff_allocation/i],
 };
@@ -278,6 +291,52 @@ async function upsertStaffAllocation(
   increment(stats.upserted, "StaffAllocation");
 }
 
+async function upsertActivity(
+  prisma: PrismaClient,
+  projectId: string,
+  pushId: string,
+  title: string,
+  data: Omit<Prisma.ActivityCreateInput, "project" | "push" | "title">,
+  stats: ImportStats
+) {
+  const existing = await prisma.activity.findFirst({ where: { projectId, pushId, title } });
+  if (existing) {
+    await prisma.activity.update({ where: { id: existing.id }, data });
+  } else {
+    await prisma.activity.create({
+      data: {
+        ...data,
+        project: { connect: { id: projectId } },
+        push: { connect: { id: pushId } },
+        title,
+      },
+    });
+  }
+  increment(stats.upserted, "Activity");
+}
+
+async function upsertCommsProfile(
+  prisma: PrismaClient,
+  projectId: string,
+  data: Omit<Prisma.CommsProfileCreateInput, "project">,
+  stats: ImportStats
+) {
+  const existing = await prisma.commsProfile.findUnique({ where: { projectId } });
+  if (existing) {
+    await prisma.commsProfile.update({ where: { id: existing.id }, data });
+    return existing.id;
+  } else {
+    const profile = await prisma.commsProfile.create({
+      data: {
+        ...data,
+        project: { connect: { id: projectId } },
+      },
+    });
+    increment(stats.upserted, "CommsProfile");
+    return profile.id;
+  }
+}
+
 function logUnused(record: ParsedRow, usedKeys: Set<string>, warnings: string[], context: string) {
   for (const key of Object.keys(record)) {
     if (!usedKeys.has(key)) {
@@ -352,6 +411,9 @@ async function processProjects(
       "case_for_change_summary",
       "case_for_change_link",
       "default_department_code",
+      "asana_workspace_gid",
+      "asana_project_gid",
+      "asana_team_gid",
     ]);
     logUnused(row, used, stats.warnings, `${projectDir}/Projects`);
 
@@ -369,6 +431,9 @@ async function processProjects(
 
     await ensureDepartment(prisma, row.default_department_code, departmentCache);
 
+    const workspaceGid = row.asana_workspace_gid ?? "52630705087449";
+    const teamGid = row.asana_team_gid ?? "1208642902759881";
+
     const createData: Prisma.ProjectUncheckedCreateInput = {
       slug,
       name: row.project_name ?? slug,
@@ -378,6 +443,9 @@ async function processProjects(
       caseForChangeSummary: row.case_for_change_summary ?? null,
       caseForChangePageUrl: row.case_for_change_link ?? null,
       primaryOwnerId: primaryOwnerId ?? null,
+      asanaWorkspaceGid: workspaceGid,
+      asanaProjectGid: row.asana_project_gid ?? null,
+      asanaTeamGid: teamGid,
     };
 
     const updateData: Prisma.ProjectUncheckedUpdateInput = {
@@ -388,6 +456,9 @@ async function processProjects(
       caseForChangeSummary: row.case_for_change_summary ?? null,
       caseForChangePageUrl: row.case_for_change_link ?? null,
       primaryOwnerId: primaryOwnerId ?? null,
+      asanaWorkspaceGid: workspaceGid,
+      asanaProjectGid: row.asana_project_gid ?? null,
+      asanaTeamGid: teamGid,
     };
 
     await ensureProject(prisma, slug, createData, updateData, stats, projectCache);
@@ -543,6 +614,7 @@ async function processPushes(
       "start_date",
       "end_date",
       "high_level_work_summary",
+      "asana_project_gid",
     ]);
     logUnused(row, used, stats.warnings, `${projectDir}/Pushes`);
 
@@ -570,6 +642,7 @@ async function processPushes(
         startDate,
         endDate,
         highLevelSummary: row.high_level_work_summary ?? undefined,
+        asanaProjectGid: row.asana_project_gid ?? undefined,
       },
       stats
     );
@@ -779,6 +852,238 @@ async function processStaffAllocation(
   }
 }
 
+async function processActivities(
+  prisma: PrismaClient,
+  projectDir: string,
+  sheet: string,
+  stats: ImportStats,
+  projectCache: Map<string, string>,
+  personCache: Map<string, string>,
+  departmentCache: Map<string, string>
+) {
+  const rows = parseCsv(sheet);
+  for (const row of rows) {
+    const used = new Set([
+      "project_slug",
+      "push_number",
+      "title",
+      "description",
+      "owner_email",
+      "department_code",
+      "due_date",
+      "status",
+    ]);
+    logUnused(row, used, stats.warnings, `${projectDir}/Activities`);
+
+    const slug = row.project_slug;
+    if (!slug || !projectCache.has(slug)) {
+      increment(stats.skipped, "Activity");
+      continue;
+    }
+    const projectId = projectCache.get(slug)!;
+    const pushNumber = Number(row.push_number);
+    if (Number.isNaN(pushNumber)) {
+      stats.warnings.push(`Missing push number for activity ${row.title} in ${slug}`);
+      increment(stats.skipped, "Activity");
+      continue;
+    }
+
+    const push = await prisma.push.findFirst({ where: { projectId, sequenceIndex: pushNumber } });
+    if (!push) {
+      stats.warnings.push(`Push ${pushNumber} not found for activity ${row.title} in ${slug}`);
+      increment(stats.skipped, "Activity");
+      continue;
+    }
+
+    const status = (normalizeEnum(row.status, ActivityStatus) as any) ?? ActivityStatus.NOT_STARTED;
+    const ownerId = row.owner_email ? personCache.get(row.owner_email) : null;
+    const departmentId = await ensureDepartment(prisma, row.department_code, departmentCache);
+    const dueDate = parseDate(row.due_date);
+
+    await upsertActivity(
+      prisma,
+      projectId,
+      push.id,
+      row.title ?? "Untitled Activity",
+      {
+        description: row.description ?? undefined,
+        status,
+        owner: ownerId ? { connect: { id: ownerId } } : undefined,
+        department: departmentId ? { connect: { id: departmentId } } : undefined,
+        dueDate: dueDate ?? undefined,
+      },
+      stats
+    );
+  }
+}
+
+async function processCommsProfile(
+  prisma: PrismaClient,
+  projectDir: string,
+  sheet: string,
+  stats: ImportStats,
+  projectCache: Map<string, string>,
+  personCache: Map<string, string>
+) {
+  const rows = parseCsv(sheet);
+  for (const row of rows) {
+    const used = new Set([
+      "project_slug",
+      "comms_lead_email",
+      "backup_lead_email",
+      "approval_required",
+      "approver_notes",
+      "local_narrative",
+      "messaging_watchouts",
+      "risk_and_minefields",
+      "general_notes",
+    ]);
+    logUnused(row, used, stats.warnings, `${projectDir}/CommsProfile`);
+
+    const slug = row.project_slug;
+    if (!slug || !projectCache.has(slug)) {
+      increment(stats.skipped, "CommsProfile");
+      continue;
+    }
+    const projectId = projectCache.get(slug)!;
+
+    const commsLeadId = row.comms_lead_email ? personCache.get(row.comms_lead_email) : null;
+    const backupLeadId = row.backup_lead_email ? personCache.get(row.backup_lead_email) : null;
+
+    await upsertCommsProfile(
+      prisma,
+      projectId,
+      {
+        commsLead: commsLeadId ? { connect: { id: commsLeadId } } : undefined,
+        backupLead: backupLeadId ? { connect: { id: backupLeadId } } : undefined,
+        approvalRequired: parseBoolean(row.approval_required) ?? false,
+        approverNotes: row.approver_notes ?? undefined,
+        localNarrative: row.local_narrative ?? undefined,
+        messagingWatchouts: row.messaging_watchouts ?? undefined,
+        riskAndMinefields: row.risk_and_minefields ?? undefined,
+        generalNotes: row.general_notes ?? undefined,
+      },
+      stats
+    );
+  }
+}
+
+async function processKeyMessages(
+  prisma: PrismaClient,
+  projectDir: string,
+  sheet: string,
+  stats: ImportStats,
+  projectCache: Map<string, string>
+) {
+  const rows = parseCsv(sheet);
+  for (const row of rows) {
+    const slug = row.project_slug;
+    if (!slug || !projectCache.has(slug)) continue;
+    const projectId = projectCache.get(slug)!;
+    const profile = await prisma.commsProfile.findUnique({ where: { projectId } });
+    if (!profile) continue;
+
+    const audience = (normalizeEnum(row.audience, AudienceType) as any) ?? AudienceType.EXTERNAL;
+
+    await prisma.keyMessage.create({
+      data: {
+        project: { connect: { id: projectId } },
+        commsProfile: { connect: { id: profile.id } },
+        text: row.text ?? "",
+        audience,
+        priorityOrder: row.priority_order ? Number(row.priority_order) : 0,
+      },
+    });
+    increment(stats.upserted, "KeyMessage");
+  }
+}
+
+async function processCTAs(
+  prisma: PrismaClient,
+  projectDir: string,
+  sheet: string,
+  stats: ImportStats,
+  projectCache: Map<string, string>
+) {
+  const rows = parseCsv(sheet);
+  for (const row of rows) {
+    const slug = row.project_slug;
+    if (!slug || !projectCache.has(slug)) continue;
+    const projectId = projectCache.get(slug)!;
+    const profile = await prisma.commsProfile.findUnique({ where: { projectId } });
+    if (!profile) continue;
+
+    const status = (normalizeEnum(row.status, CallToActionStatus) as any) ?? CallToActionStatus.ACTIVE;
+
+    await prisma.callToAction.create({
+      data: {
+        project: { connect: { id: projectId } },
+        commsProfile: { connect: { id: profile.id } },
+        description: row.description ?? "",
+        url: row.url ?? undefined,
+        status,
+      },
+    });
+    increment(stats.upserted, "CallToAction");
+  }
+}
+
+async function processCommsFrames(
+  prisma: PrismaClient,
+  projectDir: string,
+  sheet: string,
+  stats: ImportStats,
+  projectCache: Map<string, string>
+) {
+  const rows = parseCsv(sheet);
+  for (const row of rows) {
+    const slug = row.project_slug;
+    if (!slug || !projectCache.has(slug)) continue;
+    const projectId = projectCache.get(slug)!;
+    const profile = await prisma.commsProfile.findUnique({ where: { projectId } });
+    if (!profile) continue;
+
+    await prisma.commsFrame.create({
+      data: {
+        project: { connect: { id: projectId } },
+        commsProfile: { connect: { id: profile.id } },
+        title: row.title ?? "",
+        frame: row.frame ?? "",
+        whyItWorks: row.why_it_works ?? undefined,
+      },
+    });
+    increment(stats.upserted, "CommsFrame");
+  }
+}
+
+async function processFAQs(
+  prisma: PrismaClient,
+  projectDir: string,
+  sheet: string,
+  stats: ImportStats,
+  projectCache: Map<string, string>
+) {
+  const rows = parseCsv(sheet);
+  for (const row of rows) {
+    const slug = row.project_slug;
+    if (!slug || !projectCache.has(slug)) continue;
+    const projectId = projectCache.get(slug)!;
+    const profile = await prisma.commsProfile.findUnique({ where: { projectId } });
+    if (!profile) continue;
+
+    await prisma.commsFaq.create({
+      data: {
+        project: { connect: { id: projectId } },
+        commsProfile: { connect: { id: profile.id } },
+        question: row.question ?? "",
+        answer: row.answer ?? "",
+        priorityOrder: row.priority_order ? Number(row.priority_order) : 0,
+      },
+    });
+    increment(stats.upserted, "CommsFaq");
+  }
+}
+
 async function importProjectDir(
   prisma: PrismaClient,
   projectDir: string,
@@ -791,7 +1096,23 @@ async function importProjectDir(
 ) {
   const sheets = findSheetPaths(projectDir);
 
-  const { people, projects, objectives, keyResults, pushes, milestones, decisionMakers, budget, staffAllocation } = sheets;
+  const {
+    people,
+    projects,
+    objectives,
+    keyResults,
+    pushes,
+    milestones,
+    activities,
+    decisionMakers,
+    budget,
+    staffAllocation,
+    commsProfile,
+    keyMessages,
+    ctas,
+    commsFrames,
+    faqs,
+  } = sheets;
 
   if (people) {
     await processPeople(prisma, projectDir, people, stats, caches.department, caches.person);
@@ -823,6 +1144,10 @@ async function importProjectDir(
     stats.warnings.push(`No pushes file for ${path.basename(projectDir)}`);
   }
 
+  if (activities) {
+    await processActivities(prisma, projectDir, activities, stats, caches.project, caches.person, caches.department);
+  }
+
   if (milestones) {
     await processMilestones(prisma, projectDir, milestones, stats, caches.project, caches.department);
   } else {
@@ -841,12 +1166,31 @@ async function importProjectDir(
     await processStaffAllocation(prisma, projectDir, staffAllocation, stats, caches.project, caches.person, caches.department);
   }
 
-  if (sheets.pressureSources || sheets.opponents || sheets.commsPlan) {
+  if (commsProfile) {
+    await processCommsProfile(prisma, projectDir, commsProfile, stats, caches.project, caches.person);
+  }
+
+  if (keyMessages) {
+    await processKeyMessages(prisma, projectDir, keyMessages, stats, caches.project);
+  }
+
+  if (ctas) {
+    await processCTAs(prisma, projectDir, ctas, stats, caches.project);
+  }
+
+  if (commsFrames) {
+    await processCommsFrames(prisma, projectDir, commsFrames, stats, caches.project);
+  }
+
+  if (faqs) {
+    await processFAQs(prisma, projectDir, faqs, stats, caches.project);
+  }
+
+  if (sheets.pressureSources || sheets.opponents) {
     stats.warnings.push(
       `Skipped unsupported sheets for ${path.basename(projectDir)}: ${[
         sheets.pressureSources && "pressureSources",
         sheets.opponents && "opponents",
-        sheets.commsPlan && "commsPlan",
       ]
         .filter(Boolean)
         .join(", ")}`
@@ -893,7 +1237,7 @@ async function main() {
   }
 }
 
-if (require.main === module) {
+if (typeof require !== 'undefined' && require.main === module) {
   main().catch((error) => {
     console.error(error);
     process.exit(1);

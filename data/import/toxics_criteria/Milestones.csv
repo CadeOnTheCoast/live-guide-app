@@ -1,0 +1,17 @@
+project_slug,milestone_order,milestone_title,milestone_description,due_date,due_quarter,department_code,push_number,is_critical,status
+toxics-criteria,1,Meeting with Guarisco,"Meeting with Guarisco",2026-02-28,Q1 2026,PM,,TRUE,PLANNED
+toxics-criteria,2,Fish tissue pilot,"Fish tissue pilot",2026-06-30,Q2 2026,PM,,TRUE,PLANNED
+toxics-criteria,3,Hog Bayou toxics sampling,"Hog Bayou toxics sampling",2026-06-30,Q2 2026,PM,,TRUE,PLANNED
+toxics-criteria,4,State-to-state policy conversations,"State-to-state policy conversations",2026-09-30,Q3 2026,GA,,TRUE,PLANNED
+toxics-criteria,5,Statewide Dirty Dozen training,"Statewide Dirty Dozen training",2026-09-30,Q3 2026,CE,,TRUE,PLANNED
+toxics-criteria,6,Dirty Dozen statewide report & map,"Dirty Dozen statewide report & map",2026-12-31,Q4 2026,COMMS,,TRUE,PLANNED
+toxics-criteria,7,OTK engagement,"OTK engagement",2026-12-31,Q4 2026,CE,,TRUE,PLANNED
+toxics-criteria,8,Partner-supported Dirty Dozen sampling,"Partner-supported Dirty Dozen sampling",2027-06-30,Q2 2027,PM,,TRUE,PLANNED
+toxics-criteria,9,Accountability product synthesis,"Accountability product synthesis",2027-09-30,Q3 2027,PM,,TRUE,PLANNED
+toxics-criteria,10,Grassroots at ADEM,"Grassroots at ADEM",2027-09-30,Q3 2027,CE,,TRUE,PLANNED
+toxics-criteria,11,Meeting with Ed Poolos,"Meeting with Ed Poolos",2027-12-31,Q4 2027,GA,,TRUE,PLANNED
+toxics-criteria,12,Prep toxics legislation,"Prep toxics legislation",2028-09-30,Q3 2028,GA,,TRUE,PLANNED
+toxics-criteria,13,Grassroots surge,"Grassroots surge",2028-12-31,Q4 2028,CE,,TRUE,PLANNED
+toxics-criteria,14,Introduce toxics reform bill,"Introduce toxics reform bill",2029-03-31,Q1 2029,GA,,TRUE,PLANNED
+toxics-criteria,15,Accountability campaigns,"Accountability campaigns",2029-06-30,Q2 2029,CE,,TRUE,PLANNED
+toxics-criteria,16,EPA/litigation fallback,"EPA/litigation fallback",2029-12-31,Q4 2029,GA,,TRUE,PLANNED

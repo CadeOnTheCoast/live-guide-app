@@ -32,7 +32,10 @@ type ProjectFormProps = {
     startDate: Date | null;
     endDate: Date | null;
     primaryOwnerId: string | null;
+    asanaWorkspaceGid: string | null;
     asanaProjectGid: string | null;
+    asanaTeamGid: string | null;
+    historyDebrief: string | null;
   } | null;
   people: PersonOption[];
   statusOptions: readonly string[];
@@ -150,6 +153,28 @@ export default function ProjectForm({ project, people, statusOptions, defaultSta
           </div>
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
+              <label className="text-sm font-medium" htmlFor="asanaWorkspaceGid">
+                Asana workspace GID
+              </label>
+              <Input
+                id="asanaWorkspaceGid"
+                name="asanaWorkspaceGid"
+                defaultValue={project?.asanaWorkspaceGid ?? "52630705087449"}
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium" htmlFor="asanaTeamGid">
+                Asana team GID
+              </label>
+              <Input
+                id="asanaTeamGid"
+                name="asanaTeamGid"
+                defaultValue={project?.asanaTeamGid ?? "1208642902759881"}
+              />
+            </div>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="space-y-2">
               <label className="text-sm font-medium" htmlFor="description">
                 Description
               </label>
@@ -166,6 +191,18 @@ export default function ProjectForm({ project, people, statusOptions, defaultSta
                 rows={4}
               />
             </div>
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium" htmlFor="historyDebrief">
+              History Debrief
+            </label>
+            <Textarea
+              id="historyDebrief"
+              name="historyDebrief"
+              defaultValue={project?.historyDebrief ?? ""}
+              rows={6}
+              placeholder="Provide a summary of the project's history, past hurdles, and key wins..."
+            />
           </div>
           {state.formError && <p className="text-sm text-destructive">{state.formError}</p>}
           <Button type="submit">Save</Button>

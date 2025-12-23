@@ -5,9 +5,10 @@ import { Activity, ActivityStatus, Push } from "@prisma/client";
 import { ActivityFormDialog } from "@/components/projects/pushes/ActivityFormDialog";
 import { PushFormDialog } from "@/components/projects/pushes/PushFormDialog";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select } from "@/components/ui/select";
-import { updateActivityOwner, updateActivityStatus } from "@/app/projects/[projectSlug]/pushes/actions";
+import { updateActivityStatus } from "@/app/projects/[projectSlug]/pushes/actions";
+import { Calendar, Filter, Users, Plus } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 const STATUS_COLUMNS: ActivityStatus[] = [
   ActivityStatus.NOT_STARTED,
@@ -16,28 +17,13 @@ const STATUS_COLUMNS: ActivityStatus[] = [
   ActivityStatus.COMPLETED
 ];
 
-function formatDateUTC(date: Date): string {
-  const month = date.getUTCMonth() + 1;
-  const day = date.getUTCDate();
-  const year = date.getUTCFullYear() % 100;
+const STATUS_CONFIG: Record<ActivityStatus, { label: string; color: string; border: string }> = {
+  [ActivityStatus.NOT_STARTED]: { label: "To Do", color: "bg-brand-sky/20 text-brand-charcoal", border: "border-brand-sky/30" },
+  [ActivityStatus.IN_PROGRESS]: { label: "In Progress", color: "bg-brand-teal/20 text-brand-teal", border: "border-brand-teal/30" },
+  [ActivityStatus.BLOCKED]: { label: "Blocked", color: "bg-rose-100 text-rose-700", border: "border-rose-200" },
+  [ActivityStatus.COMPLETED]: { label: "Done", color: "bg-brand-mint/20 text-brand-charcoal", border: "border-brand-mint/30" }
+};
 
-  const pad = (n: number) => n.toString().padStart(2, "0");
-
-  return `${pad(month)}/${pad(day)}/${pad(year)}`;
-}
-function formatDate(date: Date): string {
-  return formatDateUTC(date);
-}
-export function formatPushName(push: {
-  sequence: number;
-  startDate: Date;
-  endDate: Date;
-}): string {
-  const startLabel = formatDateUTC(push.startDate);
-  const endLabel = formatDateUTC(push.endDate);
-
-  return `Push ${push.sequence} - ${startLabel} - ${endLabel}`;
-}
 
 function isCurrentPush(push: Push) {
   const today = new Date();
@@ -84,17 +70,15 @@ export function PushesView({
   }, [currentPushId, pushes]);
 
   const [selectedPushId, setSelectedPushId] = useState<string | null>(defaultPushId);
-  const [statusFilter, setStatusFilter] = useState<ActivityStatus | "ALL">("ALL");
   const [departmentFilter, setDepartmentFilter] = useState<string | "ALL">("ALL");
 
   const selectedPush = pushes.find((push) => push.id === selectedPushId) ?? pushes[0];
   const selectedActivities = selectedPush?.activities ?? [];
 
   const filteredActivities = selectedActivities.filter((activity: ActivityWithRelations) => {
-    const matchesStatus = statusFilter === "ALL" || activity.status === statusFilter;
     const matchesDepartment =
       departmentFilter === "ALL" || (activity.department && activity.department.id === departmentFilter);
-    return matchesStatus && matchesDepartment;
+    return matchesDepartment;
   });
 
   const grouped = STATUS_COLUMNS.map((status) => ({
@@ -102,251 +86,196 @@ export function PushesView({
     activities: filteredActivities.filter((activity: ActivityWithRelations) => activity.status === status)
   }));
 
-  return (
-    <div className="grid gap-4 lg:grid-cols-[320px,1fr]">
-      <Card className="h-full">
-        <CardHeader className="flex flex-row items-center justify-between space-y-0">
-          <CardTitle>Pushes</CardTitle>
-          {canEdit && (
-            <PushFormDialog
-              projectId={project.id}
-              slug={project.slug}
-              objectives={objectives}
-              defaultSequenceIndex={pushes.length ? Math.max(...pushes.map((p) => p.sequenceIndex)) + 1 : 1}
-              currentObjectiveId={currentObjectiveId}
-            />
-          )}
-        </CardHeader>
-        <CardContent className="space-y-3">
-          {pushes.length === 0 ? (
-            <div className="space-y-3 text-sm text-muted-foreground">
-              <p>No pushes have been created yet.</p>
-              {canEdit && <p>Use the button above to create the first push.</p>}
-            </div>
-          ) : (
-            <div className="space-y-2">
-              {pushes.map((push) => (
-                <button
-                  key={push.id}
-                  onClick={() => setSelectedPushId(push.id)}
-                  className={`w-full rounded-lg border p-3 text-left transition hover:border-primary ${
-                    selectedPush?.id === push.id ? "border-primary bg-primary/5" : "border-border"
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <p className="font-semibold">{push.name}</p>
-                      {isCurrentPush(push) && <Badge variant="secondary">Current</Badge>}
-                    </div>
-                    {canEdit && (
-                      <PushFormDialog
-                        projectId={project.id}
-                        slug={project.slug}
-                        objectives={objectives}
-                        push={push}
-                        currentObjectiveId={currentObjectiveId}
-                      />
-                    )}
-                  </div>
-                  <p className="text-sm text-muted-foreground">
-                    {formatDate(push.startDate)} – {formatDate(push.endDate)}
-                  </p>
-                  {push.highLevelSummary && (
-                    <p className="text-sm text-muted-foreground line-clamp-2">{push.highLevelSummary}</p>
-                  )}
-                </button>
-              ))}
-            </div>
-          )}
-        </CardContent>
-      </Card>
+  const handleDragStart = (e: React.DragEvent, activityId: string) => {
+    e.dataTransfer.setData("activityId", activityId);
+  };
 
-      <Card className="h-full">
-        <CardHeader className="flex flex-col gap-2 border-b pb-4">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <p className="text-sm uppercase tracking-wide text-muted-foreground">Push board</p>
-              <CardTitle>{selectedPush ? selectedPush.name : "No push selected"}</CardTitle>
-              {selectedPush && (
-                <p className="text-sm text-muted-foreground">
-                  {formatDate(selectedPush.startDate)} – {formatDate(selectedPush.endDate)}
-                </p>
-              )}
-            </div>
-            {selectedPush && canEdit && (
-              <ActivityFormDialog
-                projectId={project.id}
-                slug={project.slug}
-                pushId={selectedPush.id}
-                people={people}
-                departments={departments}
-                milestones={milestones}
-                keyResults={keyResults}
-              />
-            )}
-          </div>
-          <div className="flex flex-wrap gap-3 text-sm">
-            <div className="space-y-1">
-              <p className="text-xs uppercase tracking-wide text-muted-foreground">Department</p>
-              <Select
-                value={departmentFilter}
-                onChange={(event) => setDepartmentFilter((event.target.value || "ALL") as typeof departmentFilter)}
-                className="w-48"
+  const handleDrop = async (e: React.DragEvent, newStatus: ActivityStatus) => {
+    e.preventDefault();
+    const activityId = e.dataTransfer.getData("activityId");
+    if (!activityId) return;
+
+    const formData = new FormData();
+    formData.append("activityId", activityId);
+    formData.append("status", newStatus);
+    formData.append("slug", project.slug);
+
+    await updateActivityStatus(formData);
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+  };
+
+  return (
+    <div className="flex flex-col gap-6">
+      {/* Header Area with Filters and Push Selector */}
+      <div className="flex flex-wrap items-end justify-between gap-4 bg-white p-4 rounded-xl border border-brand-sky/20 shadow-sm">
+        <div className="flex flex-wrap items-center gap-6">
+          <div className="space-y-1.5">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-brand-sage flex items-center gap-1.5">
+              <Calendar className="h-3 w-3" /> Select Push
+            </p>
+            <div className="flex items-center gap-2">
+              <select
+                value={selectedPushId ?? ""}
+                onChange={(e) => setSelectedPushId(e.target.value)}
+                className="bg-brand-sky/5 border-none text-sm font-semibold rounded-lg px-3 py-2 focus:ring-2 focus:ring-brand-teal min-w-[240px]"
               >
-                <option value="ALL">All departments</option>
-                {departments.map((dept) => (
-                  <option key={dept.id} value={dept.id}>
-                    {dept.code} – {dept.name}
+                {pushes.map(p => (
+                  <option key={p.id} value={p.id}>
+                    {p.name} {isCurrentPush(p) ? " (Current)" : ""}
                   </option>
                 ))}
-              </Select>
-            </div>
-            <div className="space-y-1">
-              <p className="text-xs uppercase tracking-wide text-muted-foreground">Status</p>
-              <Select
-                value={statusFilter}
-                onChange={(event) => setStatusFilter((event.target.value as ActivityStatus | "ALL") ?? "ALL")}
-                className="w-40"
-              >
-                <option value="ALL">All statuses</option>
-                {STATUS_COLUMNS.map((status) => (
-                  <option key={status} value={status}>
-                    {status.replace("_", " ")}
-                  </option>
-                ))}
-              </Select>
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {!selectedPush && (
-            <p className="text-sm text-muted-foreground">Select a push to view its activities.</p>
-          )}
-          {selectedPush && filteredActivities.length === 0 && selectedPush.activities.length > 0 && (
-            <p className="text-sm text-muted-foreground">No activities match these filters.</p>
-          )}
-          {selectedPush && selectedPush.activities.length === 0 && (
-            <div className="flex items-center justify-between rounded-md border p-4">
-              <div>
-                <p className="text-sm font-medium">No activities added for this push.</p>
-                <p className="text-sm text-muted-foreground">Create activities to plan this push.</p>
-              </div>
+              </select>
               {canEdit && (
-                <ActivityFormDialog
+                <PushFormDialog
                   projectId={project.id}
                   slug={project.slug}
-                  pushId={selectedPush.id}
-                  people={people}
-                  departments={departments}
-                  milestones={milestones}
-                  keyResults={keyResults}
+                  objectives={objectives}
+                  defaultSequenceIndex={pushes.length ? Math.max(...pushes.map((p) => p.sequenceIndex)) + 1 : 1}
+                  currentObjectiveId={currentObjectiveId}
+                  trigger={<Button variant="ghost" size="icon" className="h-9 w-9 text-brand-teal hover:bg-brand-teal/10"><Plus className="h-5 w-5" /></Button>}
                 />
               )}
             </div>
-          )}
+          </div>
 
-          {selectedPush && filteredActivities.length > 0 && (
-            <div className="grid gap-4 lg:grid-cols-4">
-              {grouped.map((group) => (
-                <div key={group.status} className="space-y-3 rounded-lg border bg-muted/50 p-3">
-                  <div className="flex items-center justify-between">
-                    <p className="text-sm font-semibold">{group.status.replace("_", " ")}</p>
-                    <Badge variant="secondary">{group.activities.length}</Badge>
-                  </div>
-                  <div className="space-y-2">
-                    {group.activities.map((activity) => (
-                      <ActivityCard
-                        key={activity.id}
-                        activity={activity}
-                        slug={project.slug}
-                        people={people}
-                        canEdit={canEdit}
-                      />
-                    ))}
-                  </div>
+          <div className="h-10 w-[1px] bg-brand-sky/20 hidden md:block"></div>
+
+          <div className="space-y-1.5 text-sm">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-brand-sage flex items-center gap-1.5">
+              <Filter className="h-3 w-3" /> Filter Department
+            </p>
+            <select
+              value={departmentFilter}
+              onChange={(e) => setDepartmentFilter(e.target.value)}
+              className="bg-brand-sky/5 border-none text-sm font-medium rounded-lg px-3 py-2 focus:ring-2 focus:ring-brand-teal"
+            >
+              <option value="ALL">All Departments</option>
+              {departments.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
+            </select>
+          </div>
+        </div>
+
+        {selectedPush && canEdit && (
+          <ActivityFormDialog
+            projectId={project.id}
+            slug={project.slug}
+            pushId={selectedPush.id}
+            people={people}
+            departments={departments}
+            milestones={milestones}
+            keyResults={keyResults}
+            trigger={<Button className="bg-brand-teal hover:bg-brand-teal/90 text-white font-rajdhani shadow-md"><Plus className="h-4 w-4 mr-2" /> CREATE ACTIVITY</Button>}
+          />
+        )}
+      </div>
+
+      {/* Board Layout */}
+      {!selectedPush ? (
+        <div className="py-20 text-center bg-white rounded-xl border border-dashed text-muted-foreground">Select a push to view activities.</div>
+      ) : (
+        <div className="flex gap-4 overflow-x-auto pb-6 scrollbar-hide">
+          {grouped.map((group) => (group.status !== ActivityStatus.BLOCKED || group.activities.length > 0) && (
+            <div
+              key={group.status}
+              className="flex flex-col flex-shrink-0 w-72 rounded-xl bg-brand-sky/5 border border-brand-sky/10"
+              onDrop={(e) => handleDrop(e, group.status)}
+              onDragOver={handleDragOver}
+            >
+              <div className={cn("flex items-center justify-between p-3 border-b-2 rounded-t-xl", STATUS_CONFIG[group.status].border, "bg-white/50 backdrop-blur-sm")}>
+                <div className="flex items-center gap-2">
+                  <p className="text-xs font-bold uppercase tracking-widest text-brand-charcoal">{STATUS_CONFIG[group.status].label}</p>
+                  <Badge variant="outline" className="bg-white border-brand-sky/30 text-[10px] h-5 min-w-[20px] justify-center px-1 font-bold">{group.activities.length}</Badge>
                 </div>
-              ))}
+              </div>
+              <div className="flex-1 p-2 space-y-3 min-h-[400px]">
+                {group.activities.map((activity: ActivityWithRelations) => (
+                  <div
+                    key={activity.id}
+                    draggable={canEdit}
+                    onDragStart={(e) => handleDragStart(e, activity.id)}
+                    className="group"
+                  >
+                    <ActivityCard
+                      activity={activity}
+                      projectId={project.id}
+                      slug={project.slug}
+                      pushId={selectedPush.id}
+                      people={people}
+                      departments={departments}
+                      milestones={milestones}
+                      keyResults={keyResults}
+                      canEdit={canEdit}
+                    />
+                  </div>
+                ))}
+                {group.activities.length === 0 && (
+                  <div className="h-20 border border-dashed border-brand-sky/20 rounded-lg flex items-center justify-center">
+                    <p className="text-[10px] text-brand-sage/50 font-bold uppercase">Empty</p>
+                  </div>
+                )}
+              </div>
             </div>
-          )}
-        </CardContent>
-      </Card>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
 
 type ActivityCardProps = {
   activity: ActivityWithRelations;
+  projectId: string;
   slug: string;
+  pushId: string;
   people: { id: string; name: string }[];
+  departments: { id: string; name: string; code: string }[];
+  milestones: { id: string; title: string }[];
+  keyResults: { id: string; code: string; title: string }[];
   canEdit: boolean;
 };
 
-function ActivityCard({ activity, slug, people, canEdit }: ActivityCardProps) {
-  const handleStatusChange = async (formData: FormData) => {
-    await updateActivityStatus(formData);
-  };
-
-  const handleOwnerChange = async (formData: FormData) => {
-    await updateActivityOwner(formData);
-  };
-
+function ActivityCard({ activity, projectId, slug, pushId, people, departments, milestones, keyResults }: ActivityCardProps) {
   return (
-    <div className="space-y-2 rounded-md border bg-background p-3 shadow-sm">
-      <div className="flex items-start justify-between gap-2">
-        <div className="space-y-1">
-          <p className="font-semibold leading-tight">{activity.title}</p>
-          {activity.description && <p className="text-sm text-muted-foreground line-clamp-2">{activity.description}</p>}
+    <ActivityFormDialog
+      projectId={projectId}
+      slug={slug}
+      pushId={pushId}
+      people={people}
+      departments={departments}
+      milestones={milestones}
+      keyResults={keyResults}
+      activity={activity}
+      trigger={
+        <div className="group relative space-y-3 rounded-lg border border-brand-sky/20 bg-white p-3 shadow-sm transition-all hover:border-brand-teal hover:shadow-md cursor-pointer">
+          <div className="space-y-1">
+            <p className="font-semibold text-xs leading-snug group-hover:text-brand-teal transition-colors line-clamp-2">{activity.title}</p>
+          </div>
+
+          <div className="flex items-center justify-between pt-1">
+            <div className="flex items-center gap-1.5">
+              <div className="h-5 w-5 rounded-full bg-brand-sky/20 flex items-center justify-center text-[10px] font-bold text-brand-teal">
+                {activity.owner?.name?.charAt(0) || <Users className="h-3 w-3" />}
+              </div>
+              <span className="text-[10px] font-medium text-brand-charcoal/70 truncate max-w-[80px]">
+                {activity.owner?.name?.split(' ')[0] ?? "Unassigned"}
+              </span>
+            </div>
+            <Badge className="bg-brand-sage/10 text-brand-sage border-brand-sage/20 text-[9px] h-4 px-1 uppercase tracking-tight font-bold">
+              {activity.department?.code ?? "—"}
+            </Badge>
+          </div>
+
+          {activity.dueDate && (
+            <div className="flex items-center gap-1 text-[9px] font-bold text-brand-sage/60 uppercase tracking-tight border-t border-brand-sky/5 pt-2">
+              <Calendar className="h-2.5 w-2.5" />
+              {new Date(activity.dueDate).toLocaleDateString()}
+            </div>
+          )}
         </div>
-        <Badge variant="outline">{activity.status.replace("_", " ")}</Badge>
-      </div>
-      <div className="space-y-1 text-sm text-muted-foreground">
-        <p>Owner: {activity.owner?.name ?? "Unassigned"}</p>
-        <p>Department: {activity.department?.code ?? "—"}</p>
-        <p>Due: {activity.dueDate ? formatDate(activity.dueDate) : "No due date"}
-        </p>
-        {activity.relatedKr && (
-          <p>
-            KR: {activity.relatedKr.code} – {activity.relatedKr.title}
-          </p>
-        )}
-        {activity.relatedMilestone && <p>Milestone: {activity.relatedMilestone.title}</p>}
-        {activity.asanaTaskGid && <p>Asana: {activity.asanaTaskGid}</p>}
-      </div>
-      {canEdit && (
-        <div className="flex flex-wrap gap-2 pt-2 text-sm">
-          <form action={handleStatusChange} className="flex-1 min-w-[160px]">
-            <input type="hidden" name="activityId" value={activity.id} />
-            <input type="hidden" name="slug" value={slug} />
-            <Select
-              name="status"
-              defaultValue={activity.status}
-              onChange={(event) => event.currentTarget.form?.requestSubmit()}
-            >
-              {STATUS_COLUMNS.map((status) => (
-                <option key={status} value={status}>
-                  {status.replace("_", " ")}
-                </option>
-              ))}
-            </Select>
-          </form>
-          <form action={handleOwnerChange} className="flex-1 min-w-[160px]">
-            <input type="hidden" name="activityId" value={activity.id} />
-            <input type="hidden" name="slug" value={slug} />
-            <Select
-              name="ownerId"
-              defaultValue={activity.owner?.id ?? ""}
-              onChange={(event) => event.currentTarget.form?.requestSubmit()}
-            >
-              <option value="">Unassigned</option>
-              {people.map((person) => (
-                <option key={person.id} value={person.id}>
-                  {person.name}
-                </option>
-              ))}
-            </Select>
-          </form>
-        </div>
-      )}
-    </div>
+      }
+    />
   );
 }

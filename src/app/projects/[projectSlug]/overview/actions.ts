@@ -14,8 +14,12 @@ function parseDate(value: string | undefined | null) {
   return isNaN(date.getTime()) ? null : date;
 }
 
-function getOverviewPath(slug?: string | null) {
-  return slug ? `/projects/${slug}/overview` : "/projects";
+function revalidateProject(slug?: string | null) {
+  if (!slug) return;
+  revalidatePath(`/projects/${slug}/overview`);
+  revalidatePath(`/projects/${slug}/key-results`);
+  revalidatePath(`/projects/${slug}/pushes`);
+  revalidatePath(`/projects/${slug}/timeline`);
 }
 
 export async function upsertObjective(prevState: ObjectiveFormState, formData: FormData) {
@@ -84,7 +88,7 @@ export async function upsertObjective(prevState: ObjectiveFormState, formData: F
     ]);
   }
 
-  revalidatePath(getOverviewPath(slug));
+  revalidateProject(slug);
   return { errors: {}, success: true };
 }
 
@@ -178,7 +182,7 @@ export async function upsertKeyResult(prevState: KeyResultFormState, formData: F
     await db.keyResult.create({ data });
   }
 
-  revalidatePath(getOverviewPath(slug));
+  revalidateProject(slug);
   return { errors: {}, success: true };
 }
 
@@ -204,6 +208,6 @@ export async function cycleKeyResultStatus(prevState: CycleStatusState, formData
   const nextStatus = getNextKeyResultStatus(keyResult.status);
   await db.keyResult.update({ where: { id: keyResultId }, data: { status: nextStatus } });
 
-  revalidatePath(getOverviewPath(slug));
+  revalidateProject(slug);
   return { nextStatus };
 }

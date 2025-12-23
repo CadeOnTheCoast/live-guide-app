@@ -33,6 +33,7 @@ export async function upsertPush(prevState: PushFormState, formData: FormData) {
   const sequenceValue = formData.get("sequenceIndex")?.toString();
   const startDate = parseDate(formData.get("startDate")?.toString());
   const endDate = parseDate(formData.get("endDate")?.toString());
+  const asanaProjectGid = formData.get("asanaProjectGid")?.toString().trim() || null;
 
   const errors: PushFormState["errors"] = {};
 
@@ -100,6 +101,7 @@ export async function upsertPush(prevState: PushFormState, formData: FormData) {
     endDate: endDate!,
     highLevelSummary,
     objectiveId,
+    asanaProjectGid,
     name: formatPushName({ sequenceIndex, startDate: startDate!, endDate: endDate! })
   };
 
@@ -112,6 +114,24 @@ export async function upsertPush(prevState: PushFormState, formData: FormData) {
   revalidatePath(getPushesPath(slug));
   revalidatePath(`/projects/${slug}/overview`);
   return { errors: {}, success: true };
+}
+
+function extractAsanaGid(input: string | null | undefined): string | null {
+  if (!input) return null;
+  const trimmed = input.trim();
+  if (!trimmed) return null;
+
+  // Handle URL format: https://app.asana.com/0/1208642902759881/1208642944747248/f
+  // or simply the GID
+  if (trimmed.startsWith("http")) {
+    const parts = trimmed.split("/");
+    // Usually the GID is the last or second to last part
+    // Filtering for numeric parts
+    const numericParts = parts.filter(p => p && /^\d+$/.test(p));
+    return numericParts[numericParts.length - 1] || null;
+  }
+
+  return trimmed;
 }
 
 export async function upsertActivity(prevState: ActivityFormState, formData: FormData) {
@@ -131,7 +151,7 @@ export async function upsertActivity(prevState: ActivityFormState, formData: For
   const departmentId = formData.get("departmentId")?.toString().trim() || null;
   const relatedKrId = formData.get("relatedKrId")?.toString().trim() || null;
   const relatedMilestoneId = formData.get("relatedMilestoneId")?.toString().trim() || null;
-  const asanaTaskGid = formData.get("asanaTaskGid")?.toString().trim() || null;
+  const asanaTaskGid = extractAsanaGid(formData.get("asanaTaskGid")?.toString());
   const startDate = parseDate(formData.get("startDate")?.toString());
   const dueDate = parseDate(formData.get("dueDate")?.toString());
   const status = (formData.get("status")?.toString() as ActivityStatus | undefined) ?? ActivityStatus.NOT_STARTED;

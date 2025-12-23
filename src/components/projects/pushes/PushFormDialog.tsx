@@ -24,9 +24,10 @@ type PushFormDialogProps = {
   defaultSequenceIndex?: number;
   currentObjectiveId?: string | null;
   push?: Push;
+  trigger?: React.ReactNode;
 };
 
-export function PushFormDialog({ projectId, slug, objectives, push, defaultSequenceIndex = 1, currentObjectiveId }: PushFormDialogProps) {
+export function PushFormDialog({ projectId, slug, objectives, push, defaultSequenceIndex = 1, currentObjectiveId, trigger }: PushFormDialogProps) {
   const [open, setOpen] = useState(false);
   const [state, formAction] = useFormState<PushFormState, FormData>(upsertPush, pushInitialState);
 
@@ -47,9 +48,11 @@ export function PushFormDialog({ projectId, slug, objectives, push, defaultSeque
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant={isEditing ? "ghost" : "default"} size={isEditing ? "sm" : "default"}>
-          {isEditing ? "Edit" : "New push"}
-        </Button>
+        {trigger ?? (
+          <Button variant={isEditing ? "ghost" : "default"} size={isEditing ? "sm" : "default"}>
+            {isEditing ? "Edit" : "New push"}
+          </Button>
+        )}
       </DialogTrigger>
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-xl">
         <DialogHeader>
@@ -102,17 +105,30 @@ export function PushFormDialog({ projectId, slug, objectives, push, defaultSeque
               ))}
             </Select>
           </div>
-          <div className="space-y-2">
-            <label className="text-sm font-medium" htmlFor="highLevelSummary">
-              High-level summary
-            </label>
-            <Textarea
-              id="highLevelSummary"
-              name="highLevelSummary"
-              rows={3}
-              placeholder="Key goals, themes, or risks for this push"
-              defaultValue={push?.highLevelSummary ?? ""}
-            />
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="space-y-2">
+              <label className="text-sm font-medium" htmlFor="highLevelSummary">
+                High-level summary
+              </label>
+              <Textarea
+                id="highLevelSummary"
+                name="highLevelSummary"
+                rows={3}
+                placeholder="Key goals, themes, or risks for this push"
+                defaultValue={push?.highLevelSummary ?? ""}
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium" htmlFor="asanaProjectGid">
+                Asana project GID override
+              </label>
+              <Input
+                id="asanaProjectGid"
+                name="asanaProjectGid"
+                placeholder="Override canonical project GID"
+                defaultValue={push?.asanaProjectGid ?? ""}
+              />
+            </div>
           </div>
           {state.formError && <p className="text-sm text-destructive">{state.formError}</p>}
           <DialogFooter>

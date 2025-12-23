@@ -23,6 +23,7 @@ export type ObjectiveFormDialogProps = {
   slug: string;
   triggerLabel: string;
   action: ObjectiveFormAction;
+  triggerVariant?: "default" | "outline" | "ghost" | "link" | "secondary" | "destructive";
   objective?: {
     id: string;
     title: string;
@@ -35,7 +36,7 @@ export type ObjectiveFormDialogProps = {
 
 type ObjectiveFormAction = (prevState: ObjectiveFormState, formData: FormData) => Promise<ObjectiveFormState>;
 
-export function ObjectiveFormDialog({ projectId, slug, triggerLabel, objective, action }: ObjectiveFormDialogProps) {
+export function ObjectiveFormDialog({ projectId, slug, triggerLabel, objective, action, triggerVariant }: ObjectiveFormDialogProps) {
   const [open, setOpen] = useState(false);
   const [state, formAction] = useFormState<ObjectiveFormState, FormData>(action, objectiveFormInitialState);
 
@@ -50,7 +51,7 @@ export function ObjectiveFormDialog({ projectId, slug, triggerLabel, objective, 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant={objective ? "outline" : "default"}>{triggerLabel}</Button>
+        <Button variant={triggerVariant ?? (objective ? "outline" : "default")}>{triggerLabel}</Button>
       </DialogTrigger>
       <DialogContent className="max-h-[90vh] overflow-y-auto">
         <DialogHeader>

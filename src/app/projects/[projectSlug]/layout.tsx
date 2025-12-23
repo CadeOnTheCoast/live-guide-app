@@ -5,6 +5,7 @@ import { getProjectBySlug } from "@/server/projects";
 
 const tabs = [
   { slug: "overview", label: "Overview" },
+  { slug: "key-results", label: "Key Results" },
   { slug: "pushes", label: "Pushes" },
   { slug: "timeline", label: "Timeline" },
   { slug: "pressure", label: "Pressure" },

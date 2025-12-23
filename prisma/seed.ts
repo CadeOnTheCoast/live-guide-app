@@ -5,35 +5,17 @@ const db = new PrismaClient();
 const departments = [
   { code: "PM", name: "Project Management" },
   { code: "GA", name: "Government Affairs" },
-  { code: "CE", name: "Conservation & Ecology" },
+  { code: "CE", name: "Community Engagement" },
   { code: "COMMS", name: "Communications" },
-  { code: "FR", name: "Fundraising & Resources" }
+  { code: "FR", name: "Field and Research" }
 ];
 
 const people = [
   {
-    name: "Alex Rivera",
-    email: "alex.rivera@example.com",
+    name: "Cade Kistler",
+    email: "ckistler@mobilebaykeeper.org",
     departmentCode: "PM",
     role: "ADMIN" as const
-  },
-  {
-    name: "Jordan Lee",
-    email: "jordan.lee@example.com",
-    departmentCode: "GA",
-    role: "EDITOR" as const
-  },
-  {
-    name: "Taylor Morgan",
-    email: "taylor.morgan@example.com",
-    departmentCode: "CE",
-    role: "VIEWER" as const
-  },
-  {
-    name: "Sam Carter",
-    email: "sam.carter@example.com",
-    departmentCode: "COMMS",
-    role: "VIEWER" as const
   }
 ];
 
@@ -47,25 +29,25 @@ type ProjectSeed = {
 
 const projects: ProjectSeed[] = [
   {
-    name: "Watershed Restoration",
-    slug: "watershed-restoration",
+    name: "Toxics Criteria",
+    slug: "toxics-criteria",
     status: "ACTIVE",
-    startDate: new Date("2024-01-15"),
-    ownerEmail: "alex.rivera@example.com"
+    startDate: new Date("2024-01-01"),
+    ownerEmail: "ckistler@mobilebaykeeper.org"
   },
   {
-    name: "Community Outreach",
-    slug: "community-outreach",
-    status: "PLANNING",
-    startDate: new Date("2024-03-01"),
-    ownerEmail: "jordan.lee@example.com"
+    name: "Oyster Farm",
+    slug: "oyster-farm",
+    status: "ACTIVE",
+    startDate: new Date("2024-01-01"),
+    ownerEmail: "ckistler@mobilebaykeeper.org"
   },
   {
-    name: "Habitat Monitoring",
-    slug: "habitat-monitoring",
+    name: "Oyster Hatchery Project",
+    slug: "oyster-hatchery-project",
     status: "ACTIVE",
-    startDate: new Date("2024-02-10"),
-    ownerEmail: "taylor.morgan@example.com"
+    startDate: new Date("2024-01-01"),
+    ownerEmail: "ckistler@mobilebaykeeper.org"
   }
 ];
 

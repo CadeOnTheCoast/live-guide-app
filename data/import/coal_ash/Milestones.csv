@@ -1,9 +1,9 @@
-﻿project_slug,milestone_order,milestone_title,milestone_description,due_date,due_quarter,department_code,push_number,is_critical,status,,
-coal-ash-plant-barry,0,Title card (project start),Project initiated and tracked in dashboard.,,,PM,,TRUE,IN_PROGRESS,,
-coal-ash-plant-barry,1,Investor outreach package ready,"One concise package: problem summary, requested commitments, and supporting evidence list.",,,PM,,TRUE,NOT_STARTED,,
-coal-ash-plant-barry,2,Shareholder action pathway advanced,"Prepare and advance the selected investor/shareholder mechanism (proposal, engagement sequence, coalition alignment).",,,GA,,TRUE,NOT_STARTED,,
-coal-ash-plant-barry,3,Comms pressure phase launched,Launch at least one coordinated public pressure beat aligned with current leverage points.,,,COMMS,,FALSE,NOT_STARTED,,
-coal-ash-plant-barry,4,Binding commitment secured,Obtain enforceable commitments with deadlines and public reporting.,,,GA,,TRUE,NOT_STARTED,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
+﻿project_slug,milestone_order,milestone_title,milestone_description,due_date,due_quarter,department_code,push_number,is_critical,status
+coal-ash-plant-barry,1,Evidence package finalized,Evidence and solution package finalized and in circulation,2026-03-31,Q1 2026,PM,,TRUE,PLANNED
+coal-ash-plant-barry,2,Ashes Alabama launch,Sallie's Ashes Alabama campaign launched,2026-02-28,Q1 2026,COMMS,,TRUE,PLANNED
+coal-ash-plant-barry,3,First ADEM meeting,First high-level ADEM meeting on Barry removal and statewide program,2026-03-31,Q1 2026,GA,,TRUE,PLANNED
+coal-ash-plant-barry,4,Public statements secured,First wave of public statements for removal secured,2026-07-31,Q3 2026,COMMS,,FALSE,PLANNED
+coal-ash-plant-barry,5,Legal path chosen,Legal path chosen and new case filed if needed,2026-09-30,Q3 2026,GA,,TRUE,PLANNED
+coal-ash-plant-barry,6,Plan submitted,Barry removal or recycling plan submitted to ADEM or EMC,2026-09-30,Q3 2026,GA,,TRUE,PLANNED
+coal-ash-plant-barry,7,Binding commitment secured,Binding commitment or regulatory approval enabling removal secured,2026-12-31,Q4 2026,GA,,TRUE,PLANNED
+coal-ash-plant-barry,8,Year 1 documented,First year of removal or recycling documented,2027-12-31,Q4 2027,PM,,TRUE,PLANNED

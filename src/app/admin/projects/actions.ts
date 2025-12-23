@@ -24,7 +24,10 @@ export async function upsertProject(prevState: ProjectFormState, formData: FormD
   const startDate = parseDate(formData.get("startDate")?.toString());
   const endDate = parseDate(formData.get("endDate")?.toString());
   const primaryOwnerId = formData.get("primaryOwnerId")?.toString().trim() || null;
+  const asanaWorkspaceGid = formData.get("asanaWorkspaceGid")?.toString().trim() || null;
   const asanaProjectGid = formData.get("asanaProjectGid")?.toString().trim() || null;
+  const asanaTeamGid = formData.get("asanaTeamGid")?.toString().trim() || null;
+  const historyDebrief = formData.get("historyDebrief")?.toString().trim() || null;
 
   const errors: ProjectFormState["errors"] = {};
 
@@ -58,7 +61,10 @@ export async function upsertProject(prevState: ProjectFormState, formData: FormD
     startDate,
     endDate,
     primaryOwnerId: primaryOwnerId || null,
-    asanaProjectGid
+    asanaWorkspaceGid,
+    asanaProjectGid,
+    asanaTeamGid,
+    historyDebrief
   };
 
   try {

@@ -7,6 +7,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        rajdhani: ["var(--font-rajdhani)", "sans-serif"],
+        montserrat: ["var(--font-montserrat)", "sans-serif"],
+      },
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
@@ -25,6 +29,13 @@ module.exports = {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))"
+        },
+        brand: {
+          sky: "hsl(var(--brand-sky))",
+          sage: "hsl(var(--brand-sage))",
+          mint: "hsl(var(--brand-mint))",
+          teal: "hsl(var(--brand-teal))",
+          charcoal: "hsl(var(--brand-charcoal))",
         },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

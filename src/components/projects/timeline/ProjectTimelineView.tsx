@@ -2,6 +2,7 @@
 
 import { useMemo, useState, useTransition } from "react";
 import { MilestoneCategory, MilestoneStatus } from "@prisma/client";
+import { cn } from "@/lib/utils";
 import { deleteMilestone } from "@/app/projects/[projectSlug]/timeline/actions";
 import { ProjectHeader } from "@/components/projects/ProjectHeader";
 import { Button } from "@/components/ui/button";
@@ -15,7 +16,7 @@ import {
   MilestoneWithRelations,
   sortMilestonesByDate
 } from "./utils";
-import { MilestoneArc, categoryColorClasses } from "./MilestoneArc";
+import { MilestoneArc, departmentColorClasses } from "./MilestoneArc";
 import { MilestoneDetailPanel } from "./MilestoneDetailPanel";
 import { MilestoneForm } from "./MilestoneForm";
 
@@ -27,16 +28,22 @@ type ProjectTimelineViewProps = {
     status: string;
     primaryOwnerName: string | null;
     asanaProjectGid: string | null;
+    asanaUrl: string | null;
+    teamsUrl: string | null;
+    projectFolderUrl: string | null;
+    projectNotesUrl: string | null;
     caseForChangePageUrl: string | null;
+    badges: string[];
   };
   milestones: MilestoneWithRelations[];
+  keyResults: { id: string; code: string; title: string; date: Date; departmentId: string | null; status: string }[];
   canEdit: boolean;
   departments: { id: string; name: string; code: string }[];
   objectives: { id: string; title: string }[];
   pushes: { id: string; name: string; startDate: Date; endDate: Date }[];
 };
 
-export function ProjectTimelineView({ project, milestones, canEdit, departments, objectives, pushes }: ProjectTimelineViewProps) {
+export function ProjectTimelineView({ project, milestones, keyResults, canEdit, departments, objectives, pushes }: ProjectTimelineViewProps) {
   const bounds = useMemo(() => getMilestoneYearBounds(milestones), [milestones]);
   const [startYear, setStartYear] = useState(bounds.startYear);
   const [endYear, setEndYear] = useState(bounds.endYear);
@@ -44,18 +51,34 @@ export function ProjectTimelineView({ project, milestones, canEdit, departments,
   const [formOpen, setFormOpen] = useState(false);
   const [editingMilestone, setEditingMilestone] = useState<MilestoneWithRelations | null>(null);
   const [isPending, startTransition] = useTransition();
+  const [activeDepartments, setActiveDepartments] = useState<string[]>(departments.map(d => d.code).concat(["OTHER"]));
 
   const filtered = useMemo(() => {
-    const ordered = sortMilestonesByDate(milestones);
-    return filterMilestonesByYearRange(ordered, startYear, endYear);
-  }, [milestones, startYear, endYear]);
+    let ordered = sortMilestonesByDate(milestones);
+    ordered = filterMilestonesByYearRange(ordered, startYear, endYear);
+    return ordered.filter(m => activeDepartments.includes(m.leadDepartment?.code ?? "OTHER"));
+  }, [milestones, startYear, endYear, activeDepartments]);
 
   const selected = filtered.find((m) => m.id === selectedId) ?? filtered[0] ?? null;
 
   const startDate = new Date(`${startYear}-01-01T00:00:00Z`);
   const endDate = new Date(`${endYear}-12-31T23:59:59Z`);
 
-  const colorLegend = categoryColorClasses();
+  const filteredKeyResults = useMemo(() => {
+    return keyResults.filter(kr => {
+      if (!kr.date) return false;
+      const year = new Date(kr.date).getFullYear();
+      return year >= startYear && year <= endYear;
+    });
+  }, [keyResults, startYear, endYear]);
+
+  const colorLegend = departmentColorClasses();
+
+  const toggleDept = (code: string) => {
+    setActiveDepartments(prev =>
+      prev.includes(code) ? prev.filter(c => c !== code) : [...prev, code]
+    );
+  };
 
   const handleDelete = (milestone: MilestoneWithRelations) => {
     const hasLinks = milestone.activities.length || milestone.commsItems.length || milestone.pressureAssets.length;
@@ -85,7 +108,12 @@ export function ProjectTimelineView({ project, milestones, canEdit, departments,
           status: project.status,
           primaryOwnerName: project.primaryOwnerName,
           asanaProjectGid: project.asanaProjectGid,
-          caseForChangePageUrl: project.caseForChangePageUrl
+          asanaUrl: project.asanaUrl,
+          teamsUrl: project.teamsUrl,
+          projectFolderUrl: project.projectFolderUrl,
+          projectNotesUrl: project.projectNotesUrl,
+          caseForChangePageUrl: project.caseForChangePageUrl,
+          badges: project.badges
         }}
       />
 
@@ -125,14 +153,33 @@ export function ProjectTimelineView({ project, milestones, canEdit, departments,
             </div>
           </div>
           <div className="text-sm text-muted-foreground">
-            Colors correspond to milestone category.
+            Filter by department:
             <div className="mt-2 flex flex-wrap gap-2">
-              {Object.entries(colorLegend).map(([key, value]) => (
-                <span key={key} className="flex items-center gap-2 rounded-md border px-2 py-1">
-                  <span className={`h-3 w-3 rounded-full ${value}`} />
-                  {key}
-                </span>
-              ))}
+              <div className="flex items-center gap-2 rounded-md border px-2 py-1 bg-yellow-500/10 border-yellow-500">
+                <span className="h-3 w-3 rounded-full bg-yellow-500" />
+                <span className="text-[10px] font-bold uppercase">At Risk</span>
+              </div>
+              <div className="flex items-center gap-2 rounded-md border px-2 py-1 bg-red-600/10 border-red-600">
+                <span className="h-3 w-3 rounded-full bg-red-600" />
+                <span className="text-[10px] font-bold uppercase">Off Track</span>
+              </div>
+              <div className="h-4 w-px bg-border mx-1 my-auto" />
+              {Object.entries(colorLegend).map(([key, value]) => {
+                const isActive = activeDepartments.includes(key);
+                return (
+                  <button
+                    key={key}
+                    onClick={() => toggleDept(key)}
+                    className={cn(
+                      "flex items-center gap-2 rounded-md border px-2 py-1 transition-colors",
+                      isActive ? "bg-muted border-primary" : "opacity-50"
+                    )}
+                  >
+                    <span className={`h-3 w-3 rounded-full ${value}`} />
+                    <span className="text-xs font-medium uppercase">{key}</span>
+                  </button>
+                );
+              })}
             </div>
           </div>
         </CardContent>
@@ -159,10 +206,13 @@ export function ProjectTimelineView({ project, milestones, canEdit, departments,
         <>
           <MilestoneArc
             milestones={filtered}
+            keyResults={filteredKeyResults}
+            pushes={pushes}
             startDate={startDate}
             endDate={endDate}
             selectedId={selectedId}
             onSelect={(id) => setSelectedId(id)}
+            projectSlug={project.slug}
           />
 
           <Card>

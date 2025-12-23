@@ -1,0 +1,13 @@
+project_slug,milestone_order,milestone_title,milestone_description,due_date,due_quarter,department_code,push_number,is_critical,status
+bcss-malbis-wwtp-compliance,1,Delaney outcome,Delaney meeting outcome,2025-12-31,Q4 2025,PM,,TRUE,PLANNED
+bcss-malbis-wwtp-compliance,2,Complete Listening,Listening sessions complete (incl. attendee count),2025-12-31,Q4 2025,CE,,TRUE,PLANNED
+bcss-malbis-wwtp-compliance,3,Ft. Morgan Clarity,ICW outfall and Fort Morgan permit clarity,2025-12-31,Q4 2025,GA,,TRUE,PLANNED
+bcss-malbis-wwtp-compliance,4,Cap Assurance Draft,Capacity assurance options drafted,2026-03-31,Q1 2026,PM,,TRUE,PLANNED
+bcss-malbis-wwtp-compliance,5,Cit. Reporting Launch,Citizen reporting soft launch (if greenlit),2026-06-30,Q2 2026,COMMS,,FALSE,PLANNED
+bcss-malbis-wwtp-compliance,6,Legal decision,Legal action decision,2026-06-30,Q2 2026,GA,,TRUE,PLANNED
+bcss-malbis-wwtp-compliance,7,Cap Assurance Final,Capacity assurance path chosen,2026-06-30,Q2 2026,PM,,TRUE,PLANNED
+bcss-malbis-wwtp-compliance,8,Begin System Fixes,WWTP system fixes initiate,2026-12-31,Q4 2026,PM,,TRUE,PLANNED
+bcss-malbis-wwtp-compliance,9,Transparency/ordinance,Transparency or ordinance milestone,2027-03-31,Q1 2027,GA,,FALSE,PLANNED
+bcss-malbis-wwtp-compliance,10,Compliance Audit,Year-to-date compliance audit,2027-09-30,Q3 2027,PM,,TRUE,PLANNED
+bcss-malbis-wwtp-compliance,11,Verified Fixes,First fixes verified,2027-12-31,Q4 2027,FR,,TRUE,PLANNED
+bcss-malbis-wwtp-compliance,12,Cap Assurance Passed,Capacity assurance institutionalized,2028-03-31,Q1 2028,GA,,TRUE,PLANNED
