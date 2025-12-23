@@ -57,7 +57,7 @@ export function StakeholderFormDialog({ projectId, stakeholder, trigger }: Stake
                                 id="stakeholderType"
                                 name="stakeholderType"
                                 defaultValue={type}
-                                onChange={(e) => setType(e.target.value as StakeholderType)}
+                                onValueChange={(v) => setType(v as StakeholderType)}
                             >
                                 <option value={StakeholderType.ALLY}>Ally</option>
                                 <option value={StakeholderType.COMMUNITY_LEADER}>Community Leader</option>
@@ -96,6 +96,10 @@ export function StakeholderFormDialog({ projectId, stakeholder, trigger }: Stake
 
                         {type === StakeholderType.OPPONENT && (
                             <div className="space-y-4">
+                                <div className="space-y-2">
+                                    <Label htmlFor="influencers">Influencer(s)</Label>
+                                    <Input id="influencers" name="influencers" defaultValue={stakeholder?.influencers ?? ""} />
+                                </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="planToCounter">Plan to Counter</Label>
                                     <Textarea id="planToCounter" name="planToCounter" defaultValue={stakeholder?.planToCounter ?? ""} rows={2} />

@@ -12,6 +12,7 @@ type ProjectHeaderProps = {
     teamsUrl?: string | null;
     projectFolderUrl?: string | null;
     projectNotesUrl?: string | null;
+    projectUpdateAgendaUrl?: string | null;
     caseForChangePageUrl?: string | null;
     badges?: string[];
   };
@@ -21,9 +22,9 @@ const BADGE_COLORS: Record<string, string> = {
   "Fish Consumption": "bg-blue-500/10 text-blue-600 border-blue-500/20",
   "Swimming Safety": "bg-emerald-500/10 text-emerald-600 border-emerald-500/20",
   "Oyster Revival": "bg-amber-500/10 text-amber-600 border-amber-500/20",
-  "Oyster": "bg-amber-500/10 text-amber-600 border-amber-500/20",
   "Seagrass Restoration": "bg-teal-500/10 text-teal-600 border-teal-500/20",
-  "SAV": "bg-teal-500/10 text-teal-600 border-teal-500/20"
+  "SAV": "bg-emerald-500/10 text-emerald-600 border-emerald-500/20",
+  "Oyster": "bg-orange-500/10 text-orange-600 border-orange-500/20"
 };
 
 export function ProjectHeader({ project }: ProjectHeaderProps) {
@@ -102,6 +103,17 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
             rel="noreferrer"
           >
             NOTES
+            <ExternalLink className="h-3 w-3 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+          </a>
+        )}
+        {project.projectUpdateAgendaUrl && (
+          <a
+            href={project.projectUpdateAgendaUrl}
+            className="flex items-center gap-2 rounded-xl bg-[#0F766E] px-4 py-2 text-[10px] font-bold font-rajdhani tracking-widest text-white hover:opacity-90 transition-all shadow-md group/btn"
+            target="_blank"
+            rel="noreferrer"
+          >
+            AGENDA
             <ExternalLink className="h-3 w-3 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
           </a>
         )}

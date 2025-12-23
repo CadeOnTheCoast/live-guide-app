@@ -153,6 +153,7 @@ const stakeholderSchema = z.object({
     audience: z.string().optional(),
     plan: z.string().optional(),
     everyActionUrl: z.string().optional(),
+    influencers: z.string().optional(),
 });
 
 export async function upsertStakeholder(formData: FormData) {
@@ -170,6 +171,7 @@ export async function upsertStakeholder(formData: FormData) {
         audience: formData.get("audience") as string || undefined,
         plan: formData.get("plan") as string || undefined,
         everyActionUrl: formData.get("everyActionUrl") as string || undefined,
+        influencers: formData.get("influencers") as string || undefined,
     });
 
     if (data.id) {
@@ -187,6 +189,7 @@ export async function upsertStakeholder(formData: FormData) {
                 audience: data.audience,
                 plan: data.plan,
                 everyActionUrl: data.everyActionUrl,
+                influencers: data.influencers,
             },
         });
     } else {
@@ -204,6 +207,7 @@ export async function upsertStakeholder(formData: FormData) {
                 audience: data.audience,
                 plan: data.plan,
                 everyActionUrl: data.everyActionUrl,
+                influencers: data.influencers,
             },
         });
     }

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
-import { Activity, ActivityStatus } from "@prisma/client";
+import { ActivityStatus } from "@prisma/client";
 import { activityInitialState, type ActivityFormState } from "@/app/projects/[projectSlug]/pushes/formState";
 import { upsertActivity } from "@/app/projects/[projectSlug]/pushes/actions";
 import { Button } from "@/components/ui/button";
@@ -19,7 +19,8 @@ type ActivityFormDialogProps = {
   departments: { id: string; name: string; code: string }[];
   milestones: { id: string; title: string }[];
   keyResults: { id: string; code: string; title: string }[];
-  activity?: Partial<Activity>; // For editing
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  activity?: any; // For editing
   trigger?: React.ReactNode;
 };
 

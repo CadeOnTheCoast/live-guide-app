@@ -10,7 +10,11 @@ async function main() {
         data: {
             historyDebrief: "In-Bay disposal of maintenance dredge spoil ('federal mud-dumping') was banned in Mobile Bay from 1986-2012 due to environmental concerns. In 2012, USACE received emergency permission to resume the practice, citing budget constraints. Baykeeper has since authoring papers disputing the Corps' position and submitted over 60 pages of comment letters detailing harms. In 2023, commercial fishermen and charter captains raised alarms about declining fish stocks. In 2024, scientific findings confirmed Gulf Sturgeon presence in Mobile Bay.",
             caseForChangePageUrl: "https://mobilebaykeeper.sharepoint.com/:w:/s/TeamMobileBaykeeper/IQBN-AoCGGP5QJnPVh0UXnkMAYbo4_3soI68kqWvWhIw3Bk?e=eqJpTS",
-            badges: ["Oyster Revival", "Seagrass Restoration"]
+            badges: ["Oyster Revival", "Seagrass Restoration"],
+            asanaUrl: "https://app.asana.com/1/52630705087449/project/1204107082259395/list/1204107546983433",
+            teamsUrl: "https://teams.microsoft.com/l/channel/19%3A1I7UP0jaWWUxbd7MI7HlU2-CS6uWiNbi9lTWA-KxTU01%40thread.tacv2/Mud%20Dumping%20Project?groupId=b1754904-8545-4d34-8f8e-8484fb47659b&tenantId=cf805e36-3954-4b13-b9c7-40cf4889a25d",
+            projectNotesUrl: "https://mobilebaykeeper.sharepoint.com/sites/MobileBaykeeperProjects/_layouts/Doc.aspx?sourcedoc={FED06262-1F4B-44B1-B846-3A7185560970}&wd=target%28Mud%20Dumping.one%7C396C7338-C5E8-45C1-9C8E-0333B5AF6928%2F%29&wdsectionfileid={396C7338-C5E8-45C1-9C8E-0333B5AF6928}",
+            projectFolderUrl: "https://mobilebaykeeper.sharepoint.com/:f:/s/TeamMobileBaykeeper/IgDAcg0xHRUQTqMk9wHNcEBvAe8wSSux_PJ0zlW4cOEAPpI?e=8QNPMd"
         }
     });
 
@@ -141,7 +145,7 @@ async function main() {
         }
     }
 
-    // 3. Assign badges to other projects
+    // 3. Assign badges to other projects (example)
     const otherProjectsBadges: Record<string, string[]> = {
         "toxics-criteria": ["Fish Consumption"],
         "oyster-farm": ["Oyster Revival"],
@@ -150,9 +154,9 @@ async function main() {
         "oyster-keeper": ["Oyster Revival"],
         "coal-ash-plant-barry": ["Fish Consumption"],
         "hog-bayou": ["Fish Consumption"],
+        "prichard-wastewater": ["Swimming Safety"],
         "bcss-malbis-wwtp-compliance": ["Swimming Safety"],
-        "claiborne-millers-ferry-dam-impact-assessment": ["SAV", "Oyster"],
-        "prichard-wastewater": ["Swimming Safety"]
+        "claiborne-millers-ferry-dam-impact-assessment": ["SAV", "Oyster"]
     };
 
     for (const [slug, badges] of Object.entries(otherProjectsBadges)) {

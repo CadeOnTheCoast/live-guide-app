@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import type { ComponentProps } from "react";
 import { cn } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -300,7 +299,7 @@ export function MasterTimelineView({ projects: initialProjects }: MasterTimeline
                                                     return (
                                                         <Link
                                                             key={item.id}
-                                                            href={item.link as ComponentProps<typeof Link>["href"]}
+                                                            href={item.link}
                                                             onMouseEnter={() => setHoveredItemId(item.id)}
                                                             onMouseLeave={() => setHoveredItemId(null)}
                                                             className={cn(

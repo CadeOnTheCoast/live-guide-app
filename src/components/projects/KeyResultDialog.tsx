@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useFormState } from "react-dom";
-import { KeyResult, KeyResultStatus } from "@prisma/client";
+import { KeyResultStatus } from "@prisma/client";
 import {
     keyResultFormInitialState,
     type KeyResultFormState
@@ -28,7 +28,8 @@ type KeyResultDialogProps = {
     upsertAction: (prevState: KeyResultFormState, formData: FormData) => Promise<KeyResultFormState>;
     people: { id: string; name: string }[];
     departments: { id: string; name: string; code: string }[];
-    keyResult?: Partial<KeyResult>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    keyResult?: any;
     isNew?: boolean;
     trigger?: React.ReactNode;
 };
@@ -105,15 +106,15 @@ export function KeyResultDialog({
                     <div className="grid grid-cols-3 gap-4 border-t border-brand-sky/10 pt-4">
                         <div className="space-y-2">
                             <Label htmlFor="targetValue" className="text-[10px] uppercase font-bold tracking-widest text-brand-sage">Target</Label>
-                            <Input id="targetValue" name="targetValue" defaultValue={keyResult?.targetValue ?? ""} placeholder="100" />
+                            <Input id="targetValue" name="targetValue" defaultValue={keyResult?.targetValue} placeholder="100" />
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="currentValue" className="text-[10px] uppercase font-bold tracking-widest text-brand-sage">Current</Label>
-                            <Input id="currentValue" name="currentValue" defaultValue={keyResult?.currentValue ?? ""} placeholder="0" />
+                            <Input id="currentValue" name="currentValue" defaultValue={keyResult?.currentValue} placeholder="0" />
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="unit" className="text-[10px] uppercase font-bold tracking-widest text-brand-sage">Unit</Label>
-                            <Input id="unit" name="unit" defaultValue={keyResult?.unit ?? ""} placeholder="%" />
+                            <Input id="unit" name="unit" defaultValue={keyResult?.unit} placeholder="%" />
                         </div>
                     </div>
 
@@ -132,7 +133,7 @@ export function KeyResultDialog({
 
                     <div className="space-y-2">
                         <Label htmlFor="description" className="text-[10px] uppercase font-bold tracking-widest text-brand-sage">Notes / Context</Label>
-                        <Textarea id="description" name="description" defaultValue={keyResult?.description ?? ""} placeholder="Describe what success looks like..." />
+                        <Textarea id="description" name="description" defaultValue={keyResult?.description} placeholder="Describe what success looks like..." />
                     </div>
 
                     <div className="flex justify-end pt-4 gap-3">

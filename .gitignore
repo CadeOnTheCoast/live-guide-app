@@ -12,3 +12,4 @@ coverage
 .npm
 .idea
 tsconfig.tsbuildinfo
+backups/

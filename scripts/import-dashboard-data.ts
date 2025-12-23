@@ -413,7 +413,12 @@ async function processProjects(
       "default_department_code",
       "asana_workspace_gid",
       "asana_project_gid",
+      "asana_project_gid",
       "asana_team_gid",
+      "teams_url",
+      "asana_url",
+      "files_url",
+      "notes_url",
     ]);
     logUnused(row, used, stats.warnings, `${projectDir}/Projects`);
 
@@ -423,7 +428,16 @@ async function processProjects(
       continue;
     }
 
+
     const status = normalizeEnum(row.status, ProjectStatus) ?? ProjectStatus.ACTIVE;
+    if (slug === 'claiborne-millers-ferry-dam-impact-assessment' || slug === 'mud-dumping') {
+      console.log(`Debug ${slug}:`, {
+        teams: row.teams_url,
+        asana: row.asana_url,
+        files: row.files_url,
+        notes: row.notes_url
+      });
+    }
     const startDate = parseDate(row.start_date);
     const primaryOwnerId = row.primary_owner_email
       ? personCache.get(row.primary_owner_email) ?? (await prisma.person.findUnique({ where: { email: row.primary_owner_email } }))?.id
@@ -446,6 +460,11 @@ async function processProjects(
       asanaWorkspaceGid: workspaceGid,
       asanaProjectGid: row.asana_project_gid ?? null,
       asanaTeamGid: teamGid,
+      teamsUrl: row.teams_url ?? null,
+      asanaUrl: row.asana_url ?? null,
+      projectFolderUrl: row.files_url ?? null,
+      projectNotesUrl: row.notes_url ?? null,
+      projectUpdateAgendaUrl: row.project_update_agenda_url ?? null,
     };
 
     const updateData: Prisma.ProjectUncheckedUpdateInput = {
@@ -458,7 +477,13 @@ async function processProjects(
       primaryOwnerId: primaryOwnerId ?? null,
       asanaWorkspaceGid: workspaceGid,
       asanaProjectGid: row.asana_project_gid ?? null,
+      asanaProjectGid: row.asana_project_gid ?? null,
       asanaTeamGid: teamGid,
+      teamsUrl: row.teams_url ?? null,
+      asanaUrl: row.asana_url ?? null,
+      projectFolderUrl: row.files_url ?? null,
+      projectNotesUrl: row.notes_url ?? null,
+      projectUpdateAgendaUrl: row.project_update_agenda_url ?? null,
     };
 
     await ensureProject(prisma, slug, createData, updateData, stats, projectCache);
@@ -896,7 +921,9 @@ async function processActivities(
     }
 
     const status = (normalizeEnum(row.status, ActivityStatus) as any) ?? ActivityStatus.NOT_STARTED;
-    const ownerId = row.owner_email ? personCache.get(row.owner_email) : null;
+    const ownerId = row.owner_email
+      ? personCache.get(row.owner_email) ?? (await prisma.person.findUnique({ where: { email: row.owner_email } }))?.id
+      : null;
     const departmentId = await ensureDepartment(prisma, row.department_code, departmentCache);
     const dueDate = parseDate(row.due_date);
 
