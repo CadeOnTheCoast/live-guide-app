@@ -3,8 +3,8 @@
 import { useId } from "react";
 import { useFormState } from "react-dom";
 import { KeyResultStatus } from "@prisma/client";
-import { cycleKeyResultStatus, upsertKeyResult } from "@/app/projects/[projectSlug]/overview/actions";
 import {
+  cycleStatusInitialState,
   keyResultFormInitialState,
   type CycleStatusState,
   type KeyResultFormState
@@ -44,12 +44,17 @@ type KeyResultRowFormProps = {
   projectId: string;
   objectiveId: string;
   slug: string;
+  upsertAction: KeyResultFormAction;
+  cycleStatusAction: CycleStatusAction;
   people: PersonOption[];
   departments: DepartmentOption[];
   keyResult?: KeyResult;
   isNew?: boolean;
   canEdit: boolean;
 };
+
+type KeyResultFormAction = (prevState: KeyResultFormState, formData: FormData) => Promise<KeyResultFormState>;
+type CycleStatusAction = (prevState: CycleStatusState, formData: FormData) => Promise<CycleStatusState>;
 
 function toDateInputValue(date?: Date | null) {
   if (!date) return "";
@@ -60,6 +65,8 @@ export function KeyResultRowForm({
   projectId,
   objectiveId,
   slug,
+  upsertAction,
+  cycleStatusAction,
   people,
   departments,
   keyResult,
@@ -67,42 +74,30 @@ export function KeyResultRowForm({
   canEdit
 }: KeyResultRowFormProps) {
   const formId = useId();
-  const [state, formAction] = useFormState<KeyResultFormState, FormData>(upsertKeyResult, keyResultFormInitialState);
-  const [cycleState, cycleAction] = useFormState<CycleStatusState, FormData>(cycleKeyResultStatus, {});
+  const [state, formAction] = useFormState<KeyResultFormState, FormData>(upsertAction, keyResultFormInitialState);
+  const [cycleState, cycleAction] = useFormState<CycleStatusState, FormData>(cycleStatusAction, cycleStatusInitialState);
 
   const defaultStatus = keyResult?.status ?? KeyResultStatus.GREEN;
 
   return (
-    <>
-      <form
-        id={formId}
-        action={formAction}
-        className="hidden"
-        suppressHydrationWarning
-      >
-        <input type="hidden" name="projectId" value={projectId} />
-        <input type="hidden" name="objectiveId" value={objectiveId} />
-        <input type="hidden" name="slug" value={slug} />
-        <input type="hidden" name="keyResultId" value={keyResult?.id ?? ""} />
-      </form>
-      <TableRow className={isNew ? "bg-muted/40" : undefined}>
-        <TableCell className="align-top">
+    <TableRow className={isNew ? "bg-muted/40" : undefined}>
+      <TableCell className="align-top">
           {canEdit ? (
             <Input form={formId} name="code" defaultValue={keyResult?.code ?? ""} placeholder="KR1" />
           ) : (
             <span className="font-medium">{keyResult?.code}</span>
           )}
           {state.errors?.code && <p className="text-xs text-destructive">{state.errors.code}</p>}
-        </TableCell>
-        <TableCell className="align-top">
+      </TableCell>
+      <TableCell className="align-top">
           {canEdit ? (
             <Input form={formId} name="title" defaultValue={keyResult?.title ?? ""} placeholder="Describe the key result" />
           ) : (
             <div className="font-medium">{keyResult?.title}</div>
           )}
           {state.errors?.title && <p className="text-xs text-destructive">{state.errors.title}</p>}
-        </TableCell>
-        <TableCell className="align-top">
+      </TableCell>
+      <TableCell className="align-top">
           {canEdit ? (
             <Select form={formId} name="ownerId" defaultValue={keyResult?.ownerId ?? ""}>
               <option value="">Unassigned</option>
@@ -115,8 +110,8 @@ export function KeyResultRowForm({
           ) : (
             <span>{people.find((person) => person.id === keyResult?.ownerId)?.name ?? "—"}</span>
           )}
-        </TableCell>
-        <TableCell className="align-top">
+      </TableCell>
+      <TableCell className="align-top">
           {canEdit ? (
             <Select form={formId} name="departmentId" defaultValue={keyResult?.departmentId ?? ""}>
               <option value="">Unassigned</option>
@@ -131,8 +126,8 @@ export function KeyResultRowForm({
               {departments.find((department) => department.id === keyResult?.departmentId)?.code ?? "—"}
             </span>
           )}
-        </TableCell>
-        <TableCell className="align-top">
+      </TableCell>
+      <TableCell className="align-top">
           {canEdit ? (
             <div className="flex items-center gap-2">
               <Input form={formId} name="targetValue" defaultValue={keyResult?.targetValue ?? ""} placeholder="Target" />
@@ -143,15 +138,15 @@ export function KeyResultRowForm({
               {keyResult?.targetValue ?? "—"} {keyResult?.unit ?? ""}
             </span>
           )}
-        </TableCell>
-        <TableCell className="align-top">
+      </TableCell>
+      <TableCell className="align-top">
           {canEdit ? (
             <Input form={formId} name="currentValue" defaultValue={keyResult?.currentValue ?? ""} placeholder="Current" />
           ) : (
             <span>{keyResult?.currentValue ?? "—"}</span>
           )}
-        </TableCell>
-        <TableCell className="align-top">
+      </TableCell>
+      <TableCell className="align-top">
           {canEdit ? (
             <div className="flex items-center gap-2">
               <Select form={formId} name="status" defaultValue={defaultStatus}>
@@ -175,8 +170,8 @@ export function KeyResultRowForm({
             <Badge className={STATUS_LABELS[keyResult.status].className}>{STATUS_LABELS[keyResult.status].label}</Badge>
           ) : null}
           {cycleState?.formError && <p className="text-xs text-destructive">{cycleState.formError}</p>}
-        </TableCell>
-        <TableCell className="align-top">
+      </TableCell>
+      <TableCell className="align-top">
           {canEdit ? (
             <Input form={formId} name="dueDate" type="date" defaultValue={toDateInputValue(keyResult?.dueDate ?? null)} />
           ) : keyResult?.dueDate ? (
@@ -185,18 +180,23 @@ export function KeyResultRowForm({
             "—"
           )}
           {state.errors?.dueDate && <p className="text-xs text-destructive">{state.errors.dueDate}</p>}
+      </TableCell>
+      {canEdit && (
+        <TableCell className="align-top text-right">
+          <form id={formId} action={formAction} className="hidden">
+            <input type="hidden" name="projectId" value={projectId} />
+            <input type="hidden" name="objectiveId" value={objectiveId} />
+            <input type="hidden" name="slug" value={slug} />
+            <input type="hidden" name="keyResultId" value={keyResult?.id ?? ""} />
+          </form>
+          <div className="flex flex-col items-end gap-2">
+            <Button type="submit" form={formId} size="sm" variant={isNew ? "default" : "outline"}>
+              {isNew ? "Add" : "Save"}
+            </Button>
+            {state.formError && <p className="text-xs text-destructive">{state.formError}</p>}
+          </div>
         </TableCell>
-        {canEdit && (
-          <TableCell className="align-top text-right">
-            <div className="flex flex-col items-end gap-2">
-              <Button type="submit" form={formId} size="sm" variant={isNew ? "default" : "outline"}>
-                {isNew ? "Add" : "Save"}
-              </Button>
-              {state.formError && <p className="text-xs text-destructive">{state.formError}</p>}
-            </div>
-          </TableCell>
-        )}
-      </TableRow>
-    </>
+      )}
+    </TableRow>
   );
 }

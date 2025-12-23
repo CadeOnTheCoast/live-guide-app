@@ -4,7 +4,14 @@ import { redirect } from "next/navigation";
 import { getUserOrRedirect } from "@/server/auth";
 import { canManageAdminArea } from "@/server/permissions";
 
-const adminLinks = [
+export const dynamic = "force-dynamic";
+
+type AdminLink = {
+  href: "/admin/departments" | "/admin/people" | "/admin/projects";
+  label: string;
+};
+
+const adminLinks: AdminLink[] = [
   { href: "/admin/departments", label: "Departments" },
   { href: "/admin/people", label: "People" },
   { href: "/admin/projects", label: "Projects" }
@@ -26,11 +33,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
         </div>
         <nav className="space-y-2 text-sm">
           {adminLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href as any}
-              className="flex items-center justify-between rounded-md px-3 py-2 hover:bg-muted"
-            >
+            <Link key={link.href} href={link.href} className="flex items-center justify-between rounded-md px-3 py-2 hover:bg-muted">
               <span>{link.label}</span>
             </Link>
           ))}

@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { MilestoneCategory, MilestoneStatus } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -36,7 +35,18 @@ export function MilestoneDetailPanel({ milestone, canEdit, onEdit, onDelete }: M
           <DetailItem label="Lead department" value={milestone.leadDepartment ? `${milestone.leadDepartment.code} — ${milestone.leadDepartment.name}` : "Unassigned"} />
           <DetailItem label="Objective" value={milestone.relatedObjective?.title ?? "None"} />
           <DetailItem label="Push" value={milestone.push?.name ?? "None"} />
-          <DetailItem label="Asana" value={asanaLink ? <Link href={asanaLink as any} className="text-primary underline" target="_blank" rel="noreferrer">Open in Asana</Link> : "None"} />
+          <DetailItem
+            label="Asana"
+            value={
+              asanaLink ? (
+                <a href={asanaLink} className="text-primary underline" target="_blank" rel="noreferrer">
+                  Open in Asana
+                </a>
+              ) : (
+                "None"
+              )
+            }
+          />
         </div>
 
         <Section title="Activities" emptyLabel="No related activities">

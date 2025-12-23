@@ -3,6 +3,8 @@ import AppSidebar from "@/components/layout/AppSidebar";
 import AppTopBar from "@/components/layout/AppTopBar";
 import { getUserOrRedirect } from "@/server/auth";
 
+export const dynamic = "force-dynamic";
+
 export default async function ProjectsLayout({ children }: { children: ReactNode }) {
   await getUserOrRedirect("/projects");
 

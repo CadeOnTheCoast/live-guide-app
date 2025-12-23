@@ -3,7 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { useFormState } from "react-dom";
 import { Push } from "@prisma/client";
-import { pushInitialState, type PushFormState, upsertPush } from "@/app/projects/[projectSlug]/pushes/actions";
+import { pushInitialState, type PushFormState } from "@/app/projects/[projectSlug]/pushes/formState";
+import { upsertPush } from "@/app/projects/[projectSlug]/pushes/actions";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";

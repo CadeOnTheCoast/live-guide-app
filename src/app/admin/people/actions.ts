@@ -4,20 +4,10 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { db } from "@/server/db";
-
-export type PersonFormState = {
-  errors: {
-    name?: string;
-    email?: string;
-    role?: string;
-  };
-  formError?: string;
-};
+import type { PersonActiveState, PersonFormState } from "./formState";
 
 const USER_ROLES = ["ADMIN", "EDITOR", "VIEWER"] as const;
 type UserRole = (typeof USER_ROLES)[number];
-
-export const personInitialState: PersonFormState = { errors: {} };
 
 function isValidEmail(email: string) {
   return /.+@.+\..+/.test(email);
@@ -76,10 +66,6 @@ export async function upsertPerson(prevState: PersonFormState, formData: FormDat
   revalidatePath("/admin/projects");
   redirect("/admin/people");
 }
-
-export type PersonActiveState = { formError?: string };
-
-export const personActiveInitialState: PersonActiveState = {};
 
 export async function setPersonActive(prevState: PersonActiveState, formData: FormData) {
   const id = formData.get("id")?.toString();

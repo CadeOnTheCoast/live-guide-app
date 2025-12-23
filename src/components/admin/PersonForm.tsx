@@ -7,8 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Select } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/admin/SharedCheckbox";
-import type { PersonFormState } from "@/app/admin/people/actions";
-import { personInitialState, upsertPerson } from "@/app/admin/people/actions";
+import { personInitialState, type PersonFormState } from "@/app/admin/people/formState";
+import { upsertPerson } from "@/app/admin/people/actions";
 
 type DepartmentOption = { id: string; name: string };
 

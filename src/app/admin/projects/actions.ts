@@ -4,20 +4,8 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { db } from "@/server/db";
-
-export type ProjectFormState = {
-  errors: {
-    name?: string;
-    slug?: string;
-    date?: string;
-  };
-  formError?: string;
-};
-
-export const PROJECT_STATUS_OPTIONS = ["PLANNING", "ACTIVE", "PAUSED", "COMPLETED"] as const;
-type ProjectStatus = (typeof PROJECT_STATUS_OPTIONS)[number];
-
-export const projectInitialState: ProjectFormState = { errors: {} };
+import type { ProjectFormState, ProjectStatus } from "./formState";
+import { PROJECT_STATUS_OPTIONS } from "./formState";
 
 function parseDate(value: string | undefined | null) {
   if (!value) return null;

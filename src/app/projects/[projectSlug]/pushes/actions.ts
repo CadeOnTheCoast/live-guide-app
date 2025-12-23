@@ -6,6 +6,7 @@ import { db } from "@/server/db";
 import { getUserOrRedirect } from "@/server/auth";
 import { canEditProject } from "@/server/permissions";
 import { formatPushName } from "@/server/pushes";
+import type { ActivityFormState, PushFormState } from "./formState";
 
 function parseDate(value: string | undefined | null) {
   if (!value) return null;
@@ -16,18 +17,6 @@ function parseDate(value: string | undefined | null) {
 function getPushesPath(slug?: string | null) {
   return slug ? `/projects/${slug}/pushes` : "/projects";
 }
-
-export type PushFormState = {
-  errors: {
-    startDate?: string;
-    endDate?: string;
-    sequenceIndex?: string;
-  };
-  formError?: string;
-  success?: boolean;
-};
-
-export const pushInitialState: PushFormState = { errors: {}, success: false };
 
 export async function upsertPush(prevState: PushFormState, formData: FormData) {
   const { person } = await getUserOrRedirect();
@@ -124,17 +113,6 @@ export async function upsertPush(prevState: PushFormState, formData: FormData) {
   revalidatePath(`/projects/${slug}/overview`);
   return { errors: {}, success: true };
 }
-
-export type ActivityFormState = {
-  errors: {
-    title?: string;
-    status?: string;
-  };
-  formError?: string;
-  success?: boolean;
-};
-
-export const activityInitialState: ActivityFormState = { errors: {}, success: false };
 
 export async function upsertActivity(prevState: ActivityFormState, formData: FormData) {
   const { person } = await getUserOrRedirect();

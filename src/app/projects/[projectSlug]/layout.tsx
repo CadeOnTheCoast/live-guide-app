@@ -11,7 +11,7 @@ const tabs = [
   { slug: "comms", label: "Comms" },
   { slug: "budget", label: "Budget" },
   { slug: "case-for-change", label: "Case for change" }
-];
+] as const;
 
 export default async function ProjectLayout({
   children,
@@ -36,11 +36,7 @@ export default async function ProjectLayout({
       </div>
       <nav className="flex flex-wrap gap-2 border-b pb-2 text-sm">
         {tabs.map((tab) => (
-          <Link
-            key={tab.slug}
-            href={`/projects/${project.slug}/${tab.slug}` as any}
-            className="rounded-md px-3 py-1 hover:bg-muted"
-          >
+          <Link key={tab.slug} href={`/projects/${project.slug}/${tab.slug}`} className="rounded-md px-3 py-1 hover:bg-muted">
             {tab.label}
           </Link>
         ))}
