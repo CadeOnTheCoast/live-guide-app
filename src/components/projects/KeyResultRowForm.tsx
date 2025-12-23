@@ -21,7 +21,8 @@ const STATUS_OPTIONS = Object.values(KeyResultStatus) as KeyResultStatus[];
 const STATUS_LABELS: Record<KeyResultStatus, { label: string; className: string }> = {
   [KeyResultStatus.GREEN]: { label: "On track", className: "bg-emerald-100 text-emerald-800" },
   [KeyResultStatus.YELLOW]: { label: "At risk", className: "bg-amber-100 text-amber-800" },
-  [KeyResultStatus.RED]: { label: "Off track", className: "bg-red-100 text-red-800" }
+  [KeyResultStatus.RED]: { label: "Off track", className: "bg-red-100 text-red-800" },
+  [KeyResultStatus.ACHIEVED]: { label: "Achieved", className: "bg-emerald-200 text-emerald-900" }
 };
 
 type PersonOption = { id: string; name: string };
@@ -79,6 +80,9 @@ export function KeyResultRowForm({
   const [cycleState, cycleAction] = useFormState<CycleStatusState, FormData>(cycleStatusAction, cycleStatusInitialState);
 
   const defaultStatus = keyResult?.status ?? KeyResultStatus.GREEN;
+  const statusBadge = keyResult
+    ? STATUS_LABELS[keyResult.status] ?? { label: keyResult.status, className: "bg-slate-100 text-slate-800" }
+    : null;
 
   return (
     <TableRow className={cn("text-sm", isNew ? "bg-muted/40" : undefined)}>
@@ -168,7 +172,7 @@ export function KeyResultRowForm({
             )}
           </div>
         ) : keyResult ? (
-          <Badge className={STATUS_LABELS[keyResult.status].className}>{STATUS_LABELS[keyResult.status].label}</Badge>
+          statusBadge && <Badge className={statusBadge.className}>{statusBadge.label}</Badge>
         ) : null}
         {cycleState?.formError && <p className="text-xs text-destructive">{cycleState.formError}</p>}
       </TableCell>
