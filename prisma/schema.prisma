@@ -413,6 +413,7 @@ model Stakeholder {
   audience        String?
   plan            String?
   everyActionUrl  String?
+  influencers     String?
   notes          String?
 
   project        Project          @relation(fields: [projectId], references: [id])
