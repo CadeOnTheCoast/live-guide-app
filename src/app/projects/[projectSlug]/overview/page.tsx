@@ -32,7 +32,7 @@ export default async function ProjectOverviewPage({ params }: { params: { projec
   const { person } = await getUserOrRedirect();
   const project = await getProjectOverviewBySlug(params.projectSlug);
 
-  if (!project) return notFound();
+  if (!project || !project.isActive) return notFound();
 
   const [currentObjective] = await Promise.all([
     getCurrentObjectiveForProject(project.id)
@@ -227,10 +227,10 @@ export default async function ProjectOverviewPage({ params }: { params: { projec
           <CardContent className="pt-6">
             {project.commsProfile?.keyMessages.length ? (
               <div className="space-y-4">
-                {project.commsProfile.keyMessages.map((msg: { id: string; message: string }) => (
+                {project.commsProfile.keyMessages.map((msg: { id: string; text: string }) => (
                   <div key={msg.id} className="flex gap-3">
                     <div className="mt-1.5 h-1.5 w-1.5 rounded-full bg-brand-teal shrink-0" />
-                    <p className="text-sm text-brand-charcoal/80 leading-relaxed">{msg.message}</p>
+                    <p className="text-sm text-brand-charcoal/80 leading-relaxed">{msg.text}</p>
                   </div>
                 ))}
               </div>

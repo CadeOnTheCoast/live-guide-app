@@ -57,7 +57,7 @@ export function StakeholderFormDialog({ projectId, stakeholder, trigger }: Stake
                                 id="stakeholderType"
                                 name="stakeholderType"
                                 defaultValue={type}
-                                onValueChange={(v) => setType(v as StakeholderType)}
+                                onChange={(e) => setType(e.target.value as StakeholderType)}
                             >
                                 <option value={StakeholderType.ALLY}>Ally</option>
                                 <option value={StakeholderType.COMMUNITY_LEADER}>Community Leader</option>

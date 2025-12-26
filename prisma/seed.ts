@@ -3,11 +3,11 @@ import { PrismaClient } from "@prisma/client";
 const db = new PrismaClient();
 
 const departments = [
-  { code: "PM", name: "Project Management" },
-  { code: "GA", name: "Government Affairs" },
-  { code: "CE", name: "Community Engagement" },
-  { code: "COMMS", name: "Communications" },
-  { code: "FR", name: "Field and Research" }
+  { code: "PM", name: "Project Management", sortOrder: 10 },
+  { code: "GA", name: "Government Affairs", sortOrder: 20 },
+  { code: "CE", name: "Community Engagement", sortOrder: 30 },
+  { code: "FR", name: "Field and Research", sortOrder: 40 },
+  { code: "DEV", name: "Development", sortOrder: 50 }
 ];
 
 const people = [
@@ -52,18 +52,23 @@ const projects: ProjectSeed[] = [
 ];
 
 export async function seed() {
+  console.log("Starting seed...");
+
+  // 1. Departments
   const departmentRecords = await Promise.all(
-    departments.map(({ code, name }) =>
+    departments.map(({ code, name, sortOrder }) =>
       db.department.upsert({
         where: { code },
-        update: { name },
-        create: { code, name }
+        update: { name, sortOrder, isActive: true },
+        create: { code, name, sortOrder, isActive: true }
       })
     )
   );
+  console.log(`Upserted ${departmentRecords.length} canonical departments.`);
 
   const departmentByCode = Object.fromEntries(departmentRecords.map((dept) => [dept.code, dept]));
 
+  // 2. People
   const peopleRecords = await Promise.all(
     people.map((person) => {
       const department = departmentByCode[person.departmentCode];
@@ -73,20 +78,24 @@ export async function seed() {
         update: {
           name: person.name,
           defaultDepartmentId: department?.id,
-          role: person.role
+          role: person.role,
+          isActive: true
         },
         create: {
           name: person.name,
           email: person.email,
           role: person.role,
+          isActive: true,
           defaultDepartment: department ? { connect: { id: department.id } } : undefined
         }
       });
     })
   );
+  console.log(`Upserted ${peopleRecords.length} core people.`);
 
   const peopleByEmail = Object.fromEntries(peopleRecords.map((personRecord) => [personRecord.email, personRecord]));
 
+  // 3. Projects
   for (const project of projects) {
     const primaryOwner = peopleByEmail[project.ownerEmail];
 
@@ -96,17 +105,20 @@ export async function seed() {
         name: project.name,
         status: project.status,
         startDate: project.startDate,
-        primaryOwner: primaryOwner ? { connect: { id: primaryOwner.id } } : undefined
+        primaryOwner: primaryOwner ? { connect: { id: primaryOwner.id } } : undefined,
+        isActive: true
       },
       create: {
         name: project.name,
         slug: project.slug,
         status: project.status,
         startDate: project.startDate,
-        primaryOwner: primaryOwner ? { connect: { id: primaryOwner.id } } : undefined
+        primaryOwner: primaryOwner ? { connect: { id: primaryOwner.id } } : undefined,
+        isActive: true
       }
     });
   }
+  console.log(`Upserted ${projects.length} required projects.`);
 
   return { departments: departmentRecords.length, people: peopleRecords.length, projects: projects.length };
 }
@@ -114,11 +126,9 @@ export async function seed() {
 async function run() {
   try {
     const result = await seed();
-    console.log(
-      `Seeded ${result.departments} departments, ${result.people} people, ${result.projects} projects.`
-    );
+    console.log("Seed finished successfully.");
   } catch (e) {
-    console.error(e);
+    console.error("Seed failed:", e);
     process.exit(1);
   } finally {
     await db.$disconnect();

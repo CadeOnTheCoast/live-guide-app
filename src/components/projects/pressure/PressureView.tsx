@@ -43,7 +43,7 @@ export function PressureView({ project, decisionMakers, stakeholders, canEdit }:
     const selectedDm = decisionMakers.find(dm => dm.id === selectedDmId) ?? decisionMakers[0];
     const selectedStakeholder = stakeholders.find(s => s.id === selectedStakeholderId);
 
-    const affinityGroups = stakeholders.filter(s => [StakeholderType.COMMUNITY_LEADER, StakeholderType.ALLY, StakeholderType.INFLUENCER].includes(s.stakeholderType));
+    const affinityGroups = stakeholders.filter(s => ([StakeholderType.COMMUNITY_LEADER, StakeholderType.ALLY, StakeholderType.INFLUENCER] as StakeholderType[]).includes(s.stakeholderType));
     const opponents = stakeholders.filter(s => s.stakeholderType === StakeholderType.OPPONENT);
     const mediaOutlets = stakeholders.filter(s => s.stakeholderType === StakeholderType.MEDIA_OUTLET);
 
@@ -256,7 +256,7 @@ export function PressureView({ project, decisionMakers, stakeholders, canEdit }:
                                             )}
                                             {selectedDm?.pressureAssets?.length > 0 ? (
                                                 <Button variant="outline" size="sm" className="h-7 text-[10px] bg-white border-brand-charcoal text-brand-charcoal hover:bg-brand-charcoal hover:text-white" asChild>
-                                                    <a href={selectedDm.everyActionUrl} target="_blank" rel="noreferrer"><ExternalLink className="h-3 w-3 mr-1" /> View in CRM</a>
+                                                    <a href={selectedDm.everyActionUrl ?? undefined} target="_blank" rel="noreferrer"><ExternalLink className="h-3 w-3 mr-1" /> View in CRM</a>
                                                 </Button>
                                             ) : (
                                                 <Button variant="ghost" size="sm" className="h-7 text-[10px] text-muted-foreground italic" asChild>
@@ -342,7 +342,7 @@ function StakeholderGrid({ title, icon, stakeholders, selectedId, onSelect, empt
             <CardContent className="p-6">
                 {stakeholders.length > 0 ? (
                     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                        {stakeholders.map((s: any) => (
+                        {stakeholders.map((s: Stakeholder) => (
                             <button
                                 key={s.id}
                                 onClick={() => onSelect(s.id)}
@@ -394,7 +394,7 @@ function StakeholderDetailCard({ stakeholder, onClear, canEdit, projectId }: { s
                     )}
                     {stakeholder.everyActionUrl && (
                         <Button variant="outline" size="sm" className="h-8 text-[11px] bg-white/10 border-white/20 text-white hover:bg-white/20" asChild>
-                            <a href={stakeholder.everyActionUrl} target="_blank" rel="noreferrer"><ExternalLink className="h-3 w-3 mr-1" /> CRM</a>
+                            <a href={stakeholder.everyActionUrl ?? undefined} target="_blank" rel="noreferrer"><ExternalLink className="h-3 w-3 mr-1" /> CRM</a>
                         </Button>
                     )}
                     <Button variant="ghost" size="sm" className="h-8 w-8 text-white/60 hover:text-white" onClick={onClear}>✕</Button>
@@ -424,7 +424,7 @@ function StakeholderDetailCard({ stakeholder, onClear, canEdit, projectId }: { s
                         <p className="text-[11px] font-bold uppercase tracking-widest text-brand-sage mb-4">Strategic Execution</p>
                         <div className="grid sm:grid-cols-2 gap-8">
                             {/* Affinity Specific Fields */}
-                            {[StakeholderType.COMMUNITY_LEADER, StakeholderType.ALLY, StakeholderType.INFLUENCER].includes(stakeholder.stakeholderType) && (
+                            {([StakeholderType.COMMUNITY_LEADER, StakeholderType.ALLY, StakeholderType.INFLUENCER] as StakeholderType[]).includes(stakeholder.stakeholderType) && (
                                 <>
                                     <div className="space-y-4">
                                         <div>
@@ -444,7 +444,6 @@ function StakeholderDetailCard({ stakeholder, onClear, canEdit, projectId }: { s
                                     </div>
                                 </>
                             )}
-
                             {/* Opponent Specific Fields */}
                             {stakeholder.stakeholderType === StakeholderType.OPPONENT && (
                                 <>

@@ -4,6 +4,7 @@ import SidebarClient from "./SidebarClient";
 
 export default async function AppSidebar() {
   const projects = await db.project.findMany({
+    where: { isActive: true },
     orderBy: { name: "asc" },
     take: 20,
     select: { id: true, name: true, slug: true, status: true }

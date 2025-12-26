@@ -26,6 +26,7 @@ export function getProjectBySlug(slug: string) {
 
 export function getAllProjectsWithTimelineData() {
   return db.project.findMany({
+    where: { isActive: true },
     orderBy: { name: "asc" },
     include: {
       milestones: {

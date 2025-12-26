@@ -477,7 +477,6 @@ async function processProjects(
       primaryOwnerId: primaryOwnerId ?? null,
       asanaWorkspaceGid: workspaceGid,
       asanaProjectGid: row.asana_project_gid ?? null,
-      asanaProjectGid: row.asana_project_gid ?? null,
       asanaTeamGid: teamGid,
       teamsUrl: row.teams_url ?? null,
       asanaUrl: row.asana_url ?? null,
