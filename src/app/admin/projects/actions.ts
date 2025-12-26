@@ -4,6 +4,8 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { db } from "@/server/db";
+import { getUserOrRedirect } from "@/server/auth";
+import { logAudit } from "@/server/audit";
 import type { ProjectFormState, ProjectStatus } from "./formState";
 import { PROJECT_STATUS_OPTIONS } from "./formState";
 
@@ -68,10 +70,42 @@ export async function upsertProject(prevState: ProjectFormState, formData: FormD
   };
 
   try {
+    const { user } = await getUserOrRedirect();
+    const actorEmail = user.email!;
+    const actorUserId = user.id;
+
     if (id) {
-      await db.project.update({ where: { id }, data });
+      const before = await db.project.findUnique({ where: { id } });
+      const after = await db.project.update({ where: { id }, data });
+
+      try {
+        await logAudit({
+          actorEmail,
+          actorUserId,
+          action: "UPDATE",
+          entityType: "Project",
+          entityId: id,
+          before,
+          after,
+        });
+      } catch (e) {
+        console.error("Audit log failed for project update:", e);
+      }
     } else {
-      await db.project.create({ data });
+      const after = await db.project.create({ data });
+
+      try {
+        await logAudit({
+          actorEmail,
+          actorUserId,
+          action: "CREATE",
+          entityType: "Project",
+          entityId: after.id,
+          after,
+        });
+      } catch (e) {
+        console.error("Audit log failed for project create:", e);
+      }
     }
   } catch (error: unknown) {
     if (error instanceof PrismaClientKnownRequestError && error.code === "P2002") {

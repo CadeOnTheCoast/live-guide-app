@@ -32,7 +32,7 @@ export default async function ProjectOverviewPage({ params }: { params: { projec
   const { person } = await getUserOrRedirect();
   const project = await getProjectOverviewBySlug(params.projectSlug);
 
-  if (!project) return notFound();
+  if (!project || !project.isActive) return notFound();
 
   const [currentObjective] = await Promise.all([
     getCurrentObjectiveForProject(project.id)

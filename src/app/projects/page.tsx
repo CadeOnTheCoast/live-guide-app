@@ -12,6 +12,7 @@ type ProjectSummary = {
 
 export default async function ProjectsHomePage() {
   const projects = (await db.project.findMany({
+    where: { isActive: true },
     orderBy: { createdAt: "desc" },
     take: 10,
     select: { id: true, name: true, slug: true, status: true }

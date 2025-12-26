@@ -4,12 +4,16 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { db } from "@/server/db";
+import { getUserOrRedirect } from "@/server/auth";
+import { logAudit } from "@/server/audit";
 import type { DeleteDepartmentState, DepartmentFormState } from "./formState";
 
 export async function upsertDepartment(prevState: DepartmentFormState, formData: FormData) {
   const id = formData.get("id")?.toString();
   const name = formData.get("name")?.toString().trim();
   const code = formData.get("code")?.toString().trim();
+  const isActive = formData.get("isActive") === "on";
+  const sortOrder = parseInt(formData.get("sortOrder")?.toString() || "0", 10);
 
   const errors: DepartmentFormState["errors"] = {};
 
@@ -26,12 +30,52 @@ export async function upsertDepartment(prevState: DepartmentFormState, formData:
   }
 
   try {
-    const data = { name: name!, code: code! };
+    const { user } = await getUserOrRedirect();
+    const actorEmail = user.email!;
+    const actorUserId = user.id;
+    const data = {
+      name: name!,
+      code: code!,
+      isActive,
+      sortOrder
+    };
 
     if (id) {
-      await db.department.update({ where: { id }, data });
+      const before = await db.department.findUnique({ where: { id } });
+
+      // Protect canonical code on update if desired
+      // If updating, we ignore the code from the form to keep it immutable
+      const updateData = { name: data.name, isActive: data.isActive, sortOrder: data.sortOrder };
+      const after = await db.department.update({ where: { id }, data: updateData });
+
+      try {
+        await logAudit({
+          actorEmail,
+          actorUserId,
+          action: "UPDATE",
+          entityType: "Department",
+          entityId: id,
+          before,
+          after,
+        });
+      } catch (e) {
+        console.error("Audit log failed for department update:", e);
+      }
     } else {
-      await db.department.create({ data });
+      const after = await db.department.create({ data });
+
+      try {
+        await logAudit({
+          actorEmail,
+          actorUserId,
+          action: "CREATE",
+          entityType: "Department",
+          entityId: after.id,
+          after,
+        });
+      } catch (e) {
+        console.error("Audit log failed for department create:", e);
+      }
     }
   } catch (error: unknown) {
     if (error instanceof PrismaClientKnownRequestError && error.code === "P2002") {
@@ -82,7 +126,25 @@ export async function deleteDepartment(prevState: DeleteDepartmentState, formDat
     return { formError: "Cannot delete a department that is referenced by people or activities." };
   }
 
+  const { user } = await getUserOrRedirect();
+  const actorEmail = user.email!;
+  const actorUserId = user.id;
+
+  const before = await db.department.findUnique({ where: { id } });
   await db.department.delete({ where: { id } });
+
+  try {
+    await logAudit({
+      actorEmail,
+      actorUserId,
+      action: "DELETE",
+      entityType: "Department",
+      entityId: id,
+      before,
+    });
+  } catch (e) {
+    console.error("Audit log failed for department delete:", e);
+  }
   revalidatePath("/admin/departments");
   revalidatePath("/projects");
   redirect("/admin/departments");

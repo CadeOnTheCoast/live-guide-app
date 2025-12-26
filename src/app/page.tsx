@@ -16,8 +16,9 @@ type ProjectRow = {
   } | null;
 };
 
- async function getProjects(): Promise<ProjectRow[]> {
+async function getProjects(): Promise<ProjectRow[]> {
   const projects = await db.project.findMany({
+    where: { isActive: true },
     take: 10,
     orderBy: { createdAt: "desc" },
     include: { primaryOwner: { include: { defaultDepartment: true } } }

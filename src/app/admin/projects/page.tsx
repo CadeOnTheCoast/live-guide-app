@@ -3,9 +3,17 @@ import { db } from "@/server/db";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
 
-export default async function ProjectsAdminPage() {
+export default async function ProjectsAdminPage({
+  searchParams,
+}: {
+  searchParams: { showInactive?: string };
+}) {
+  const showInactive = searchParams.showInactive === "true";
+
   const projects = await db.project.findMany({
+    where: showInactive ? {} : { isActive: true },
     orderBy: { name: "asc" },
     include: { primaryOwner: true }
   });
@@ -17,13 +25,20 @@ export default async function ProjectsAdminPage() {
           <p className="text-sm uppercase tracking-wide text-muted-foreground">Admin</p>
           <h2 className="text-2xl font-bold">Projects</h2>
         </div>
-        <Button asChild>
-          <Link href="/admin/projects/new">New project</Link>
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="outline" asChild>
+            <Link href={showInactive ? "/admin/projects" : "/admin/projects?showInactive=true"}>
+              {showInactive ? "Hide Inactive" : "Show Inactive"}
+            </Link>
+          </Button>
+          <Button asChild>
+            <Link href="/admin/projects/new">New project</Link>
+          </Button>
+        </div>
       </div>
       <Card>
         <CardHeader>
-          <CardTitle>All projects</CardTitle>
+          <CardTitle>All projects {showInactive && "(including inactive)"}</CardTitle>
         </CardHeader>
         <CardContent>
           <Table>
@@ -31,22 +46,26 @@ export default async function ProjectsAdminPage() {
               <TableRow>
                 <TableHead>Name</TableHead>
                 <TableHead>Status</TableHead>
+                <TableHead>Active</TableHead>
                 <TableHead>Primary owner</TableHead>
-                <TableHead>Start date</TableHead>
-                <TableHead>End date</TableHead>
-                <TableHead>Asana GID</TableHead>
                 <TableHead className="w-[160px] text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {projects.map((project: (typeof projects)[number]) => (
-                <TableRow key={project.id}>
+              {projects.map((project) => (
+                <TableRow key={project.id} className={!project.isActive ? "opacity-60" : ""}>
                   <TableCell className="font-medium">{project.name}</TableCell>
-                  <TableCell>{project.status}</TableCell>
+                  <TableCell>
+                    <Badge variant="outline">{project.status}</Badge>
+                  </TableCell>
+                  <TableCell>
+                    {project.isActive ? (
+                      <Badge className="bg-green-100 text-green-800 hover:bg-green-100 border-none">Active</Badge>
+                    ) : (
+                      <Badge variant="secondary">Inactive</Badge>
+                    )}
+                  </TableCell>
                   <TableCell>{project.primaryOwner?.name ?? "—"}</TableCell>
-                  <TableCell>{project.startDate ? project.startDate.toISOString().substring(0, 10) : "—"}</TableCell>
-                  <TableCell>{project.endDate ? project.endDate.toISOString().substring(0, 10) : "—"}</TableCell>
-                  <TableCell>{project.asanaProjectGid ?? "—"}</TableCell>
                   <TableCell className="flex justify-end gap-2">
                     <Button variant="outline" size="sm" asChild>
                       <Link href={`/admin/projects/${project.id}`}>Edit</Link>

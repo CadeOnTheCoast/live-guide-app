@@ -5,9 +5,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_DATABASE_URL")
 }
 
 // ---------- Enums ----------
@@ -176,6 +176,9 @@ model Department {
   milestones       Milestone[]
   staffAllocations StaffAllocation[]
 
+  isActive         Boolean       @default(true)
+  sortOrder        Int           @default(0)
+
   createdAt        DateTime      @default(now())
   updatedAt        DateTime      @updatedAt
 }
@@ -239,6 +242,7 @@ model Project {
   commsFrames             CommsFrame[]
   commsFaqs               CommsFaq[]
 
+  isActive                Boolean         @default(true)
   createdAt               DateTime        @default(now())
   updatedAt               DateTime        @updatedAt
 }
@@ -353,6 +357,7 @@ model Milestone {
   description         String?
   date                DateTime
   isMajor             Boolean           @default(false)
+  // category and status are currently unused in favor of department-based coloring
   category            MilestoneCategory @default(OTHER)
   status              MilestoneStatus   @default(PLANNED)
 
@@ -615,4 +620,20 @@ model StaffAllocation {
 
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
+}
+
+model AuditLog {
+  id          String   @id @default(cuid())
+  actorEmail  String
+  actorUserId String?
+  action      String   // "CREATE", "UPDATE", "DELETE"
+  entityType  String
+  entityId    String
+  before      Json?
+  after       Json?
+  createdAt   DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([entityType, entityId])
+  @@index([actorEmail])
 }

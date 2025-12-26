@@ -4,6 +4,8 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { db } from "@/server/db";
+import { getUserOrRedirect } from "@/server/auth";
+import { logAudit } from "@/server/audit";
 import type { PersonActiveState, PersonFormState } from "./formState";
 
 const USER_ROLES = ["ADMIN", "EDITOR", "VIEWER"] as const;
@@ -50,10 +52,42 @@ export async function upsertPerson(prevState: PersonFormState, formData: FormDat
   };
 
   try {
+    const { user } = await getUserOrRedirect();
+    const actorEmail = user.email!;
+    const actorUserId = user.id;
+
     if (id) {
-      await db.person.update({ where: { id }, data });
+      const before = await db.person.findUnique({ where: { id } });
+      const after = await db.person.update({ where: { id }, data });
+
+      try {
+        await logAudit({
+          actorEmail,
+          actorUserId,
+          action: "UPDATE",
+          entityType: "Person",
+          entityId: id,
+          before,
+          after,
+        });
+      } catch (e) {
+        console.error("Audit log failed for person update:", e);
+      }
     } else {
-      await db.person.create({ data });
+      const after = await db.person.create({ data });
+
+      try {
+        await logAudit({
+          actorEmail,
+          actorUserId,
+          action: "CREATE",
+          entityType: "Person",
+          entityId: after.id,
+          after,
+        });
+      } catch (e) {
+        console.error("Audit log failed for person create:", e);
+      }
     }
   } catch (error: unknown) {
     if (error instanceof PrismaClientKnownRequestError && error.code === "P2002") {
@@ -77,7 +111,26 @@ export async function setPersonActive(prevState: PersonActiveState, formData: Fo
 
   const isActive = activeValue === "true";
   try {
-    await db.person.update({ where: { id }, data: { isActive } });
+    const { user } = await getUserOrRedirect();
+    const actorEmail = user.email!;
+    const actorUserId = user.id;
+
+    const before = await db.person.findUnique({ where: { id } });
+    const after = await db.person.update({ where: { id }, data: { isActive } });
+
+    try {
+      await logAudit({
+        actorEmail,
+        actorUserId,
+        action: "UPDATE",
+        entityType: "Person",
+        entityId: id,
+        before,
+        after,
+      });
+    } catch (e) {
+      console.error("Audit log failed for person active toggle:", e);
+    }
   } catch (error: unknown) {
     if (error instanceof PrismaClientKnownRequestError && error.code === "P2025") {
       return { formError: "Person not found" };
