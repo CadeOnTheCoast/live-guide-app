@@ -18,7 +18,8 @@
     "db:generate": "prisma generate",
     "db:seed": "prisma db seed",
     "db:backup": "./scripts/backup.sh",
-    "import-dashboard-data": "tsx scripts/import-dashboard-data.ts"
+    "import-dashboard-data": "tsx scripts/import-dashboard-data.ts",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^5.16.1",
