@@ -1120,6 +1120,7 @@ async function importProjectDir(
     person: Map<string, string>;
   }
 ) {
+  console.log(`\nImporting project directory: ${path.basename(projectDir)}`);
   const sheets = findSheetPaths(projectDir);
 
   const {
@@ -1141,74 +1142,89 @@ async function importProjectDir(
   } = sheets;
 
   if (people) {
+    console.log(`  Processing people...`);
     await processPeople(prisma, projectDir, people, stats, caches.department, caches.person);
   } else {
     stats.warnings.push(`No people file for ${path.basename(projectDir)}`);
   }
 
   if (projects) {
+    console.log(`  Processing projects...`);
     await processProjects(prisma, projectDir, projects, stats, caches.person, caches.project, caches.department);
   } else {
     stats.warnings.push(`No projects file for ${path.basename(projectDir)}`);
   }
 
   if (objectives) {
+    console.log(`  Processing objectives...`);
     await processObjectives(prisma, projectDir, objectives, stats, caches.project);
   } else {
     stats.warnings.push(`No objectives file for ${path.basename(projectDir)}`);
   }
 
   if (keyResults) {
+    console.log(`  Processing key results...`);
     await processKeyResults(prisma, projectDir, keyResults, stats, caches.project, caches.person, caches.department);
   } else {
     stats.warnings.push(`No key results file for ${path.basename(projectDir)}`);
   }
 
   if (pushes) {
+    console.log(`  Processing pushes...`);
     await processPushes(prisma, projectDir, pushes, stats, caches.project);
   } else {
     stats.warnings.push(`No pushes file for ${path.basename(projectDir)}`);
   }
 
   if (activities) {
+    console.log(`  Processing activities...`);
     await processActivities(prisma, projectDir, activities, stats, caches.project, caches.person, caches.department);
   }
 
   if (milestones) {
+    console.log(`  Processing milestones...`);
     await processMilestones(prisma, projectDir, milestones, stats, caches.project, caches.department);
   } else {
     stats.warnings.push(`No milestones file for ${path.basename(projectDir)}`);
   }
 
   if (decisionMakers) {
+    console.log(`  Processing decision makers...`);
     await processDecisionMakers(prisma, projectDir, decisionMakers, stats, caches.project);
   }
 
   if (budget) {
+    console.log(`  Processing budget...`);
     await processBudget(prisma, projectDir, budget, stats, caches.project);
   }
 
   if (staffAllocation) {
+    console.log(`  Processing staff allocation...`);
     await processStaffAllocation(prisma, projectDir, staffAllocation, stats, caches.project, caches.person, caches.department);
   }
 
   if (commsProfile) {
+    console.log(`  Processing comms profile...`);
     await processCommsProfile(prisma, projectDir, commsProfile, stats, caches.project, caches.person);
   }
 
   if (keyMessages) {
+    console.log(`  Processing key messages...`);
     await processKeyMessages(prisma, projectDir, keyMessages, stats, caches.project);
   }
 
   if (ctas) {
+    console.log(`  Processing CTAs...`);
     await processCTAs(prisma, projectDir, ctas, stats, caches.project);
   }
 
   if (commsFrames) {
+    console.log(`  Processing comms frames...`);
     await processCommsFrames(prisma, projectDir, commsFrames, stats, caches.project);
   }
 
   if (faqs) {
+    console.log(`  Processing FAQs...`);
     await processFAQs(prisma, projectDir, faqs, stats, caches.project);
   }
 

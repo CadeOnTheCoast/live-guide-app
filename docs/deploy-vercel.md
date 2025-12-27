@@ -1,43 +1,36 @@
-# Deployment Runbook: Vercel + Supabase
+# Vercel & Supabase Deployment Guide
 
-Follow these steps to ensure a successful deployment and database synchronization for the Live Guide application.
+This document outlines the required environment variables and steps to deploy the Live Guide application successfully.
 
-## 1. Required Environment Variables
+## Required Environment Variables
 
-Ensure the following environment variables are set in your Vercel Project Settings (Preview and Production):
+Set these in your Vercel Project Settings (Environment Variables):
 
-| Variable | Description | Example / Note |
+| Key | Value / Example | Notes |
 | :--- | :--- | :--- |
-| `DATABASE_URL` | Connection string for the application. | Use the pooled URL if using PgBouncer. Add `?pgbouncer=true&statement_cache_size=0` if needed. |
-| `DIRECT_DATABASE_URL` | Direct connection string for Prisma migrations. | Use the non-pooled, direct PostgreSQL URL from Supabase. |
-| `NEXT_PUBLIC_SUPABASE_URL` | URL for Supabase client. | Found in Supabase project settings. |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Anonymous key for Supabase client. | Found in Supabase project settings. |
+| `DATABASE_URL` | `postgresql://user:pass@host:5432/db?pgbouncer=true&statement_cache_size=0` | The pooler connection string. |
+| `DIRECT_DATABASE_URL` | `postgresql://user:pass@host:5432/db` | Direct connection string (no pooler). Required for migrations. |
+| `NEXT_PUBLIC_SUPABASE_URL` | `https://your-project.supabase.co` | |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | `your-anon-key` | |
 
-## 2. Database Migrations
+## Deployment Checklist
 
-To apply missing schema changes (like `isActive` or `AuditLog`) to your Supabase database:
+1. **Database Migrations**:
+   Run the following command locally or via a CI pipeline to apply migrations to production:
+   ```bash
+   npx prisma migrate deploy
+   ```
+   > [!IMPORTANT]
+   > Ensure `DIRECT_DATABASE_URL` is set in your local environment when running this.
 
-1.  **Direct Migration**: Use the `DIRECT_DATABASE_URL` in your local environment or CI.
-2.  **Safety**: Always use `prisma migrate deploy` to apply existing migrations without resetting the database.
-    ```bash
-    npx prisma migrate deploy
-    ```
-    > [!CAUTION]
-    > Never run `prisma migrate reset` in an environment with real data.
+2. **Vercel Runtime**:
+   The application is configured to run on the **Node.js** runtime. Edge runtime is not compatible with Prisma at this time.
 
-## 3. Build Parity
+3. **Prisma Generation**:
+   The Vercel build process will automatically run `prisma generate` if the `@prisma/client` dependency is present.
 
-The application must be built using Node.js runtime. Ensure no Edge runtime declarations are used in routes that import Prisma.
+## Troubleshooting
 
-To verify build locally:
-```bash
-npm install
-npx prisma generate
-npm run build
-```
-
-## 4. Troubleshooting
-
-- **db is undefined**: Ensure `DATABASE_URL` is set. The Prisma client in `src/server/db.ts` uses a global cache pattern.
-- **Module not found (zod)**: Ensure `zod` is listed in `dependencies` in `package.json` (fixed in v0.1.0).
-- **Project table does not exist**: This usually means the migration history is out of sync. Use `npx prisma migrate resolve --applied <migration_name>` ONLY if you are sure the migration has been manually applied to the DB.
+- **500 Errors (db undefined)**: Ensure `DATABASE_URL` is correctly set and that the Prisma client is initialized using the singleton pattern in `src/server/db.ts`.
+- **Missing Module 'zod'**: Ensure `zod` is listed in the `dependencies` section of `package.json`, not `devDependencies`.
+- **Schema Mismatches**: If you see errors about missing columns (like `isActive`), run `npx prisma migrate deploy`.
