@@ -4,6 +4,23 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { isAllowedEmail } from "@/server/auth-domain";
 import { getPersonByEmail } from "@/server/current-user";
 
+export async function getCurrentUser() {
+  const supabase = createSupabaseServerClient();
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  const user = session?.user;
+  const email = user?.email;
+
+  // if (!email || !isAllowedEmail(email)) {
+  //   return { user: null, person: null, supabase };
+  // }
+
+  const person = await getPersonByEmail(email);
+  return { user, person, supabase };
+}
+
 export async function getUserOrRedirect(nextPath?: string) {
   const supabase = createSupabaseServerClient();
   const {
@@ -19,10 +36,10 @@ export async function getUserOrRedirect(nextPath?: string) {
 
   const email = user.email;
 
-  if (!email || !isAllowedEmail(email)) {
-    await supabase.auth.signOut();
-    redirect(buildLoginRedirect(desiredNext, "unauthorized"));
-  }
+  // if (!email || !isAllowedEmail(email)) {
+  //   await supabase.auth.signOut();
+  //   redirect(buildLoginRedirect(desiredNext, "unauthorized"));
+  // }
 
   const person = email ? await getPersonByEmail(email) : null;
 
