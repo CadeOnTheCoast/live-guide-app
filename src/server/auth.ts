@@ -1,7 +1,6 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { isAllowedEmail } from "@/server/auth-domain";
 import { getPersonByEmail } from "@/server/current-user";
 
 export async function getCurrentUser() {
@@ -16,6 +15,10 @@ export async function getCurrentUser() {
   // if (!email || !isAllowedEmail(email)) {
   //   return { user: null, person: null, supabase };
   // }
+
+  if (!email) {
+    return { user, person: null, supabase };
+  }
 
   const person = await getPersonByEmail(email);
   return { user, person, supabase };
