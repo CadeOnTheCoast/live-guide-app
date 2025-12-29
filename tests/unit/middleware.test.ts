@@ -29,4 +29,13 @@ describe("middleware", () => {
 
     expect(response?.status).toBe(200);
   });
+
+  it("supports token-style magic link params", async () => {
+    const middleware = (await import("../../middleware")).middleware;
+    const request = new NextRequest("http://localhost:3000/projects?token=pkce-abc");
+
+    const response = middleware(request);
+
+    expect(response?.headers.get("location")).toBe("http://localhost:3000/auth/callback?code=pkce-abc&next=%2Fprojects");
+  });
 });

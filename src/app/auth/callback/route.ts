@@ -6,7 +6,10 @@ const DEFAULT_NEXT = "/projects";
 
 export async function GET(request: NextRequest) {
   const url = new URL(request.url);
-  const code = url.searchParams.get("code");
+  const code =
+    url.searchParams.get("code") ??
+    url.searchParams.get("token") ??
+    url.searchParams.get("token_hash");
   const next = resolveNextPath(url.searchParams.get("next") ?? DEFAULT_NEXT);
 
   if (!code) {

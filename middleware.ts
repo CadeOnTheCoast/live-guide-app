@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { resolveNextPath } from "@/lib/auth/redirects";
 
 export function middleware(request: NextRequest) {
-  const code = request.nextUrl.searchParams.get("code");
+  const code = request.nextUrl.searchParams.get("code") ?? request.nextUrl.searchParams.get("token") ?? request.nextUrl.searchParams.get("token_hash");
   const path = request.nextUrl.pathname;
 
   if (code && path !== "/auth/callback") {
