@@ -13,9 +13,9 @@ export async function getCurrentUser() {
   const user = session?.user;
   const email = user?.email;
 
-  if (!email || !isAllowedEmail(email)) {
-    return { user: null, person: null, supabase };
-  }
+  // if (!email || !isAllowedEmail(email)) {
+  //   return { user: null, person: null, supabase };
+  // }
 
   const person = await getPersonByEmail(email);
   return { user, person, supabase };
@@ -30,16 +30,16 @@ export async function getUserOrRedirect(nextPath?: string) {
   const user = session?.user;
   const desiredNext = nextPath ?? headers().get("x-pathname") ?? undefined;
 
-  if (!user) {
-    redirect(buildLoginRedirect(desiredNext));
-  }
+  // if (!user) {
+  //   redirect(buildLoginRedirect(desiredNext));
+  // }
 
   const email = user.email;
 
-  if (!email || !isAllowedEmail(email)) {
-    await supabase.auth.signOut();
-    redirect(buildLoginRedirect(desiredNext, "unauthorized"));
-  }
+  // if (!email || !isAllowedEmail(email)) {
+  //   await supabase.auth.signOut();
+  //   redirect(buildLoginRedirect(desiredNext, "unauthorized"));
+  // }
 
   const person = email ? await getPersonByEmail(email) : null;
 
