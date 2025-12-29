@@ -3,10 +3,15 @@ import AppSidebar from "@/components/layout/AppSidebar";
 import AppTopBar from "@/components/layout/AppTopBar";
 import { SidebarProvider } from "@/components/layout/SidebarContext";
 import { getUserOrRedirect } from "@/server/auth";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
 
 export default async function ProjectsLayout({ children }: { children: ReactNode }) {
+  const supabase = createSupabaseServerClient();
+  const { data: { session: debugSession } } = await supabase.auth.getSession();
+  console.log("Auth Debug: ProjectsLayout session check:", debugSession ? "Session found" : "No session");
+
   await getUserOrRedirect("/projects");
 
   return (

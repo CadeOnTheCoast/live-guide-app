@@ -30,9 +30,9 @@ export async function getUserOrRedirect(nextPath?: string) {
   const user = session?.user;
   const desiredNext = nextPath ?? headers().get("x-pathname") ?? undefined;
 
-  // if (!user) {
-  //   redirect(buildLoginRedirect(desiredNext));
-  // }
+  if (!user) {
+    redirect(buildLoginRedirect(desiredNext));
+  }
 
   const email = user.email;
 

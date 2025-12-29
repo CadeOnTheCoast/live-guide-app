@@ -26,6 +26,9 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
+  const { data: { session: debugSession } } = await supabase.auth.getSession();
+  console.log("Auth Debug: Callback session check:", debugSession ? "Session found" : "No session");
+
   // Use a relative path or the origin from the request to ensure we stay on the same domain
   const redirectUrl = new URL(next, url.origin);
 
