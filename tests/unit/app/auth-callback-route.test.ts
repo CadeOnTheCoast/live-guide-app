@@ -45,4 +45,15 @@ describe("auth callback route", () => {
 
     expect(response.headers.get("location")).toBe("http://localhost:3000/login?next=%2Fadmin&error=auth_failed");
   });
+
+  it("accepts token-based magic link params", async () => {
+    exchangeCodeForSession.mockResolvedValue({ error: null });
+    const { GET } = await import("@/app/auth/callback/route");
+    const request = new NextRequest("http://localhost:3000/auth/callback?token=pkce-token&next=/projects");
+
+    const response = await GET(request);
+
+    expect(exchangeCodeForSession).toHaveBeenCalledWith("pkce-token");
+    expect(response.headers.get("location")).toBe("http://localhost:3000/projects");
+  });
 });
