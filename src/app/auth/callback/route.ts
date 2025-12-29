@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { resolveNextPath } from "@/lib/auth/redirects";
 import { createSupabaseRouteHandlerClient } from "@/lib/supabase/server";
 
 const DEFAULT_NEXT = "/projects";
@@ -6,7 +7,7 @@ const DEFAULT_NEXT = "/projects";
 export async function GET(request: NextRequest) {
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
-  const next = url.searchParams.get("next") ?? DEFAULT_NEXT;
+  const next = resolveNextPath(url.searchParams.get("next") ?? DEFAULT_NEXT);
 
   if (!code) {
     const loginUrl = new URL("/login", url.origin);
