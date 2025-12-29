@@ -11,16 +11,17 @@ export function AuthRedirect() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const code = searchParams.get("code");
+    const next = searchParams.get("next") || "/projects";
 
     useEffect(() => {
         if (code) {
             // Small delay to ensure the browser has time to settle
             const timeout = setTimeout(() => {
-                router.replace(`/auth/callback?code=${code}`);
+                router.replace(`/auth/callback?code=${code}&next=${encodeURIComponent(next)}`);
             }, 100);
             return () => clearTimeout(timeout);
         }
-    }, [code, router]);
+    }, [code, next, router]);
 
     return null;
 }

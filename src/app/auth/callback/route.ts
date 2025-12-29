@@ -8,9 +8,11 @@ export async function GET(request: NextRequest) {
   const code = url.searchParams.get("code");
   const next = url.searchParams.get("next") ?? DEFAULT_NEXT;
 
+  // Build the login URL once to reuse it for errors
+  const loginUrl = new URL("/login", url.origin);
+  loginUrl.searchParams.set("next", next);
+
   if (!code) {
-    const loginUrl = new URL("/login", url.origin);
-    loginUrl.searchParams.set("next", next);
     loginUrl.searchParams.set("error", "missing_code");
     return NextResponse.redirect(loginUrl);
   }
@@ -20,12 +22,14 @@ export async function GET(request: NextRequest) {
 
   if (error) {
     console.error("Supabase exchangeCodeForSession error:", error);
-    const loginUrl = new URL("/login", url.origin);
-    loginUrl.searchParams.set("next", next);
     loginUrl.searchParams.set("error", "auth_failed");
     return NextResponse.redirect(loginUrl);
   }
 
+  // Use a relative path or the origin from the request to ensure we stay on the same domain
   const redirectUrl = new URL(next, url.origin);
-  return NextResponse.redirect(redirectUrl.toString());
+
+  // We MUST create a response and return it to ensure cookies are set
+  const response = NextResponse.redirect(redirectUrl.toString());
+  return response;
 }
