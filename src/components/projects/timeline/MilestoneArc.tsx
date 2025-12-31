@@ -289,7 +289,7 @@ export function MilestoneArc({ milestones, keyResults, startDate, endDate, selec
                   (isSelected || isHovered) ? "opacity-100" : "opacity-0"
                 )}>
                   <div className={cn(
-                    "max-w-[200px] min-w-[120px] rounded bg-background px-3 py-1.5 text-[10px] text-foreground shadow-lg border border-primary/20 flex flex-col items-center",
+                    "max-w-[200px] min-w-[120px] rounded bg-background px-3 py-1.5 text-[10px] text-foreground shadow-2xl border border-primary/20 flex flex-col items-center",
                     isCompleted && "text-muted-foreground"
                   )}>
                     <div className="font-bold border-b pb-1 mb-1 w-full text-center">

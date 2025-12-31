@@ -244,7 +244,9 @@ export function MasterTimelineView({ projects: initialProjects }: MasterTimeline
                                         className={cn(
                                             "group flex h-16 transition-colors relative",
                                             isHidden ? "bg-muted/50 opacity-60" : "hover:bg-muted/30",
-                                            draggedIndex === pIdx && "bg-primary/10 opacity-50 ring-2 ring-primary ring-inset z-20"
+                                            draggedIndex === pIdx && "bg-primary/10 opacity-50 ring-2 ring-primary ring-inset z-20",
+                                            // Raise z-index if any item in this row is hovered
+                                            hoveredItemId && timelineItems.some(i => i.id === hoveredItemId) && "z-50"
                                         )}
                                     >
                                         <div className="w-64 flex-shrink-0 flex items-center px-4 border-r bg-card/50">
@@ -303,8 +305,8 @@ export function MasterTimelineView({ projects: initialProjects }: MasterTimeline
                                                             onMouseEnter={() => setHoveredItemId(item.id)}
                                                             onMouseLeave={() => setHoveredItemId(null)}
                                                             className={cn(
-                                                                "absolute -translate-x-1/2 -translate-y-1/2 z-10 transition-all hover:scale-125 hover:z-20 flex flex-col items-center top-1/2",
-                                                                isHovered && "z-30"
+                                                                "absolute -translate-x-1/2 -translate-y-1/2 transition-all hover:scale-125 flex flex-col items-center top-1/2",
+                                                                isHovered ? "z-50" : "z-10"
                                                             )}
                                                             style={{ left: `${percent}%` }}
                                                         >
@@ -327,7 +329,7 @@ export function MasterTimelineView({ projects: initialProjects }: MasterTimeline
 
                                                             {/* Tooltip on hover */}
                                                             <div className={cn(
-                                                                "absolute top-full mt-2 w-48 bg-popover text-popover-foreground text-[10px] p-2 rounded border shadow-lg transition-opacity pointer-events-none",
+                                                                "absolute top-full mt-2 w-48 bg-background border-primary/20 text-foreground text-[10px] p-2 rounded border shadow-xl transition-opacity pointer-events-none z-[100]",
                                                                 isHovered ? "opacity-100" : "opacity-0"
                                                             )}>
                                                                 <div className="font-bold border-b pb-1 mb-1 text-center">{new Intl.DateTimeFormat("en", { month: "short", day: "numeric", year: "numeric" }).format(item.date)}</div>
