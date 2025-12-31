@@ -282,8 +282,10 @@ export function MilestoneArc({ milestones, keyResults, startDate, endDate, selec
                     )}
                   </button>
                 </MarkerWrapper>
+                {/* Dynamic tooltip positioning based on vertical offset */}
                 <div className={cn(
-                  "absolute left-1/2 bottom-full mb-2 -translate-x-1/2 pointer-events-none z-50 transition-opacity",
+                  "absolute left-1/2 -translate-x-1/2 pointer-events-none z-50 transition-opacity",
+                  verticalOffset < 0 ? "top-full mt-2" : "bottom-full mb-2",
                   (isSelected || isHovered) ? "opacity-100" : "opacity-0"
                 )}>
                   <div className={cn(

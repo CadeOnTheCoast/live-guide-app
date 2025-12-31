@@ -327,7 +327,7 @@ export function MasterTimelineView({ projects: initialProjects }: MasterTimeline
 
                                                             {/* Tooltip on hover */}
                                                             <div className={cn(
-                                                                "absolute bottom-full mb-2 w-48 bg-popover text-popover-foreground text-[10px] p-2 rounded border shadow-lg transition-opacity pointer-events-none",
+                                                                "absolute top-full mt-2 w-48 bg-popover text-popover-foreground text-[10px] p-2 rounded border shadow-lg transition-opacity pointer-events-none",
                                                                 isHovered ? "opacity-100" : "opacity-0"
                                                             )}>
                                                                 <div className="font-bold border-b pb-1 mb-1 text-center">{new Intl.DateTimeFormat("en", { month: "short", day: "numeric", year: "numeric" }).format(item.date)}</div>
