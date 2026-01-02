@@ -27,7 +27,7 @@ async function main() {
         columns: true,
         skip_empty_lines: true,
         trim: true,
-    });
+    }) as Record<string, string>[];
 
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -38,8 +38,10 @@ async function main() {
     for (const record of records) {
         const category = record["Account"];
         const description = record["Description"] || "No description";
-        const unitCost = record["Unit Cost"] ? parseFloat(record["Unit Cost"].replace(/[$,]/g, "")) : null;
-        const quantity = record["Quantity"] ? parseFloat(record["Quantity"]) : null;
+        const unitCostStr = record["Unit Cost"];
+        const unitCost = unitCostStr ? parseFloat(unitCostStr.replace(/[$,]/g, "")) : null;
+        const quantityStr = record["Quantity"];
+        const quantity = quantityStr ? parseFloat(quantityStr) : null;
         const notes = record["Notes"];
 
         if (!category) continue;
