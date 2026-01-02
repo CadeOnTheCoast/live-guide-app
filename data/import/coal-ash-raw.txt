@@ -1,0 +1,57 @@
+Coal Ash 							
+Account 	 What 	 Explained 	 Unit Cost 	 Quantity (Frequency/#/miles) 	 Cost 	 Calendar Breakout 	 Notes 
+Communications: Branding & Marketing 							
+4010 Consulting 					 $-   		
+4020 Contractors 					 $-   		
+4030 Design 					 $-   		
+4040 Printing 	 Printed leave-behinds 	 One-pagers/handouts for meetings/AGM 	 $0 	 $1,000 	 $400 	 Q1 & Q2 	
+4060 Website 					 $-   		
+4070 Advertising 	 Spend to advertise shareholder risks 	 Funds to increase awareness, turnout on anticipated shareholder concerns re: dealing with coal ash 	 $6,000 	 $1 	 $6,000 	 Q1 	
+Operations: Facilities & Equipment 							
+6335 Postage 					 $-   		
+6340 Printing 					 $-   		
+6360 Technology & Software 					 $-   		
+Operations: Human Resources & Culture 							
+6510 Computer Services 					 $-   		
+6550 Meals 					 $-   		
+6540 Events & Retreats 					 $-   		
+7020 Supplies 					 $-   		
+7040 Transportation 					 $-   		
+Programs: Community Engagement 							
+7010 Contractors 					 $-   		
+7020 Supplies 					 $-   		
+7030 Technology & Software 					 $-   		
+7040 Transportation 					 $-   		
+Programs: Field Investigation 							
+7305 Baykeeper Boat 	 Ash Pond 	 3 trips to see ash pond; $4/gal * 30 mi round trip * 3mpg; 	 $4 	 $30 	 $120 	 Q2 & Q3 	
+7310 Contractors 					 $-   		
+7315 Field Equipment 					 $-   		
+7320 Laboratoy 					 $-   		
+7325 Legal Fees 					 $-   		
+7330 Technology & Software 					 $-   		
+7335 Testing Equipment 					 $-   		
+7340 Testing Supplies 					 $-   		
+7345 Transportation Equipment 					 $-   		
+7350 Travel 	 ash pond trip 	 Mileage - 3 trip * 75. miles *$0.67/mi 	 $1 	 $225 	 $151 	 February 	
+Programs: Projects 							
+7410 Consulting 	 Lobbyist Time 	 5% of lobbyist time at $625/mth 	 $625 	 $12 	 $7,500 		
+7410 Consulting 	 Technical/financial review 	 Expert advise on communicating re: coal ash and any shareholder concerns $10k; 	 $10,000 	 $1 	 $10,000 		
+7415: Contractors 					 $-   		
+7420: Field Equipment 					 $-   		
+7425 Laboratory 					 $-   		
+7430 Legal Fees 					 $-   		
+7435 Technology & Software 	 Action Network 	 $10/mth 	 $10 	 $12 	 $120 	 Monthly 	
+7435 Technology & Software 	 ChatGPT subscription 	 $22/mth * 2 licenses 	 $22 	 $24 	 $528 	 Monthly 	
+7440 Testing Equipment 					 $-   		
+7445 Testing Supplies 					 $-   		
+7450 Transportation Equipment 					 $-   		
+7455 Travel 	 Meetings with electeds 	 12 meetings with elected officials re: the issue; Majority of them local. Mileage ~25mi /mtg 	 $17 	 $12 	 $201 	 Monthly 	
+7455 Travel 	 Meeting with electeds (DC) - Airfare 	 1 Trip to DC; 2 individuals @~$550/flight 	 $550 	 $2 	 $1,100 	 Q1 	
+7455 Travel 	 Meeting with electeds (DC) - Car 	 8 rides via Uber or comparable (to from airport, to meetings etc 	 $20 	 $8 	 $160 	 Q1 	
+7455 Travel 	 Meeting with electeds (DC) - Hotel 	 2 nights @ ~$330/nt 	 $330 	 $2 	 $660 	 Q1 	
+7456 Travel 	 Mileage (Montgomery electeds) 	 Round-trip driving, ~375 miles 	 $1 	 $375 	 $263 		 Adjust to IRS 2026 rate if different 
+7455 Travel 	 Parking (Montgomery) 	 Capitol/day garages (range $5–$10) 	 $8 	 $2 	 $15 		 Uses midpoint; 2 paid stops 
+7460 Meals 	 Coffee with electeds 	 4 mtgs × 3 people 	 $5 	 $12 	 $60 		 Edit qty if fewer/more meetings or people 
+7460 Meals 	 Meal with electeds 	 10 meals × 3 people 	 $100 	 $10 	 $1,000 		
+7465 Conferences 					 $-   		
+Totals 					 $28,277
