@@ -262,8 +262,13 @@ async function main() {
 
     // 3. Execute DB Actions
     if (budgetLinesToCreate.length > 0) {
-        console.log(`\n[DB] Deleting old records...`);
-        await prisma.budgetLine.deleteMany({ where: { projectId: project.id } });
+        console.log(`\n[DB] Deleting old records (preserving Staffing)...`);
+        await prisma.budgetLine.deleteMany({
+            where: {
+                projectId: project.id,
+                category: { not: "Staffing" }
+            }
+        });
 
         console.log(`[DB] Inserting new records...`);
         const result = await prisma.budgetLine.createMany({ data: budgetLinesToCreate });

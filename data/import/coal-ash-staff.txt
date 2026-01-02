@@ -1,0 +1,24 @@
+Grant type (Government/Private)	Private	Year 1												
+Staff (hours)	Rate	January	February	March	April	May	June	July	August	September	October	November	December	Annual Totals
+Cassie Bates	 $64.29 	10	10	10	10	12	12	12	12	12	12	12	12	136
+Cade Kistler	 $93.68 	10	10	12	12	14	20	40	20	12	40	40	40	270
+Luke Kiszla	 $87.46 	20	20	20	20	20	20	20	20	20	20	20	20	240
+Water Quality Investigator	 $59.47 	24	24	24	24	24	24	24	24	24	24	24	24	288
+Kayla Boyd	 $59.47 	0	0	0	0	0	0	0	0	0	0	0	0	0
+Morgan Bishop	 $43.01 	4	4	4	4	4	4	4	4	4	4	4	4	48
+Oyster Coordinator	 $-   	0	0	0	0	0	0	0	0	0	0	0	0	0
+Water Quality Monitor	 $2.21 	0	0	0	0	0	0	0	0	0	0	0	0	0
+Water Quality Monitor	 $43.01 	0	0	0	0	0	0	0	0	0	0	0	0	0
+Public Notification Manager	 $43.01 	0	0	0	0	0	0	0	0	0	0	0	0	0
+Addtional Project Team Member	 $-   	0	0	0	0	0	0	0	0	0	0	0	0	0
+Caine O'Rear	 $63.50 	14	14	16	14	14	16	14	14	16	14	14	16	176
+PR Director	 $75.52 	0	0	0	0	0	0	0	0	0	0	0	0	0
+Valerie Longa	 $17.29 	0	0	0	0	0	0	0	0	0	0	0	0	0
+Shalela Dowdy	 $57.00 	0	0	0	0	0	0	0	0	0	0	0	0	0
+Community Organizer	 $55.70 	0	0	0	0	0	0	0	0	0	0	0	0	0
+Luke Kiszla	 $52.45 	20	20	20	20	20	20	20	20	20	20	20	20	240
+Education Support Staff	 $48.13 	0	0	0	0	0	0	0	0	0	0	0	0	0
+Education Support Staff	 $-   	0	0	0	0	0	0	0	0	0	0	0	0	0
+Community Engagement Director	 $68.00 	32	32	32	32	32	32	32	32	32	32	32	32	384
+Charith Denson	 $63.78 	14	14	14	14	14	14	14	14	14	14	14	14	168
+William Strickland	 $105.00 	16	16	16	16	16	16	16	16	16	16	16	16	192
