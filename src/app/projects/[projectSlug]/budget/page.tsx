@@ -20,7 +20,7 @@ export default async function BudgetPage({
     notFound();
   }
 
-  const budgetLines = await db.budgetLine.findMany({
+  const budgetLinesRaw = await db.budgetLine.findMany({
     where: { projectId: project.id },
     include: {
       comments: {
@@ -35,13 +35,25 @@ export default async function BudgetPage({
     orderBy: { category: "asc" }
   });
 
-  const staffAllocations = await db.staffAllocation.findMany({
+  const staffAllocationsRaw = await db.staffAllocation.findMany({
     where: { projectId: project.id },
     include: {
       person: { select: { name: true, email: true } }
     },
     orderBy: { person: { name: "asc" } }
   });
+
+  // Convert Decimals to numbers for client components
+  const budgetLines = budgetLinesRaw.map(line => ({
+    ...line,
+    amount: Number(line.amount),
+    unitCost: line.unitCost ? Number(line.unitCost) : null
+  }));
+
+  const staffAllocations = staffAllocationsRaw.map(alloc => ({
+    ...alloc,
+    hours: Number(alloc.allocation)
+  }));
 
   const canEdit = canEditProject(person?.role);
 

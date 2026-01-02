@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 
 interface BudgetLine {
     id: string;
-    amount: { toNumber(): number } | number;
+    amount: number;
     period: string;
 }
 
@@ -19,7 +19,7 @@ export function BudgetSummary({ budgetLines }: BudgetSummaryProps) {
         return budgetLines
             .filter((line) => line.period.startsWith(month))
             .reduce((sum, line) => {
-                const amt = typeof line.amount === 'number' ? line.amount : line.amount.toNumber();
+                const amt = Number(line.amount) || 0;
                 return sum + amt;
             }, 0);
     });

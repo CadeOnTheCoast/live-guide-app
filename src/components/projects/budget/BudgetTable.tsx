@@ -26,8 +26,8 @@ interface BudgetLine {
     id: string;
     category: string;
     description: string;
-    amount: { toNumber(): number } | number;
-    unitCost: { toNumber(): number } | number | null;
+    amount: number;
+    unitCost: number | null;
     quantity: number | null;
     period: string;
     notes: string | null;
@@ -50,10 +50,10 @@ export function BudgetTable({ budgetLines, projectSlug, canEdit }: BudgetTablePr
     const groupedRows: Record<string, {
         category: string;
         description: string;
-        unitCost: { toNumber(): number } | number | null;
+        unitCost: number | null;
         quantity: number | null;
         notes: string | null;
-        months: Record<string, { id: string; amount: { toNumber(): number } | number }>;
+        months: Record<string, { id: string; amount: number }>;
     }> = {};
     budgetLines.forEach((line) => {
         const key = `${line.category}-${line.description}`;
@@ -112,7 +112,7 @@ export function BudgetTable({ budgetLines, projectSlug, canEdit }: BudgetTablePr
                             let rowTotal = 0;
                             MONTHS.forEach((m) => {
                                 if (row.months[m]) {
-                                    const amt = typeof row.months[m].amount === 'number' ? row.months[m].amount : row.months[m].amount.toNumber();
+                                    const amt = Number(row.months[m].amount) || 0;
                                     rowTotal += amt;
                                 }
                             });
@@ -157,7 +157,7 @@ export function BudgetTable({ budgetLines, projectSlug, canEdit }: BudgetTablePr
                                                                 canEdit && "hover:bg-brand-sky/10 cursor-pointer"
                                                             )}
                                                         >
-                                                            ${(typeof line.amount === 'number' ? line.amount : line.amount.toNumber()).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+                                                            ${Number(line.amount).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                                                         </div>
                                                     )
                                                 ) : (
