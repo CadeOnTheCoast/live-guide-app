@@ -45,6 +45,17 @@ const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "
 export function BudgetTable({ budgetLines, projectSlug, canEdit }: BudgetTableProps) {
     const [editingCell, setEditingCell] = useState<{ id: string, field: string } | null>(null);
     const [commentText, setCommentText] = useState("");
+    const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
+
+    const toggleRow = (key: string) => {
+        const next = new Set(expandedRows);
+        if (next.has(key)) {
+            next.delete(key);
+        } else {
+            next.add(key);
+        }
+        setExpandedRows(next);
+    };
 
     // Grouping logic
     const groupedRows: Record<string, {
@@ -124,9 +135,20 @@ export function BudgetTable({ budgetLines, projectSlug, canEdit }: BudgetTablePr
                                         <div className="flex flex-col">
                                             <span className="text-sm font-semibold text-brand-charcoal">{row.description}</span>
                                             {row.notes && (
-                                                <span className="text-[10px] text-brand-sage italic flex items-center gap-1">
-                                                    <Info className="h-2 w-2" /> {row.notes}
-                                                </span>
+                                                <div className="mt-1">
+                                                    <button
+                                                        onClick={() => toggleRow(key)}
+                                                        className="text-[10px] text-brand-teal font-bold uppercase tracking-widest flex items-center gap-1 hover:underline focus:outline-none"
+                                                    >
+                                                        <Info className="h-3 w-3" />
+                                                        {expandedRows.has(key) ? "Hide Details" : "Show Details"}
+                                                    </button>
+                                                    {expandedRows.has(key) && (
+                                                        <div className="mt-2 text-[11px] text-brand-sage bg-brand-sky/5 p-2 rounded-lg border border-brand-sky/10 whitespace-pre-wrap font-medium">
+                                                            {row.notes}
+                                                        </div>
+                                                    )}
+                                                </div>
                                             )}
                                         </div>
                                     </TableCell>

@@ -1,0 +1,707 @@
+Coal Ash 							
+ Account 	 What 	 Explained 	 Unit Cost 	 Quantity (Frequency/#/miles) 	 Cost 	 Calendar Breakout 	 Notes 
+ Communications: Branding & Marketing 							
+ 4010 Consulting 					 $-   		
+ 4020 Contractors 					 $-   		
+ 4030 Design 					 $-   		
+ 4040 Printing 	 Printed leave-behinds 	 One-pagers/handouts for meetings/AGM 	 $0 	 $1,000 	 $400 	 Q1 & Q2 	
+ 4060 Website 					 $-   		
+ 4070 Advertising 	 Spend to advertise shareholder risks 	 Funds to increase awareness, turnout on anticipated shareholder concerns re: dealing with coal ash 	 $6,000 	 $1 	 $6,000 	 Q1 	
+ Operations: Facilities & Equipment 							
+ 6335 Postage 					 $-   		
+ 6340 Printing 					 $-   		
+ 6360 Technology & Software 					 $-   		
+ Operations: Human Resources & Culture 							
+ 6510 Computer Services 					 $-   		
+ 6550 Meals 					 $-   		
+ 6540 Events & Retreats 					 $-   		
+ 7020 Supplies 					 $-   		
+ 7040 Transportation 					 $-   		
+ Programs: Community Engagement 							
+ 7010 Contractors 					 $-   		
+ 7020 Supplies 					 $-   		
+ 7030 Technology & Software 					 $-   		
+ 7040 Transportation 					 $-   		
+ Programs: Field Investigation 							
+ 7305 Baykeeper Boat 	 Ash Pond 	 3 trips to see ash pond; $4/gal * 30 mi round trip * 3mpg; 	 $4 	 $30 	 $120 	 Q2 & Q3 	
+ 7310 Contractors 					 $-   		
+ 7315 Field Equipment 					 $-   		
+ 7320 Laboratoy 					 $-   		
+ 7325 Legal Fees 					 $-   		
+ 7330 Technology & Software 					 $-   		
+ 7335 Testing Equipment 					 $-   		
+ 7340 Testing Supplies 					 $-   		
+ 7345 Transportation Equipment 					 $-   		
+ 7350 Travel 	 ash pond trip 	 Mileage - 3 trip * 75. miles *$0.67/mi 	 $1 	 $225 	 $151 	 February 	
+ Programs: Projects 							
+ 7410 Consulting 	 Lobbyist Time 	 5% of lobbyist time at $625/mth 	 $625 	 $12 	 $7,500 		
+ 7410 Consulting 	 Technical/financial review 	 Expert advise on communicating re: coal ash and any shareholder concerns $10k; 	 $10,000 	 $1 	 $10,000 		
+ 7415: Contractors 					 $-   		
+ 7420: Field Equipment 					 $-   		
+ 7425 Laboratory 					 $-   		
+ 7430 Legal Fees 					 $-   		
+ 7435 Technology & Software 	 Action Network 	 $10/mth 	 $10 	 $12 	 $120 	 Monthly 	
+ 7435 Technology & Software 	 ChatGPT subscription 	 $22/mth * 2 licenses 	 $22 	 $24 	 $528 	 Monthly 	
+ 7440 Testing Equipment 					 $-   		
+ 7445 Testing Supplies 					 $-   		
+ 7450 Transportation Equipment 					 $-   		
+ 7455 Travel 	 Meetings with electeds 	 12 meetings with elected officials re: the issue; Majority of them local. Mileage ~25mi /mtg 	 $17 	 $12 	 $201 	 Monthly 	
+ 7455 Travel 	 Meeting with electeds (DC) - Airfare 	 1 Trip to DC; 2 individuals @~$550/flight 	 $550 	 $2 	 $1,100 	 Q1 	
+ 7455 Travel 	 Meeting with electeds (DC) - Car 	 8 rides via Uber or comparable (to from airport, to meetings etc 	 $20 	 $8 	 $160 	 Q1 	
+ 7455 Travel 	 Meeting with electeds (DC) - Hotel 	 2 nights @ ~$330/nt 	 $330 	 $2 	 $660 	 Q1 	
+ 7456 Travel 	 Mileage (Montgomery electeds) 	 Round-trip driving, ~375 miles 	 $1 	 $375 	 $263 		 Adjust to IRS 2026 rate if different 
+ 7455 Travel 	 Parking (Montgomery) 	 Capitol/day garages (range $5–$10) 	 $8 	 $2 	 $15 		 Uses midpoint; 2 paid stops 
+ 7460 Meals 	 Coffee with electeds 	 4 mtgs × 3 people 	 $5 	 $12 	 $60 		 Edit qty if fewer/more meetings or people 
+ 7460 Meals 	 Meal with electeds 	 10 meals × 3 people 	 $100 	 $10 	 $1,000 		
+ 7465 Conferences 					 $-   		
+ Totals 					 $28,277 		
+							
+ Mud Dumping Budget Narrative 							
+ Account 	 What 	 Explained 	 Unit Cost 	 Quantity (Frequency/#/miles) 	 Cost 	 Calendar Breakout 	 Notes 
+ Communications: Branding & Marketing 							
+ 4010 Consulting 							
+ 4020 Contractors 	 Video needs 	 Joseph produced video(s) to tell story as needed; 	 $3,750 	 $2 	 $7,500 	 Q2 & Q4 	 Captioning/licensing in scope 
+ 4030 Design 							
+ 4040 Printing 							
+ 4060 Website 							
+ 4070 Advertising 	 Digital issue education 	 Paid reach for WRDA windows 	 $12,500 	 $1 	 $12,500 	 Q2, Q4 	 If CE holds ads, move this there and zero here 
+ Operations: Facilities & Equipment 							
+ 6335 Postage 	 FedEx/USPS to Hill/partners 	 Packets, return labels 	 $25 	 $1 	 $25 	 As needed 	
+ 6340 Printing 	 Internal run-rate 	 In-house prints not above 	 $250 	 $1 	 $250 	 As needed 	
+ 6360 Technology & Software 							
+ Operations: Human Resources & Culture 							
+ 6510 Computer Services 					 $-   		 Covered org-wide 
+ 6550 Meals 					 $-   		 Use program meals lines 
+ 6540 Events & Retreats 					 $-   		
+ Programs: Community Engagement 							
+ 7010 Contractors 					 $-   		 In CE budget 
+ 7020 Supplies 					 $-   		 In CE budget 
+ 7030 Technology & Software 					 $-   		 In CE budget 
+ 7040 Transportation 					 $-   		 In CE budget 
+ Meals 							
+ Programs: Field Investigation 							
+ 7305 Baykeeper Boat 	 Boat trips to view/visuals/sample 	 Mileage for 5 boat sampling events; 20 mi/event @2mpg * $4/gal; 	 $40 	 $5 	 $200 	 Q2 & Q4 	 Fuel math ≈ $32/trip; line padded for incidentals 
+ 7310 Contractors 	 Drone/GIS/surge sampling 	 As-needed field/imagery support 	 $3,000 	 $1 	 $3,000 	 Quarterly 	
+ 7315 Field Equipment 	 Smallwares refresh 	 Turbidity tube/filters/batteries/ice chests 	 $500 	 $1 	 $500 	 Q2 	
+ 7320 Laboratory 	 Outside lab min orders 	 Quarterly lab events supporting concerns re: sediment 	 $300 	 $4 	 $1,200 	 Q2 & Q3 	 Allow for fee creep 
+ 7325 Legal Fees 					 $-   		 Legal is under 7430 
+ 7330 Technology & Software 					 $-   		 N/A 
+ 7335 Testing Equipment 					 $-   		 Included in 7315 if needed 
+ 7340 Testing Supplies 	 Bottles/PPE/labels/ice 	 Consumables for turbidity/spot checks 	 $300 	 $1 	 $300 	 Q2–Q3 	
+ 7345 Transportation Equipment 					 $-   		
+ 7350 Travel 	 Mileage to ramp 	 ~6 trips × ~30 mi round-trip × $0.67/mi (pool) 	 $1 	 $180 	 $120 	 Q2–Q4 	 Pooled allowance 
+ Programs: Projects 							
+ 7410 Consulting 	 Lobbyist Time 	 60% of lobbyist time at $7,500/mth 	 $7,500 	 $12 	 $90,000 	 Monthly 	
+ 7415: Contractors 	 Expert honoraria/reviews 	 8 expert reviews @ $500 	 $500 	 $8 	 $4,000 	 Q2–Q3 	
+ 7420: Field Equipment 					 $-   		
+ 7425 Laboratory 					 $-   		 Lab is in 7320 
+ 7430 Legal Fees 							
+ 7435 Technology & Software 							
+ 7440 Testing Equipment 							
+ 7445 Testing Supplies 							
+ 7450 Transportation Equipment 					 $-   		
+ 7455 Travel 	 Local/regional stakeholder mileage 	 Stakeholders/partners/USACE/Port/agency 	 $1 	 $300 	 $210 	 Monthly 	 Mileage pool 
+ 7455 Travel 	 Montgomery day trips (2 ppl × 5 trips) 	 Mileage - 350 miles * 5 trips * $0.7/mi 	 $1 	 $1,750 	 $1,225 	 Q1, Q2, Q3 	 Includes meals/parking 
+ 7455 Travel 	 Airfare (DC) 	 3 trips × 4 travelers @ $550 ea. 	 $550 	 $12 	 $6,600 	 Q2, Q3, Q4 	
+ 7455 Travel 	 Hotel (DC) 	 2 rooms × 2 nights × 3 trips @ $300 	 $300 	 $12 	 $3,600 	 Q2–Q4 	
+ 7455 Travel 	 Local transport (DC) 	 Metro/ubers between Hill/meetings 	 $20 	 $10 	 $200 	 Q2–Q4 	
+ 7455 Travel 	 Per-diem meals (DC) 	 $55/day × ~3 days × 12 traveler-days 	 $55 	 $36 	 $1,980 	 Q2–Q4 	 Tips included 
+ 7455 Travel 	 Captain travel reserve 	 Extra tickets/lodging/meals for captains as needed 	 $2,500 	 $1 	 $2,500 	 Q2–Q4 	 Working meals only 
+ 7465 Conferences 	 Registrations/hearings/forums 	 Relevant hearings/forums 	 $1,500 	 $1 	 $1,500 	 As needed 	
+ Totals 					 $137,410 		
+ BCSS Project 							
+  	 What 	 Explained 	 Unit Cost 	 Quantity (Frequency/#/miles) 	 Cost 	 Calendar Breakout 	 Notes 
+ Communications: Branding & Marketing 							
+ 4010 Consulting 					 $-   		
+ 4020 Contractors 					 $-   		
+ 4030 Design 					 $-   		
+ 4040 Printing 	 Event handouts & simple signs 	 Print minimal handouts and a few table signs for listening sessions 	 $100 	 $4 	 $400 	 Q2 & Q4 	
+ 4050 Technology & Software 							
+ 4060 Website 					 $-   		
+ 4070 Advertising 	 Digital ads (geo-targeted) 	 Promote meetings and transparency updates to affected areas 	 $500 	 $4 	 $2,000 	 Quarterly 	
+ Operations: Facilities & Equipment 							
+ 6335 Postage 					 $-   		
+ 6340 Printing 					 $-   		
+ 6360 Technology & Software 					 $-   		
+ Operations: Human Resources & Culture 							
+ 6510 Computer Services 					 $-   		
+ 6550 Meals 					 $-   		
+ 6540 Events & Retreats 					 $-   		
+ Programs: Community Engagement 							
+ 7010 Contractors 					 $-   		
+ 7020 Supplies 					 $-   		
+ 7030 Technology & Software 					 $-   		
+ 7040 Transportation 					 $-   		
+ Meals 							
+ Programs: Field Investigation 							
+ 7305 Baykeeper Boat 					 $-   		
+ 7310 Contractors 					 $-   		
+ 7315 Field Equipment 					 $-   		
+ 7320 Laboratoy 					 $-   		
+ 7325 Legal Fees 					 $-   		
+ 7330 Technology & Software 					 $-   		
+ 7335 Testing Equipment 					 $-   		
+ 7340 Testing Supplies 					 $-   		
+ 7345 Transportation Equipment 					 $-   		
+ 7350 Travel 					 $-   		
+ Programs: Projects 							
+ 7405 Baykeeper Boat 							
+ 7410 Consulting 					 $-   		
+ 7415: Contractors 					 $-   		
+ 7420: Field Equipment 					 $-   		
+ 7425 Laboratory 							
+ 7430 Legal Fees 							
+ 7435 Technology & Software 					 $-   		
+ 7440 Testing Equipment 					 $-   		
+ 7445 Testing Supplies 							
+ 7450 Transportation Equipment 					 $-   		
+ 7455 Travel 	 Travel for meetings 	 Meetings with influencers, BCSS, etc; Assume 12 mtgs * 35 mi/mtg 	 $23 	 $12 	 $276 	 Q2, Q3, Q4 	
+ 7455 Travel 							
+ 7455 Travel 							
+ 7460 Meals 	 Influencer Meeting(s) 	 2 meetings * 4 individuals *$25/meal 	 $25 	 $8 	 $200 	 Monthly 	
+ 7465 Conferences 					 $-   		
+ Totals 					 $2,876 		
+							
+ Prichard Project 							
+ Account 	 What 	 Explained 	 Unit Cost 	 Quantity (Frequency/#/miles) 	 Cost 	 Calendar Breakout 	 Notes 
+ Communications: Branding & Marketing 							
+ 4010 Consulting 					 $-   		
+ 4020 Contractors 	 Video telling story 	 Joseph produced video to tell story 	 $4,000 	 $1 	 $4,000 	 Q3 	
+ 4030 Design 					 $-   		
+ 4040 Printing 	 Materials for community events 	 Flyers and informational papers for events 	 $3 	 $250 	 $500 		
+ 4050 Technology and Consulting 							
+ 4060 Website 					 $-   		
+ 4070 Advertising 	 Targeted ads (digital/radio) 	 Geo-targeted buys to amplify storytelling, drive meeting turnout, and support petition/advocacy pushes 	 $300 	 $5 	 $1,500 	 Q2 & Q3 	
+ Operations: Facilities & Equipment 							
+ 6335 Postage 					 $-   		
+ 6340 Printing 					 $-   		
+ 6360 Technology & Software 					 $-   		
+ Operations: Human Resources & Culture 							
+ 6510 Computer Services 					 $-   		
+ 6550 Meals 					 $-   		
+ 6540 Events & Retreats 					 $-   		
+ 7020 Supplies 					 $-   		
+ 7040 Transportation 					 $-   		
+ Programs: Community Engagement 							
+ 7010 Contractors 					 $-   		
+ 7020 Supplies 					 $-   		
+ 7030 Technology & Software 					 $-   		
+ 7040 Transportation 					 $-   		
+ Programs: Field Investigation 							
+ 7305 Baykeeper Boat 					 $-   		
+ 7310 Contractors 					 $-   		
+ 7315 Field Equipment 					 $-   		
+ 7320 Laboratory 					 $-   		
+ 7325 Legal Fees 					 $-   		
+ 7330 Technology & Software 					 $-   		
+ 7335 Testing Equipment 					 $-   		
+ 7340 Testing Supplies 					 $-   		
+ 7345 Transportation Equipment 					 $-   		
+ 7350 Travel 		 Sampling Excursions @ ~15 miles per trip 	 $10 	 $4 	 $40 	 Monthly 	
+ Programs: Projects 							
+ 7410 Consulting 	 TMF/SRF technical assistance 	 To assist Prichard in working to meet TMF requirements for funding 	 $10,000 	 $1 	 $10,000 	 Q1, Q2, Q3 	
+ 7415: Contractors 					 $-   		
+ 7420: Field Equipment 	 Water Filters 	" RO systems (for higher-need homes): $350 x 300 households = $105,000. 
+
+Advanced carbon filters: $100 x 700 households = $70,000. Average cost of $225 for 1000 residents; "	 $225 	 $1,000 	 $225,000 	 Q2 	 Contingent on receiving grant funding 
+ 7425 Laboratory 							
+ 7430 Legal Fees 					 $-   		
+ 7435 Technology & Software 					 $-   		
+ 7440 Testing Equipment 					 $-   		
+ 7445 Testing Supplies 	 Tap Testing Initiative Kits 	 Cost of $290/test for My tap score for 300 residentsl; 	 $290 	 $300 	 $87,000 	 Q2 	 Contingent on receiving grant funding 
+ 7445 Testing Supplies 					 $-   		
+ 7450 Transportation Equipment 					 $-   		
+ 7455 Travel 	 Travel to DC 	 This will likely roll into one of the trips already budgeted for Coal Ash and Ship Channel, adding in some incidential here; 	 $50 	 $5 	 $250 	 May 	
+ 7455 Travel 	 Travel to Montgomery 	 3 trips to Montgomery 	 $228 	 $3 	 $681 	 Q2 & Q4 	
+ 7455 Travel 	 Mileage to Meetings 	 3 meetings/mth @ ~15 miles per meeting 	 $10 	 $36 	 $360 	 Monthly 	
+ 7460 Meals 	 Public meeting food 	 Two public meetings to drive attendance 	 $25 	 $100 	 $2,500 		
+ 7465 Conferences 					 $-   		
+ Totals 					 $331,831 	 $1,291 	
+							
+ Oyster Keeper 							
+  	 What 	 Explained 	 Unit Cost 	 Quantity (Frequency/#/miles) 	 Cost 	 Calendar Breakout 	 Notes 
+ Communications: Branding & Marketing 							
+ 4010 Consulting 					 $-   		
+ 4020 Contractors 	 Video 	 Joseph to produce video to tell story of efforts of Oyster Restoration. Splitting this across the oyster projects; 	 $4,000 	 $1 	 $4,000 	 Q4 	
+ 4030 Design 					 $-   		
+ 4040 Printing 	 Data Booklets 	 Oyster Keeper data booklets for homeowners to record observations throughout the year and additional promotional material 	 $1,250 		 $-   		
+ 4060 Website 					 $-   		
+ 4070 Advertising 					 $-   		
+ Operations: Facilities & Equipment 							
+ 6335 Postage 					 $-   		
+ 6340 Printing 					 $-   		
+ 6360 Technology & Software 					 $-   		
+ Operations: Human Resources & Culture 							
+ 6510 Computer Services 					 $-   		
+ 6550 Meals 					 $-   		
+ 6540 Events & Retreats 					 $-   		
+ 7020 Supplies 					 $-   		
+ 7040 Transportation 					 $-   		
+ Programs: Community Engagement 							
+ 7010 Contractors 					 $-   		
+ 7020 Supplies 					 $-   		
+ 7030 Technology & Software 					 $-   		
+ 7040 Transportation 					 $-   		
+ Programs: Field Investigation 							
+ 7305 Baykeeper Boat 					 $-   		
+ 7310 Contractors 					 $-   		
+ 7315 Field Equipment 					 $-   		
+ 7320 Laboratoy 					 $-   		
+ 7325 Legal Fees 					 $-   		
+ 7330 Technology & Software 					 $-   		
+ 7335 Testing Equipment 					 $-   		
+ 7340 Testing Supplies 					 $-   		
+ 7345 Transportation Equipment 					 $-   		
+ 7350 Travel 					 $-   		
+ Programs: Projects 							
+ 7410 Consulting 					 $-   		
+ 7415: Contractors 					 $-   		
+ 7420: Field Equipment 							
+ 7420: Field Equipment 	 Calipers 	 Used to measuring oyster sizes 	 $10 	 $10 	 $100 		
+ 7420: Field Equipment 	 1.5-2" live oysters 	 Live oysters for stocking oyster keeper cages 			 $5,550 		
+ 7425 Laboratory 							
+ 7430 Legal Fees 							
+ 7435 Technology & Software 							
+ 7440 Testing Equipment 							
+ 7445 Testing Supplies 							
+ 7450 Transportation Equipment 							
+							
+							
+ 7455 Travel 					 $2,000 		
+ 7460 Meals 							
+ 7460 Meals 							
+							
+							
+ Totals 					 $11,650 		
+							
+ Oyster Planting Project 							
+  	 What 	 Explained 	 Unit Cost 	 Quantity (Frequency/#/miles) 	 Cost 	 Calendar Breakout 	 Notes 
+ Communications: Branding & Marketing 							
+ 4010 Consulting 					 $-   		
+ 4020 Contractors 					 $-   		
+ 4030 Design 					 $-   		
+ 4040 Printing 					 $-   		
+ 4060 Website 					 $-   		
+ 4070 Advertising 					 $-   		
+ Operations: Facilities & Equipment 							
+ 6335 Postage 					 $-   		
+ 6340 Printing 					 $-   		
+ 6360 Technology & Software 					 $-   		
+ Operations: Human Resources & Culture 							
+ 6510 Computer Services 					 $-   		
+ 6550 Meals 					 $-   		
+ 6540 Events & Retreats 					 $-   		
+ 7020 Supplies 					 $-   		
+ 7040 Transportation 					 $-   		
+ Programs: Community Engagement 							
+ 7010 Contractors 					 $-   		
+ 7020 Supplies 					 $-   		
+ 7030 Technology & Software 					 $-   		
+ 7040 Transportation 					 $-   		
+ Programs: Field Investigation 							
+ 7305 Baykeeper Boat 					 $-   		
+ 7310 Contractors 					 $-   		
+ 7315 Field Equipment 					 $-   		
+ 7320 Laboratoy 					 $-   		
+ 7325 Legal Fees 					 $-   		
+ 7330 Technology & Software 					 $-   		
+ 7335 Testing Equipment 					 $-   		
+ 7340 Testing Supplies 					 $-   		
+ 7345 Transportation Equipment 					 $-   		
+ 7350 Travel 					 $-   		
+ Programs: Projects 							
+ 7405 Boat Equipment 							
+ 7410 Consulting 					 $-   		
+ 7415: Contractors 	 Cost to have Oyster Harvesters assist in planting 	 Oyster harvester planting days; We plan on 9 days at $125/harvester, ~5 harvesters per plant day 	 $625 	 $9 	 $5,625 		
+ 7420 Field Equipment 	 Oyster purchases costs 				 $42,000 		
+ 7425 Laboratory 					 $-   		
+ 7430 Legal Fees 					 $-   		
+ 7435 Technology & Software 					 $-   		
+ 7440 Testing Equipment 					 $-   		
+ 7445 Testing Supplies 					 $-   		
+ 7450 Transportation Equipment 					 $-   		
+ 7455 Travel 							
+ 7455 Travel 							
+ 7455 Travel 							
+ 7455 Travel 							
+ 7455 Travel 							
+ 7460 Meals 					 $-   		
+ 7465 Conferences 							
+ 7465 Conferences 							
+ Totals 					 $47,625 		
+							
+ Oyster Hatchery Project 							
+  	 What 	 Explained 	 Unit Cost 	 Quantity (Frequency/#/miles) 	 Cost 	 Calendar Breakout 	 Notes 
+ Communications: Branding & Marketing 							
+ 4010 Consulting 							
+ 4020 Contractors 							
+ 4030 Design 							
+ 4040 Printing 							
+ 4060 Website 							
+ 4070 Advertising 							
+ Operations: Facilities & Equipment 							
+ 6335 Postage 							
+ 6340 Printing 							
+ 6360 Technology & Software 							
+ Operations: Human Resources & Culture 							
+ 6510 Computer Services 							
+ 6550 Meals 							
+ 6540 Events & Retreats 							
+ 7020 Supplies 							
+ 7040 Transportation 							
+ Programs: Community Engagement 							
+ 7010 Contractors 							
+ 7020 Supplies 							
+ 7030 Technology & Software 							
+ 7040 Transportation 							
+ Programs: Field Investigation 							
+ 7305 Baykeeper Boat 							
+ 7310 Contractors 							
+ 7315 Field Equipment 							
+ 7320 Laboratoy 							
+ 7325 Legal Fees 							
+ 7330 Technology & Software 							
+ 7335 Testing Equipment 							
+ 7340 Testing Supplies 							
+ 7345 Transportation Equipment 							
+ 7350 Travel 							
+ Programs: Projects 							
+ 7410 Consulting 							
+ 7415: Contractors 							
+ 7420: Field Equipment 							
+ 7425 Laboratory 							
+ 7430 Legal Fees 							
+ 7435 Technology & Software 							
+ 7440 Testing Equipment 							
+ 7445 Testing Supplies 							
+ 7450 Transportation Equipment 							
+ 7455 Travel 							
+ 7455 Travel 							
+ 7455 Travel 							
+ 7455 Travel 							
+ 7455 Travel 							
+ 7460 Meals 							
+ 7465 Conferences 							
+ 7465 Conferences 							
+ Totals 					 $-   		
+							
+ Oyster Farm Project 							
+  	 What 	 Explained 	 Unit Cost 	 Quantity (Frequency/#/miles) 	 Cost 	 Calendar Breakout 	 Notes 
+ Communications: Branding & Marketing 							
+ 4010 Consulting 							
+ 4020 Contractors 							
+ 4030 Design 							
+ 4040 Printing 							
+ 4060 Website 							
+ 4070 Advertising 							
+ Operations: Facilities & Equipment 							
+ 6335 Postage 							
+ 6340 Printing 							
+ 6360 Technology & Software 							
+ Operations: Human Resources & Culture 							
+ 6510 Computer Services 							
+ 6550 Meals 							
+ 6540 Events & Retreats 							
+ 7020 Supplies 							
+ 7040 Transportation 							
+ Programs: Community Engagement 							
+ 7010 Contractors 							
+ 7020 Supplies 							
+ 7030 Technology & Software 							
+ 7040 Transportation 							
+ Programs: Field Investigation 							
+ 7305 Baykeeper Boat 							
+ 7310 Contractors 							
+ 7315 Field Equipment 							
+ 7320 Laboratoy 							
+ 7325 Legal Fees 							
+ 7330 Technology & Software 							
+ 7335 Testing Equipment 							
+ 7340 Testing Supplies 							
+ 7345 Transportation Equipment 							
+ 7350 Travel 							
+ Programs: Projects 							
+7405 Boat Equipment			 $286 	 $7 	 $2,000 		
+ 7410 Consulting 					 $-   		
+ 7415: Contractors 	 Oyster Deployment by wild harvesters 	 This is to hire the wild oyster harvesters to deploy the oysters 	 $625 	 $7 	 $4,375 	 Q2, Q3, Q4 	
+ 7415: Contractors 	 Oyster Farm Contract 	 This is to contract Jackie Wilson of Bama Bay oyster company to raise and maintain the spat on shell from the months of May -December 	 $2,184 	 $8 	 $17,472 	 Q2, Q3, Q4 	
+ 7415: Contractors 	 Oyster Farm Interns 	 To pay for two interns to gain farm experience, care and maintain the spat on shell 	 $780 	 $12 	 $9,360 	 Monthly 	
+ 7420: Field Equipment 	 Oyster hatchery trailer 	 To split the cost of a trailer with DISL to produce spat on shell at ADSFR 	 $2,000 	 $1 	 $2,000 	 Q1 	
+ 7420: Field Equipment 	 Oyster Cage Lease 	 This is the cost to lease the cages to grow out the oysters from the farm(s) 	 $2,000 	 $1 	 $2,000 	 Quarterly 	
+ 7420: Field Equipment 	 Shell and Larvae 	 Purchasing shell and oyster larvae 	 $5,651 	 $1 	 $5,651 		
+ 7430 Legal Fees 							
+ 7435 Technology & Software 							
+ 7440 Testing Equipment 							
+ 7445 Testing Supplies 							
+ 7450 Transportation Equipment 							
+ 7455 Travel 							
+ 7455 Travel 							
+ 7455 Travel 							
+ 7455 Travel 							
+ 7455 Travel 							
+ 7460 Meals 							
+ 7465 Conferences 							
+ 7465 Conferences 							
+ Totals 					 $42,858 		
+							
+							
+ Oyster Monitoring Project 							
+  	 What 	 Explained 	 Unit Cost 	 Quantity (Frequency/#/miles) 	 Cost 	 Calendar Breakout 	 Notes 
+ Communications: Branding & Marketing 							
+ 4010 Consulting 					 $-   		
+ 4020 Contractors 					 $-   		
+ 4030 Design 					 $-   		
+ 4040 Printing 					 $-   		
+ 4060 Website 					 $-   		
+ 4070 Advertising 					 $-   		
+ Operations: Facilities & Equipment 							
+ 6335 Postage 					 $-   		
+ 6340 Printing 					 $-   		
+ 6360 Technology & Software 					 $-   		
+ Operations: Human Resources & Culture 							
+ 6510 Computer Services 					 $-   		
+ 6550 Meals 					 $-   		
+ 6540 Events & Retreats 					 $-   		
+ 7020 Supplies 					 $-   		
+ 7040 Transportation 					 $-   		
+ Programs: Community Engagement 							
+ 7010 Contractors 					 $-   		
+ 7020 Supplies 					 $-   		
+ 7030 Technology & Software 					 $-   		
+ 7040 Transportation 					 $-   		
+ Programs: Field Investigation 							
+ 7305 Baykeeper Boat 					 $-   		
+ 7310 Contractors 					 $-   		
+ 7315 Field Equipment 					 $-   		
+ 7320 Laboratoy 					 $-   		
+ 7325 Legal Fees 					 $-   		
+ 7330 Technology & Software 					 $-   		
+ 7335 Testing Equipment 					 $-   		
+ 7340 Testing Supplies 					 $-   		
+ 7345 Transportation Equipment 					 $-   		
+ 7350 Travel 					 $-   		
+ Programs: Projects 							
+ 7405 Boat Equipment 	 Boat time for oyster surveys 	Oyster plot pre-construction surveys	 $400 	 $8 	 $3,200 		
+ 7410 Consulting 					 $-   		
+ 7415: Contractors 							
+ 7420: Field Equipment 	 RTK for Oyster surveys 	RTK purchase https://store.emlid.com/products/reachrx?variant=47253691072817	 $2,500 	 $1 	 $2,500 		
+ 7425 Laboratory 					 $-   		
+ 7430 Legal Fees 					 $-   		
+ 7435 Technology & Software 					 $-   		
+ 7440 Testing Equipment 					 $-   		
+ 7445 Testing Supplies 					 $-   		
+ 7450 Transportation Equipment 					 $-   		
+ 7455 Travel 					 $-   		
+ 7455 Travel 					 $-   		
+ 7455 Travel 					 $-   		
+ 7455 Travel 					 $-   		
+ 7455 Travel 					 $-   		
+ 7460 Meals 					 $-   		
+ 7465 Conferences 					 $-   		
+ 7465 Conferences 					 $-   		
+ Totals 					 $5,700 		
+							
+ Toxics Criteria 							
+  	 What 	 Explained 	 Unit Cost 	 Quantity (Frequency/#/miles) 	 Cost 	 Calendar Breakout 	 Notes 
+ Communications: Branding & Marketing 							
+ 4010 Consulting 					 $-   		
+ 4020 Contractors 					 $-   		
+ 4030 Design 					 $-   		
+ 4040 Printing 					 $-   		
+ 4060 Website 					 $-   		
+ 4070 Advertising 					 $-   		
+ Operations: Facilities & Equipment 							
+ 6335 Postage 					 $-   		
+ 6340 Printing 					 $-   		
+ 6360 Technology & Software 					 $-   		
+ Operations: Human Resources & Culture 							
+ 6510 Computer Services 					 $-   		
+ 6550 Meals 					 $-   		
+ 6540 Events & Retreats 					 $-   		
+ 7020 Supplies 					 $-   		
+ 7040 Transportation 					 $-   		
+ Programs: Community Engagement 							
+ 7010 Contractors 					 $-   		
+ 7020 Supplies 					 $-   		
+ 7030 Technology & Software 					 $-   		
+ 7040 Transportation 					 $-   		
+ Programs: Field Investigation 							
+ 7305 Baykeeper Boat 					 $-   		
+ 7310 Contractors 					 $-   		
+ 7315 Field Equipment 					 $-   		
+ 7320 Laboratoy 					 $-   		
+ 7325 Legal Fees 					 $-   		
+ 7330 Technology & Software 					 $-   		
+ 7335 Testing Equipment 					 $-   		
+ 7340 Testing Supplies 					 $-   		
+ 7345 Transportation Equipment 					 $-   		
+ 7350 Travel 					 $-   		
+ Programs: Projects 							
+ 7410 Consulting 	 Consultant to help with specific reccomendations regarding criteria 	 Have a consultant with experience in water quality regulatory efforts help us target our ask and technical rationale to be most effective to ADEM 	 $150 	 $44 	 $6,600 	 Q2 & Q3 	
+ 7415: Contractors 					 $-   		
+ 7420: Field Equipment 					 $-   		
+ 7425 Laboratory 					 $-   		
+ 7430 Legal Fees 	 Legal Challenge 	 Potential need to challenge ADEM regs through legal action 	 $225 	 $100 	 $22,500 	 Q3 & Q4 	 it is possible this will be unneccesary if legal team works pro-bono, we challenge through regulatory or legislative means; 
+ 7435 Technology & Software 					 $-   		
+ 7440 Testing Equipment 					 $-   		
+ 7445 Testing Supplies 					 $-   		
+ 7450 Transportation Equipment 					 $-   		
+ 7455 Travel 	 Trips to Montgomery 	 Dealing with ADEM, legislative action, ADPH; 6 trips @ 340 miles per trip 	 $228 	 $6 	 $1,362 	 Q1 & Q2 	
+ 7455 Travel 	 Trips for Watkeepers training 	 3 Waterkeepers traveling ~300 miles each * $0.7/mi 	 $1 	 $900 	 $630 		
+ 7455 Travel 	 Trips to meet with OTK 	 4 trips * 50 miles * $0.7/mi 	 $1 	 $200 	 $140 		
+ 7460 Meals 	 Meals for training with Waterkeepers 	 8 meals * $25/meal 	 $25 	 $8 	 $200 		
+ 7465 Conferences 					 $-   		
+ Totals 					 $31,432 		
+							
+ Nutrient Criteria 							
+  	 What 	 Explained 	 Unit Cost 	 Quantity (Frequency/#/miles) 	 Cost 	 Calendar Breakout 	 Notes 
+ Communications: Branding & Marketing 							
+ 4010 Consulting 					 $-   		
+ 4020 Contractors 					 $-   		
+ 4030 Design 					 $-   		
+ 4040 Printing 					 $-   		
+ 4060 Website 					 $-   		
+ 4070 Advertising 					 $-   		
+ Operations: Facilities & Equipment 							
+ 6335 Postage 					 $-   		
+ 6340 Printing 					 $-   		
+ 6360 Technology & Software 					 $-   		
+ Operations: Human Resources & Culture 							
+ 6510 Computer Services 					 $-   		
+ 6550 Meals 					 $-   		
+ 6540 Events & Retreats 					 $-   		
+ 7020 Supplies 					 $-   		
+ 7040 Transportation 					 $-   		
+ Programs: Community Engagement 							
+ 7010 Contractors 					 $-   		
+ 7020 Supplies 					 $-   		
+ 7030 Technology & Software 					 $-   		
+ 7040 Transportation 					 $-   		
+ Programs: Field Investigation 							
+ 7305 Baykeeper Boat 					 $-   		
+ 7310 Contractors 					 $-   		
+ 7315 Field Equipment 					 $-   		
+ 7320 Laboratoy 					 $-   		
+ 7325 Legal Fees 					 $-   		
+ 7330 Technology & Software 					 $-   		
+ 7335 Testing Equipment 					 $-   		
+ 7340 Testing Supplies 					 $-   		
+ 7345 Transportation Equipment 					 $-   		
+ 7350 Travel 					 $-   		
+ Programs: Projects 							
+ 7410 Consulting 	 Consultant to help with specific reccomendations regarding criteria 	 Have a consultant with experience in water quality regulatory efforts help us target our ask and technical rationale to be most effective to ADEM 	 $150 	 $80 	 $12,000 	 Q3 & Q4 	
+ 7415: Contractors 					 $-   		
+ 7420: Field Equipment 					 $-   		
+ 7425 Laboratory 					 $-   		
+ 7430 Legal Fees 					 $-   		
+ 7435 Technology & Software 					 $-   		
+ 7440 Testing Equipment 					 $-   		
+ 7445 Testing Supplies 					 $-   		
+ 7450 Transportation Equipment 					 $-   		
+ 7455 Travel 	 Travel to meet with ADEM etc 	 Trips to Montgomery to discuss issue with ADEM, legislators; 340mi/trip * 4 trips 	 $228 	 $4 	 $911 		
+ 7460 Meals 	 Meals for trips to Montgomery 	 4 trips, 2 people, $30/meal 	 $30 	 $8 	 $240 		
+ 7465 Conferences 					 $-   		
+ Totals 					 $13,151 		
+							
+ Hog Bayou 							
+  	 What 	 Explained 	 Unit Cost 	 Quantity (Frequency/#/miles) 	 Cost 	 Calendar Breakout 	 Notes 
+ Communications: Branding & Marketing 							
+ 4010 Consulting 					 $-   		
+ 4020 Contractors 					 $-   		
+ 4030 Design 					 $-   		
+ 4040 Printing 	 Printed flyers & materials 	 Event flyers, agendas, posters for CE series 	 $250 	 $8 	 $2,000 	 Monthly 	
+ 4060 Website 					 $-   		
+ 4070 Advertising 	 Digital advertising/boosts 	 Local social/paper boosts to drive attendance 	 $400 	 $8 	 $3,200 	 Monthly 	
+ Operations: Facilities & Equipment 							
+ 6335 Postage 					 $-   		
+ 6340 Printing 					 $-   		
+ 6360 Technology & Software 					 $-   		
+ Operations: Human Resources & Culture 							
+ 6510 Computer Services 					 $-   		
+ 6550 Meals 					 $-   		
+ 6540 Events & Retreats 					 $-   		
+ 7020 Supplies 					 $-   		
+ 7040 Transportation 					 $-   		
+ Programs: Community Engagement 							
+ 7010 Contractors 					 $-   		
+ 7020 Supplies 					 $-   		
+ 7030 Technology & Software 					 $-   		
+ 7040 Transportation 					 $-   		
+ Programs: Field Investigation 							
+ 7305 Baykeeper Boat 					 $-   		
+ 7310 Contractors 					 $-   		
+ 7315 Field Equipment 					 $-   		
+ 7320 Laboratoy 					 $-   		
+ 7325 Legal Fees 					 $-   		
+ 7330 Technology & Software 					 $-   		
+ 7335 Testing Equipment 					 $-   		
+ 7340 Testing Supplies 					 $-   		
+ 7345 Transportation Equipment 					 $-   		
+ 7350 Travel 					 $-   		
+ Programs: Projects 							
+ 7410 Consulting 	 Community advisor – Joe Womack (CHESS) 	 Retainer/honorarium for advice & co-design 	 $7,500 	 $1 	 $7,500 	 Monthly 	
+ 7410 Consulting 	 Community advisor – Ramsey Sprague (MEJAC) 	 Retainer/honorarium for advice & co-design 	 $7,500 	 $1 	 $7,500 	 Monthly 	
+ 7415: Contractors 	 Parcel Due Diligence 	 Assist County/City with due diligence around access/conservation easement, recreation, etc. 	 $10,000 		 $-   		
+ 7420: Field Equipment 					 $-   		
+ 7425 Laboratory 					 $-   		
+ 7430 Legal Fees 					 $-   		
+ 7435 Technology & Software 					 $-   		
+ 7440 Testing Equipment 					 $-   		
+ 7445 Testing Supplies 					 $-   		
+ 7450 Transportation Equipment 					 $-   		
+ 7455 Travel 	 Misc Project Travel 	 Visiting captains, meetings, etc. 	 $1 	 $80 	 $46 		
+ 7460 Meals 	 Event meals/catering (with take-home) 	 Family-friendly food at meetings; take-home boxes 	 $2,500 	 $8 	 $20,000 	 Monthly 	
+ 7460 Meals 	 Meetings with partners/stakeholders; 	" Community Engagement events, meals on boat; 
+CE 3 events * 60 attendees * $25/meal = $1500
+F&R - 2 boat days * 3 members * $10/meal = $60 "	 $151 	 $10 	 $1,510 	 Q1, Q3, Q4 	
+ 7465 Conferences 					 $-   		
+ Totals 					 $41,756 		
+							
+ Dam Removal 							
+  	 What 	 Explained 	 Unit Cost 	 Quantity (Frequency/#/miles) 	 Cost 	 Calendar Breakout 	 Notes 
+ Communications: Branding & Marketing 							
+ 4010 Consulting 					 $-   		
+ 4020 Contractors 					 $-   		
+ 4030 Design 					 $-   		
+ 4040 Printing 					 $-   		
+ 4060 Website 					 $-   		
+ 4070 Advertising 					 $-   		
+ Operations: Facilities & Equipment 							
+ 6335 Postage 					 $-   		
+ 6340 Printing 					 $-   		
+ 6360 Technology & Software 					 $-   		
+ Operations: Human Resources & Culture 							
+ 6510 Computer Services 					 $-   		
+ 6550 Meals 					 $-   		
+ 6540 Events & Retreats 					 $-   		
+ 7020 Supplies 					 $-   		
+ 7040 Transportation 					 $-   		
+ Programs: Community Engagement 							
+ 7010 Contractors 					 $-   		
+ 7020 Supplies 					 $-   		
+ 7030 Technology & Software 					 $-   		
+ 7040 Transportation 					 $-   		
+ Programs: Field Investigation 							
+ 7305 Baykeeper Boat 					 $-   		
+ 7310 Contractors 					 $-   		
+ 7315 Field Equipment 					 $-   		
+ 7320 Laboratoy 					 $-   		
+ 7325 Legal Fees 					 $-   		
+ 7330 Technology & Software 					 $-   		
+ 7335 Testing Equipment 					 $-   		
+ 7340 Testing Supplies 					 $-   		
+ 7345 Transportation Equipment 					 $-   		
+ 7350 Travel 					 $-   		
+ Programs: Projects 							
+ 7410 Consulting 					 $-   		
+ 7415: Contractors 					 $-   		
+ 7420: Field Equipment 					 $-   		
+ 7425 Laboratory 					 $-   		
+ 7430 Legal Fees 					 $-   		
+ 7435 Technology & Software 					 $-   		
+ 7440 Testing Equipment 					 $-   		
+ 7445 Testing Supplies 					 $-   		
+ 7450 Transportation Equipment 					 $-   		
+ 7455 Travel 					 $-   		
+ 7460 Meals 					 $-   		
+ 7465 Conferences 					 $-   		

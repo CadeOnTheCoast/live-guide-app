@@ -64,18 +64,18 @@ export function BudgetSummary({ budgetLines }: BudgetSummaryProps) {
                     <div className="mt-8 space-y-3">
                         <div className="flex justify-between items-center text-[9px] text-white/40 font-bold uppercase tracking-widest">
                             <span>RECURRING EXPENSES</span>
-                            <span className="text-white">42%</span>
+                            <span className="text-white">0%</span>
                         </div>
                         <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-                            <div className="h-full bg-brand-sky w-[42%]" />
+                            <div className="h-full bg-brand-sky w-[0%]" />
                         </div>
 
                         <div className="flex justify-between items-center text-[9px] text-white/40 font-bold uppercase tracking-widest">
                             <span>PROJECT SPECIFIC</span>
-                            <span className="text-white">58%</span>
+                            <span className="text-white">0%</span>
                         </div>
                         <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-                            <div className="h-full bg-brand-mint w-[58%]" />
+                            <div className="h-full bg-brand-mint w-[0%]" />
                         </div>
                     </div>
                 </div>
@@ -83,10 +83,10 @@ export function BudgetSummary({ budgetLines }: BudgetSummaryProps) {
                 <div className="relative z-10 mt-8 pt-8 border-t border-white/10">
                     <div className="flex justify-between items-center text-[10px] text-brand-mint font-bold uppercase tracking-widest">
                         <span>Tracking Accuracy</span>
-                        <span>92%</span>
+                        <span>0%</span>
                     </div>
                     <div className="mt-2 h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
-                        <div className="h-full bg-brand-mint w-[92%]" />
+                        <div className="h-full bg-brand-mint w-[0%]" />
                     </div>
                 </div>
             </Card>
