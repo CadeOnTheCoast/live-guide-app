@@ -13,7 +13,7 @@
     "test:e2e": "echo \"No e2e tests defined yet\"",
     "import:data": "ts-node --transpile-only scripts/import-dashboard-data.ts",
     "db:migrate:dev": "LOCAL_DEV=1 ./scripts/db-guard.sh 'prisma migrate dev' false && LOCAL_DEV=1 prisma migrate dev",
-    "db:migrate:deploy": "./scripts/db-guard.sh 'prisma migrate deploy' false && prisma migrate deploy",
+    "db:migrate:deploy": "./scripts/db-guard.sh 'prisma migrate deploy' false && (npx prisma migrate resolve --applied 20251226160000_align_schema || true) && (npx prisma migrate resolve --applied 20251226212000_sync_missing_fields || true) && prisma migrate deploy",
     "db:reset": "LOCAL_DEV=1 ./scripts/db-guard.sh 'prisma migrate reset' true && prisma migrate reset",
     "db:generate": "prisma generate",
     "db:seed": "prisma db seed",
