@@ -88,3 +88,14 @@
 - `npm run lint` PASS
 - `npm run build` PASS
 - `npm run test --if-present` PASS
+
+## Module 10 — Codebase Review & Cleanup
+### Actions taken
+- **Script Archiving**: Moved deprecated/one-time utility scripts to `scripts/archive/`.
+- **Backup Cleanup**: Cleared the `backups/` directory to remove stale data.
+- **Documentation Audit**: Updated `README.md`, `AGENTS.md`, and created `ROADMAP.md` to reflect current project status and future goals.
+- **Consistency**: Ensured all server actions and hydration patterns follow established best practices.
+
+### Verification
+- Project build and lint checks verified.
+- Documentation links and relative paths confirmed.

@@ -19,6 +19,7 @@ import {
 import { MilestoneArc, departmentColorClasses } from "./MilestoneArc";
 import { MilestoneDetailPanel } from "./MilestoneDetailPanel";
 import { MilestoneForm } from "./MilestoneForm";
+import { useTimelineRealtime } from "./useTimelineRealtime";
 
 type ProjectTimelineViewProps = {
   project: {
@@ -41,9 +42,11 @@ type ProjectTimelineViewProps = {
   departments: { id: string; name: string; code: string }[];
   objectives: { id: string; title: string }[];
   pushes: { id: string; name: string; startDate: Date; endDate: Date }[];
+  currentUser?: { email: string; name: string } | null;
 };
 
-export function ProjectTimelineView({ project, milestones, keyResults, canEdit, departments, objectives, pushes }: ProjectTimelineViewProps) {
+export function ProjectTimelineView({ project, milestones, keyResults, canEdit, departments, objectives, pushes, currentUser }: ProjectTimelineViewProps) {
+  useTimelineRealtime();
   const bounds = useMemo(() => getMilestoneYearBounds(milestones), [milestones]);
   const [startYear, setStartYear] = useState(bounds.startYear);
   const [endYear, setEndYear] = useState(bounds.endYear);
@@ -115,6 +118,8 @@ export function ProjectTimelineView({ project, milestones, keyResults, canEdit, 
           caseForChangePageUrl: project.caseForChangePageUrl,
           badges: project.badges
         }}
+        projectSlug={project.slug}
+        currentUser={currentUser}
       />
 
       <Card>

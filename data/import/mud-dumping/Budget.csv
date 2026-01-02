@@ -1,0 +1,21 @@
+Account,Description,Unit Cost,Quantity,Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec,Notes
+4020,Video needs,3750,2,,3750,,,,,,3750,,,"Q2 & Q4, Captioning/licensing in scope"
+4070,Digital issue education,12500,1,,6250,,,,,,6250,,,"Q2, Q4"
+6335,FedEx/USPS to Hill/partners,25,1,25,,,,,,,,,,,As needed
+6340,Internal run-rate,250,1,250,,,,,,,,,,,As needed
+7305,Boat trips to view/visuals/sample,40,5,,80,,,,,,120,,,"Q2 & Q4, Fuel math ≈ $32/trip"
+7310,Drone/GIS/surge sampling,3000,1,750,750,750,750,,,,,,,,Quarterly
+7315,Smallwares refresh,500,1,,500,,,,,,,,,,Q2
+7320,Outside lab min orders,300,4,,600,600,,,,,,,,Q2 & Q3
+7340,Bottles/PPE/labels/ice,300,1,,150,150,,,,,,,,Q2–Q3
+7350,Mileage to ramp,1,180,,40,40,40,,,,,,,,Q2–Q4
+7410,Lobbyist Time,7500,12,7500,7500,7500,7500,7500,7500,7500,7500,7500,7500,7500,7500,Monthly
+7415:,Expert honoraria/reviews,500,8,,2000,2000,,,,,,,,Q2–Q3
+7455,Local/regional stakeholder mileage,1,300,17.5,17.5,17.5,17.5,17.5,17.5,17.5,17.5,17.5,17.5,17.5,17.5,Monthly
+7455,Montgomery day trips (2 ppl × 5 trips),1,1750,408.33,408.33,408.34,,,,,,,,,"Q1, Q2, Q3"
+7455,Airfare (DC),550,12,,2200,2200,2200,,,,,,,,,"Q2, Q3, Q4"
+7455,Hotel (DC),300,12,,1200,1200,1200,,,,,,,,Q2–Q4
+7455,Local transport (DC),20,10,,66.67,66.67,66.66,,,,,,,,Q2–Q4
+7455,Per-diem meals (DC),55,36,,660,660,660,,,,,,,,Q2–Q4
+7455,Captain travel reserve,2500,1,,833.33,833.33,833.34,,,,,,,,Q2–Q4
+7465,Registrations/hearings/forums,1500,1,1500,,,,,,,,,,,As needed

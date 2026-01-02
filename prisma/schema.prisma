@@ -27,6 +27,7 @@ model Person {
   primaryProjects     Project[]         @relation("ProjectPrimaryOwner")
   roleAssignments     RoleAssignment[]
   staffAllocations    StaffAllocation[]
+  budgetComments      BudgetComment[]
 }
 
 model Department {
@@ -392,18 +393,35 @@ model CommsItem {
 }
 
 model BudgetLine {
-  id            String   @id @default(cuid())
+  id            String          @id @default(cuid())
   projectId     String
   category      String
   description   String
-  amount        Decimal  @db.Decimal(10, 2)
-  currency      String   @default("USD")
+  amount        Decimal         @db.Decimal(10, 2)
+  unitCost      Decimal?        @db.Decimal(10, 2)
+  quantity      Float?
+  currency      String          @default("USD")
   period        String
   fundingSource String?
-  isActual      Boolean  @default(false)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  project       Project  @relation(fields: [projectId], references: [id])
+  isActual      Boolean         @default(false)
+  notes         String?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  project       Project         @relation(fields: [projectId], references: [id])
+  comments      BudgetComment[]
+
+  @@unique([projectId, category, description, period])
+}
+
+model BudgetComment {
+  id           String     @id @default(cuid())
+  budgetLineId String
+  authorId     String
+  text         String
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  author       Person     @relation(fields: [authorId], references: [id])
+  budgetLine   BudgetLine @relation(fields: [budgetLineId], references: [id])
 }
 
 model StaffAllocation {

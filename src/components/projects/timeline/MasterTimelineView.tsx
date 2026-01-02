@@ -9,6 +9,8 @@ import { getTimelinePosition } from "./utils";
 import { Check } from "lucide-react";
 
 import { Eye, EyeOff, GripVertical } from "lucide-react";
+import { useEffect } from "react";
+import { useTimelineRealtime } from "./useTimelineRealtime";
 
 type Milestone = {
     id: string;
@@ -56,6 +58,7 @@ const PROJECT_COLORS = [
 ];
 
 export function MasterTimelineView({ projects: initialProjects }: MasterTimelineViewProps) {
+    useTimelineRealtime();
     const currentYear = new Date().getFullYear();
     const [startYear, setStartYear] = useState(currentYear - 1);
     const [endYear, setEndYear] = useState(currentYear + 2);
@@ -67,6 +70,11 @@ export function MasterTimelineView({ projects: initialProjects }: MasterTimeline
     const [activeFilters, setActiveFilters] = useState<Set<"milestone" | "keyresult">>(new Set());
     const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
     const [showHidden, setShowHidden] = useState(false);
+
+    // Sync state when props change (realtime update)
+    useEffect(() => {
+        setOrderedProjects(initialProjects);
+    }, [initialProjects]);
 
     const startDate = useMemo(() => new Date(`${startYear}-01-01T00:00:00Z`), [startYear]);
     const endDate = useMemo(() => new Date(`${endYear}-12-31T23:59:59Z`), [endYear]);

@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ProjectHeader } from "@/components/projects/ProjectHeader";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function CaseForChangeView({ project }: { project: any }) {
+export function CaseForChangeView({ project, currentUser }: { project: any, currentUser?: { email: string; name: string } | null }) {
     return (
         <div className="space-y-6">
             <ProjectHeader
@@ -15,6 +15,8 @@ export function CaseForChangeView({ project }: { project: any }) {
                     asanaProjectGid: project.asanaProjectGid,
                     caseForChangePageUrl: project.caseForChangePageUrl
                 }}
+                projectSlug={project.slug}
+                currentUser={currentUser}
             />
 
             <Card>

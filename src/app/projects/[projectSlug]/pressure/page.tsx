@@ -39,6 +39,7 @@ export default async function ProjectPressurePage({ params }: { params: { projec
       decisionMakers={project.decisionMakers}
       stakeholders={project.stakeholders}
       canEdit={canEdit}
+      currentUser={person ? { email: person.email, name: person.name } : null}
     />
   );
 }

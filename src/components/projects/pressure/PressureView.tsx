@@ -26,6 +26,7 @@ type PressureViewProps = {
     decisionMakers: (DecisionMaker & { pressureAssets: PressureAsset[] })[];
     stakeholders: Stakeholder[];
     canEdit: boolean;
+    currentUser?: { email: string; name: string } | null;
 };
 
 const CORNER_CONFIG: Record<PressureCorner, { color: string; label: string; bg: string }> = {
@@ -35,7 +36,7 @@ const CORNER_CONFIG: Record<PressureCorner, { color: string; label: string; bg: 
     [PressureCorner.MEDIA]: { color: "text-brand-sky", bg: "bg-brand-sky", label: "Media" }
 };
 
-export function PressureView({ project, decisionMakers, stakeholders, canEdit }: PressureViewProps) {
+export function PressureView({ project, decisionMakers, stakeholders, canEdit, currentUser }: PressureViewProps) {
     const [selectedDmId, setSelectedDmId] = useState<string | null>(decisionMakers[0]?.id ?? null);
     const [selectedStakeholderId, setSelectedStakeholderId] = useState<string | null>(null);
     const [filterCorner, setFilterCorner] = useState<PressureCorner | null>(null);
@@ -78,6 +79,8 @@ export function PressureView({ project, decisionMakers, stakeholders, canEdit }:
                     asanaProjectGid: project.asanaProjectGid,
                     caseForChangePageUrl: project.caseForChangePageUrl
                 }}
+                projectSlug={project.slug}
+                currentUser={currentUser}
             />
 
             <Tabs defaultValue="dm" className="w-full">

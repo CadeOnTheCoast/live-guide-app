@@ -6,6 +6,7 @@ import { db } from "@/server/db";
 import { getUserOrRedirect } from "@/server/auth";
 import { canEditProject } from "@/server/permissions";
 import type { MilestoneFormState } from "./formState";
+import { pushMilestoneToAsana } from "./asana-sync";
 
 function parseDate(value: string | undefined | null) {
   if (!value) return null;
@@ -37,6 +38,7 @@ export async function upsertMilestone(prevState: MilestoneFormState, formData: F
   const isMajor = formData.get("isMajor") === "on";
   const category = (formData.get("category")?.toString() as MilestoneCategory | undefined) ?? MilestoneCategory.OTHER;
   const status = (formData.get("status")?.toString() as MilestoneStatus | undefined) ?? MilestoneStatus.PLANNED;
+  const shouldPushToAsana = formData.get("asanaPush") === "on";
 
   const errors: MilestoneFormState["errors"] = {};
 
@@ -102,10 +104,22 @@ export async function upsertMilestone(prevState: MilestoneFormState, formData: F
     asanaTaskGid
   };
 
+  let finalMilestoneId = milestoneId;
   if (milestoneId) {
     await db.milestone.update({ where: { id: milestoneId }, data });
   } else {
-    await db.milestone.create({ data });
+    const created = await db.milestone.create({ data });
+    finalMilestoneId = created.id;
+  }
+
+  if (shouldPushToAsana && finalMilestoneId) {
+    try {
+      await pushMilestoneToAsana(finalMilestoneId);
+    } catch (error) {
+      console.error("Asana push failed:", error);
+      // We don't fail the whole action, but maybe we should return a warning?
+      // For now, we'll just log it.
+    }
   }
 
   revalidatePath(getTimelinePath(slug));

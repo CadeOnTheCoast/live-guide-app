@@ -4,7 +4,7 @@ import { getUserOrRedirect } from "@/server/auth";
 import { CaseForChangeView } from "@/components/projects/case-for-change/CaseForChangeView";
 
 export default async function ProjectCaseForChangePage({ params }: { params: { projectSlug: string } }) {
-  await getUserOrRedirect();
+  const { person } = await getUserOrRedirect();
 
   const project = await db.project.findUnique({
     where: { slug: params.projectSlug },
@@ -18,6 +18,7 @@ export default async function ProjectCaseForChangePage({ params }: { params: { p
   return (
     <CaseForChangeView
       project={project}
+      currentUser={person ? { email: person.email, name: person.name } : null}
     />
   );
 }

@@ -16,7 +16,11 @@ type ProjectHeaderProps = {
     caseForChangePageUrl?: string | null;
     badges?: string[];
   };
+  projectSlug: string;
+  currentUser?: { email: string; name: string } | null;
 };
+
+import { ProjectPresence } from "./ProjectPresence";
 
 const BADGE_COLORS: Record<string, string> = {
   "Fish Consumption": "bg-blue-500/10 text-blue-600 border-blue-500/20",
@@ -27,7 +31,7 @@ const BADGE_COLORS: Record<string, string> = {
   "Oyster": "bg-orange-500/10 text-orange-600 border-orange-500/20"
 };
 
-export function ProjectHeader({ project }: ProjectHeaderProps) {
+export function ProjectHeader({ project, projectSlug, currentUser }: ProjectHeaderProps) {
   const asanaLink = project.asanaUrl || (project.asanaProjectGid
     ? `https://app.asana.com/0/${project.asanaProjectGid}/list`
     : null);
@@ -69,6 +73,8 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
           <p className="text-xs font-bold uppercase tracking-widest">
             OWNER: <span className="text-brand-charcoal ml-1">{project.primaryOwnerName ?? "UNASSIGNED"}</span>
           </p>
+          <div className="h-4 w-px bg-brand-sky/20 mx-2 hidden md:block" />
+          <ProjectPresence slug={projectSlug} currentUser={currentUser} />
         </div>
       </div>
 

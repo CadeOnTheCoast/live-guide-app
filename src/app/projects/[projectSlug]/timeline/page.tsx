@@ -58,6 +58,7 @@ export default async function ProjectTimelinePage({ params }: { params: { projec
       departments={departments}
       objectives={objectives}
       pushes={pushes}
+      currentUser={person ? { email: person.email, name: person.name } : null}
     />
   );
 }

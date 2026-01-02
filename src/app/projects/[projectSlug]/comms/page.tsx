@@ -37,6 +37,7 @@ export default async function ProjectCommsPage({ params }: { params: { projectSl
       commsProfile={project.commsProfile}
       commsItems={project.commsItems}
       canEdit={canEdit}
+      currentUser={person ? { email: person.email, name: person.name } : null}
     />
   );
 }

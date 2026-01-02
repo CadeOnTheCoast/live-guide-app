@@ -104,6 +104,17 @@ export function MilestoneForm({ projectId, slug, open, onOpenChange, defaultValu
                     defaultValue={defaultValues?.asanaTaskGid ?? ""}
                   />
                 </div>
+                <div className="space-y-2 flex flex-col justify-end">
+                  <div className="flex items-center gap-2 pb-2">
+                    <input
+                      id="asanaPush"
+                      name="asanaPush"
+                      type="checkbox"
+                      className="h-4 w-4 rounded border text-primary focus:ring-primary"
+                    />
+                    <Label htmlFor="asanaPush" className="text-xs font-semibold text-brand-sage">Push changes to Asana</Label>
+                  </div>
+                </div>
               </div>
 
               <div className="space-y-2">

@@ -5,6 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatDate } from "@/lib/date";
 import { MilestoneWithRelations } from "./utils";
+import { useTransition } from "react";
+import { syncMilestoneWithAsana } from "@/app/projects/[projectSlug]/timeline/asana-sync";
+import { RefreshCw } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 type MilestoneDetailPanelProps = {
   milestone: MilestoneWithRelations;
@@ -14,7 +18,19 @@ type MilestoneDetailPanelProps = {
 };
 
 export function MilestoneDetailPanel({ milestone, canEdit, onEdit, onDelete }: MilestoneDetailPanelProps) {
+  const [isSyncing, startSyncTransition] = useTransition();
   const asanaLink = milestone.asanaTaskGid ? `https://app.asana.com/0/${milestone.asanaTaskGid}` : null;
+
+  const handleSync = () => {
+    startSyncTransition(async () => {
+      try {
+        await syncMilestoneWithAsana(milestone.id);
+      } catch (error) {
+        console.error("Sync failed:", error);
+        alert("Failed to sync with Asana. Please check your ASANA_PAT.");
+      }
+    });
+  };
 
   return (
     <Card data-testid="milestone-detail">
@@ -39,9 +55,23 @@ export function MilestoneDetailPanel({ milestone, canEdit, onEdit, onDelete }: M
             label="Asana"
             value={
               asanaLink ? (
-                <a href={asanaLink} className="text-primary underline" target="_blank" rel="noreferrer">
-                  Open in Asana
-                </a>
+                <div className="flex items-center gap-2">
+                  <a href={asanaLink} className="text-primary underline" target="_blank" rel="noreferrer">
+                    Open in Asana
+                  </a>
+                  {canEdit && (
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-6 w-6 text-brand-sage hover:text-brand-teal transition-colors"
+                      onClick={handleSync}
+                      disabled={isSyncing}
+                      title="Sync from Asana"
+                    >
+                      <RefreshCw className={cn("h-3 w-3", isSyncing && "animate-spin")} />
+                    </Button>
+                  )}
+                </div>
               ) : (
                 "None"
               )

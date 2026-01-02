@@ -21,7 +21,15 @@ A Next.js + Prisma + Postgres dashboard for Mobile Baykeeper projects. The app u
    ```bash
    npm run prisma:seed
    ```
-5. Run the development server
+5. (Internal) Ingest or populate data
+   ```bash
+   # Import from project template markdown
+   # npx tsx scripts/ingest-project.ts path/to/project-template.md
+
+   # Or run the standard dashboard data importer
+   npm run import:data
+   ```
+6. Run the development server
    ```bash
    npm run dev
    ```
@@ -39,7 +47,17 @@ A Next.js + Prisma + Postgres dashboard for Mobile Baykeeper projects. The app u
 - `npm run prisma:generate` – generate Prisma client
 - `npm run prisma:seed` – seed Departments, People, and Projects
 
+### Data Import Scripts
+- `npm run import:data` – standard dashboard data importer (uses `scripts/import-dashboard-data.ts`)
+- `npx tsx scripts/ingest-project.ts` – ingest project data from a Markdown template
+
+> [!NOTE]
+> One-time utility scripts and historical fixes are archived in `scripts/archive/`.
+
 Database-aware tests are skipped unless `DATABASE_URL` is set and the database has been migrated/seeded.
+
+## Roadmap
+See [ROADMAP.md](file:///Users/cade/Documents/Repos/live-guide-app/ROADMAP.md) for planned features and historical milestones.
 
 ## Project structure
 - `src/app` – Next.js App Router pages and layout

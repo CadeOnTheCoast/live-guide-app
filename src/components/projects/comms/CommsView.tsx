@@ -25,9 +25,10 @@ type CommsViewProps = {
     }) | null;
     commsItems: (CommsItem & { owner?: { name: string } | null })[];
     canEdit: boolean;
+    currentUser?: { email: string; name: string } | null;
 };
 
-export function CommsView({ project, commsProfile, commsItems }: CommsViewProps) {
+export function CommsView({ project, commsProfile, commsItems, currentUser }: CommsViewProps) {
     return (
         <div className="space-y-6">
             <ProjectHeader
@@ -38,6 +39,8 @@ export function CommsView({ project, commsProfile, commsItems }: CommsViewProps)
                     asanaProjectGid: project.asanaProjectGid,
                     caseForChangePageUrl: project.caseForChangePageUrl
                 }}
+                projectSlug={project.slug}
+                currentUser={currentUser}
             />
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

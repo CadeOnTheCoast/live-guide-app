@@ -57,6 +57,8 @@ export default async function ProjectOverviewPage({ params }: { params: { projec
           caseForChangePageUrl: project.caseForChangePageUrl,
           badges: project.badges
         }}
+        projectSlug={project.slug}
+        currentUser={person ? { email: person.email, name: person.name } : null}
       />
 
       <div className="grid gap-6 lg:grid-cols-3">
