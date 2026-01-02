@@ -20,7 +20,12 @@ This document outlines the planned features, historical milestones, and future d
 - [x] Modern, responsive design system (vibrant colors, glassmorphism).
 - [x] Dynamic project overview forms with hydration fixes.
 
-## Phase 4: Intelligence & Analytics (Current Focus)
+## Phase 4: Budgeting & Financials (Completed)
+- [x] Unified budget data ingestion (merging raw & narrative sources).
+- [x] Detailed Budget Table with collapsible notes and recurrent expenses.
+- [x] Project financial summary implementation.
+
+## Phase 5: Intelligence & Analytics (Upcoming)
 - [/] **Predictive Analytics Engine**: Time series forecasting for key metrics (VSC%, GAP%, PVR).
 - [ ] **Anomaly Detection**: Highlight stores or projects with significant deviations from trends.
 - [ ] **Goal Probability**: Calculate the likelihood of achieving project milestones based on current velocity.

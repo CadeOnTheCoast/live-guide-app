@@ -119,7 +119,7 @@ export function BudgetTable({ budgetLines, projectSlug, canEdit }: BudgetTablePr
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {Object.values(groupedRows).map((row, idx) => {
+                        {Object.entries(groupedRows).map(([key, row], idx) => {
                             let rowTotal = 0;
                             MONTHS.forEach((m) => {
                                 if (row.months[m]) {

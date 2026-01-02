@@ -30,7 +30,7 @@ const baseMilestone: MilestoneWithRelations = {
 };
 
 const mockKeyResults = [
-  { id: "kr1", code: "KR1", title: "Key Result 1", date: new Date("2026-06-01"), departmentId: "d1" }
+  { id: "kr1", code: "KR1", title: "Key Result 1", date: new Date("2026-06-01"), departmentId: "d1", status: "PLANNED" }
 ];
 
 describe("Milestone visualization", () => {
@@ -81,7 +81,6 @@ describe("Milestone visualization", () => {
           relatedKrId: null,
           relatedMilestoneId: "1",
           asanaTaskGid: null,
-          asanaSectionGid: null,
           createdAt: new Date(),
           updatedAt: new Date()
         }
