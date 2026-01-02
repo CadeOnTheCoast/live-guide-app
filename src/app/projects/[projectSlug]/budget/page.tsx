@@ -52,7 +52,7 @@ export default async function BudgetPage({
 
   const staffAllocations = staffAllocationsRaw.map(alloc => ({
     ...alloc,
-    hours: Number(alloc.allocation)
+    hours: alloc.hours
   }));
 
   const canEdit = canEditProject(person?.role);
