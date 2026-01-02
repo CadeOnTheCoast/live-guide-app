@@ -8,7 +8,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { cn } from "@/lib/utils";
 
 interface StaffAllocation {
     id: string;
@@ -24,7 +23,10 @@ interface StaffAllocationTableProps {
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 export function StaffAllocationTable({ allocations }: StaffAllocationTableProps) {
-    const groupedRows: Record<string, any> = {};
+    const groupedRows: Record<string, {
+        name: string;
+        months: Record<string, number>;
+    }> = {};
 
     allocations.forEach((alloc) => {
         const key = alloc.person.email;

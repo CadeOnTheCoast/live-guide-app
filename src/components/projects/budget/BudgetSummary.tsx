@@ -1,10 +1,15 @@
 "use client";
 
 import { Card } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
+
+interface BudgetLine {
+    id: string;
+    amount: { toNumber(): number } | number;
+    period: string;
+}
 
 interface BudgetSummaryProps {
-    budgetLines: any[];
+    budgetLines: BudgetLine[];
 }
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -13,7 +18,10 @@ export function BudgetSummary({ budgetLines }: BudgetSummaryProps) {
     const monthlyTotals = MONTHS.map((month) => {
         return budgetLines
             .filter((line) => line.period.startsWith(month))
-            .reduce((sum, line) => sum + Number(line.amount), 0);
+            .reduce((sum, line) => {
+                const amt = typeof line.amount === 'number' ? line.amount : line.amount.toNumber();
+                return sum + amt;
+            }, 0);
     });
 
     const maxTotal = Math.max(...monthlyTotals, 1);

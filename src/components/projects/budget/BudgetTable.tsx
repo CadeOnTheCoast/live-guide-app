@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import { updateBudgetLine, addBudgetComment } from "@/app/projects/[projectSlug]/budget/actions";
-import { MessageSquare, MoreHorizontal, Info } from "lucide-react";
+import { MessageSquare, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
     Dialog,
@@ -26,12 +26,12 @@ interface BudgetLine {
     id: string;
     category: string;
     description: string;
-    amount: any; // Prisma.Decimal
-    unitCost: any;
+    amount: { toNumber(): number } | number;
+    unitCost: { toNumber(): number } | number | null;
     quantity: number | null;
     period: string;
     notes: string | null;
-    comments?: any[];
+    comments?: { text: string; author: { name: string } }[];
 }
 
 interface BudgetTableProps {
@@ -44,11 +44,17 @@ const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "
 
 export function BudgetTable({ budgetLines, projectSlug, canEdit }: BudgetTableProps) {
     const [editingCell, setEditingCell] = useState<{ id: string, field: string } | null>(null);
-    const [commentingLine, setCommentingLine] = useState<string | null>(null);
     const [commentText, setCommentText] = useState("");
 
     // Grouping logic
-    const groupedRows: Record<string, any> = {};
+    const groupedRows: Record<string, {
+        category: string;
+        description: string;
+        unitCost: { toNumber(): number } | number | null;
+        quantity: number | null;
+        notes: string | null;
+        months: Record<string, { id: string; amount: { toNumber(): number } | number }>;
+    }> = {};
     budgetLines.forEach((line) => {
         const key = `${line.category}-${line.description}`;
         if (!groupedRows[key]) {
@@ -81,7 +87,6 @@ export function BudgetTable({ budgetLines, projectSlug, canEdit }: BudgetTablePr
         try {
             await addBudgetComment({ budgetLineId: id, text: commentText, slug: projectSlug });
             setCommentText("");
-            setCommentingLine(null);
         } catch (error) {
             console.error("Failed to add comment:", error);
         }
@@ -106,7 +111,10 @@ export function BudgetTable({ budgetLines, projectSlug, canEdit }: BudgetTablePr
                         {Object.values(groupedRows).map((row, idx) => {
                             let rowTotal = 0;
                             MONTHS.forEach((m) => {
-                                if (row.months[m]) rowTotal += Number(row.months[m].amount);
+                                if (row.months[m]) {
+                                    const amt = typeof row.months[m].amount === 'number' ? row.months[m].amount : row.months[m].amount.toNumber();
+                                    rowTotal += amt;
+                                }
                             });
 
                             return (
@@ -149,7 +157,7 @@ export function BudgetTable({ budgetLines, projectSlug, canEdit }: BudgetTablePr
                                                                 canEdit && "hover:bg-brand-sky/10 cursor-pointer"
                                                             )}
                                                         >
-                                                            ${Number(line.amount).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+                                                            ${(typeof line.amount === 'number' ? line.amount : line.amount.toNumber()).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                                                         </div>
                                                     )
                                                 ) : (
@@ -181,7 +189,7 @@ export function BudgetTable({ budgetLines, projectSlug, canEdit }: BudgetTablePr
                                                     />
                                                     <div className="flex justify-end">
                                                         <Button
-                                                            onClick={() => handleComment(Object.values(row.months)[0] as any)} // For simplicity using the first month's ID as reference
+                                                            onClick={() => handleComment((Object.values(row.months)[0] as { id: string }).id)} // For simplicity using the first month's ID as reference
                                                             className="bg-brand-teal hover:bg-brand-teal/90 text-white font-bold tracking-widest text-[10px]"
                                                         >
                                                             SEND NOTIFICATION
