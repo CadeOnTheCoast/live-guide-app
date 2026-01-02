@@ -1,10 +1,10 @@
 -- AlterTable
-ALTER TABLE "BudgetLine" ADD COLUMN     "notes" TEXT,
-ADD COLUMN     "quantity" DOUBLE PRECISION,
-ADD COLUMN     "unitCost" DECIMAL(10,2);
+ALTER TABLE "BudgetLine" ADD COLUMN IF NOT EXISTS "notes" TEXT,
+ADD COLUMN IF NOT EXISTS "quantity" DOUBLE PRECISION,
+ADD COLUMN IF NOT EXISTS "unitCost" DECIMAL(10,2);
 
 -- CreateTable
-CREATE TABLE "BudgetComment" (
+CREATE TABLE IF NOT EXISTS "BudgetComment" (
     "id" TEXT NOT NULL,
     "budgetLineId" TEXT NOT NULL,
     "authorId" TEXT NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE "BudgetComment" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "BudgetLine_projectId_category_description_period_key" ON "BudgetLine"("projectId", "category", "description", "period");
+CREATE UNIQUE INDEX IF NOT EXISTS "BudgetLine_projectId_category_description_period_key" ON "BudgetLine"("projectId", "category", "description", "period");
 
 -- AddForeignKey
 ALTER TABLE "BudgetComment" ADD CONSTRAINT "BudgetComment_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "Person"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

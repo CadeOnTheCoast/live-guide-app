@@ -1,36 +1,36 @@
 -- AlterTable
-ALTER TABLE "Project" ADD COLUMN "historyDebrief" TEXT,
-ADD COLUMN "asanaWorkspaceGid" TEXT,
-ADD COLUMN "asanaTeamGid" TEXT,
-ADD COLUMN "asanaUrl" TEXT,
-ADD COLUMN "teamsUrl" TEXT,
-ADD COLUMN "projectFolderUrl" TEXT,
-ADD COLUMN "projectNotesUrl" TEXT,
-ADD COLUMN "badges" TEXT[] DEFAULT ARRAY[]::TEXT[],
-ADD COLUMN "isActive" BOOLEAN NOT NULL DEFAULT true;
+ALTER TABLE "Project" ADD COLUMN IF NOT EXISTS "historyDebrief" TEXT,
+ADD COLUMN IF NOT EXISTS "asanaWorkspaceGid" TEXT,
+ADD COLUMN IF NOT EXISTS "asanaTeamGid" TEXT,
+ADD COLUMN IF NOT EXISTS "asanaUrl" TEXT,
+ADD COLUMN IF NOT EXISTS "teamsUrl" TEXT,
+ADD COLUMN IF NOT EXISTS "projectFolderUrl" TEXT,
+ADD COLUMN IF NOT EXISTS "projectNotesUrl" TEXT,
+ADD COLUMN IF NOT EXISTS "badges" TEXT[] DEFAULT ARRAY[]::TEXT[],
+ADD COLUMN IF NOT EXISTS "isActive" BOOLEAN NOT NULL DEFAULT true;
 
 -- AlterTable
-ALTER TABLE "Department" ADD COLUMN "isActive" BOOLEAN NOT NULL DEFAULT true,
-ADD COLUMN "sortOrder" INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE "Department" ADD COLUMN IF NOT EXISTS "isActive" BOOLEAN NOT NULL DEFAULT true,
+ADD COLUMN IF NOT EXISTS "sortOrder" INTEGER NOT NULL DEFAULT 0;
 
 -- AlterTable
-ALTER TABLE "DecisionMaker" ADD COLUMN "reason" TEXT,
-ADD COLUMN "pressurePoints" TEXT,
-ADD COLUMN "influencers" TEXT,
-ADD COLUMN "everyActionUrl" TEXT;
+ALTER TABLE "DecisionMaker" ADD COLUMN IF NOT EXISTS "reason" TEXT,
+ADD COLUMN IF NOT EXISTS "pressurePoints" TEXT,
+ADD COLUMN IF NOT EXISTS "influencers" TEXT,
+ADD COLUMN IF NOT EXISTS "everyActionUrl" TEXT;
 
 -- AlterTable
-ALTER TABLE "Stakeholder" ADD COLUMN "reason" TEXT,
-ADD COLUMN "captains" TEXT,
-ADD COLUMN "planToEducate" TEXT,
-ADD COLUMN "planToCounter" TEXT,
-ADD COLUMN "audience" TEXT,
-ADD COLUMN "plan" TEXT,
-ADD COLUMN "everyActionUrl" TEXT,
-ADD COLUMN "influencers" TEXT;
+ALTER TABLE "Stakeholder" ADD COLUMN IF NOT EXISTS "reason" TEXT,
+ADD COLUMN IF NOT EXISTS "captains" TEXT,
+ADD COLUMN IF NOT EXISTS "planToEducate" TEXT,
+ADD COLUMN IF NOT EXISTS "planToCounter" TEXT,
+ADD COLUMN IF NOT EXISTS "audience" TEXT,
+ADD COLUMN IF NOT EXISTS "plan" TEXT,
+ADD COLUMN IF NOT EXISTS "everyActionUrl" TEXT,
+ADD COLUMN IF NOT EXISTS "influencers" TEXT;
 
 -- CreateTable
-CREATE TABLE "AuditLog" (
+CREATE TABLE IF NOT EXISTS "AuditLog" (
     "id" TEXT NOT NULL,
     "actorEmail" TEXT NOT NULL,
     "actorUserId" TEXT,
@@ -45,10 +45,10 @@ CREATE TABLE "AuditLog" (
 );
 
 -- CreateIndex
-CREATE INDEX "AuditLog_createdAt_idx" ON "AuditLog"("createdAt");
+CREATE INDEX IF NOT EXISTS "AuditLog_createdAt_idx" ON "AuditLog"("createdAt");
 
 -- CreateIndex
-CREATE INDEX "AuditLog_entityType_entityId_idx" ON "AuditLog"("entityType", "entityId");
+CREATE INDEX IF NOT EXISTS "AuditLog_entityType_entityId_idx" ON "AuditLog"("entityType", "entityId");
 
 -- CreateIndex
-CREATE INDEX "AuditLog_actorEmail_idx" ON "AuditLog"("actorEmail");
+CREATE INDEX IF NOT EXISTS "AuditLog_actorEmail_idx" ON "AuditLog"("actorEmail");
