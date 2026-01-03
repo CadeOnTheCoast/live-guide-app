@@ -117,7 +117,7 @@ export function BudgetTable({ budgetLines, projectSlug, canEdit }: BudgetTablePr
                             <TableHead className="w-[120px] text-right font-bold text-brand-charcoal text-[10px] uppercase tracking-widest">Total</TableHead>
                             <TableHead className="w-[50px] text-center">
                                 <a
-                                    href="https://mobilebaykeeper.sharepoint.com/sites/TeamMobileBaykeeper/Shared%20Documents/2026%20Budget.xlsx"
+                                    href="https://mobilebaykeeper.sharepoint.com/:x:/s/TeamMobileBaykeeper/IQDa--Y03kMjRaNQUmOKNDHaAezYOJf-8ufYolkN5wPjC7o?e=H9IM84&nav=MTNfezNERTU4NjQ3LTIxQUItNEYwNS1CNkMxLUU4RjIwQTFBMUVBM31fezk4N0YwNDBGLTE5MTgtNDkyMi1CM0Q4LUZFMTgyNDY4QUZBMX0"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     title="Open Source File in Excel"
