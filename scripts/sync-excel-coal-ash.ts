@@ -9,7 +9,7 @@ const prisma = new PrismaClient();
 
 // --- Configuration ---
 const TABLE_NAME = "CoalAshNarrative";
-const PROJECT_SLUG = "coal-ash-plant-barry";
+const PROJECT_SLUG = "coal-ash";
 
 // --- Graph Client Helper ---
 function getGraphClient() {
@@ -96,16 +96,6 @@ async function main() {
     const budgetLinesToCreate: any[] = [];
     let currentCategory = "General"; // Default
 
-    // Known Columns based on verification:
-    // 0: Account
-    // 1: What
-    // 2: Explained
-    // 3: Unit Cost
-    // 4: Quantity
-    // 5: Cost
-    // 6: Calendar Breakout
-    // 7: Notes
-
     let processedCount = 0;
 
     for (const rowObj of rows) {
@@ -113,16 +103,13 @@ async function main() {
 
         const colA = String(row[0] || "").trim(); // Account
 
-        // Category Header Logic:
-        // In a Table, headers are usually just bold text rows or empty-ish rows
-        // Heuristic: If Col A ends in ":" (e.g. "Communications:"), it's a category.
+        // Category Header Logic (Optional, effectively unused if we map Account->Category)
         if (colA.endsWith(":")) {
             currentCategory = colA.replace(":", "").trim();
             continue;
         }
 
-        // Also user sometimes has blank rows or sub-headers mixed in?
-        // If Cost (Index 5) is empty/zero, treat as structural or skip
+        // Structural/Empty check
         const cost = Number(row[5]);
         if (!cost || cost === 0) continue;
 
@@ -131,15 +118,21 @@ async function main() {
         const explained = String(row[2] || "").trim();
         const calendar = String(row[6] || "").trim();
 
-        // Mapping Logic Verified with User:
-        // Description = Account + " - " + What
-        // Notes = Explained + Calendar info
-        const combinedDesc = desc ? `${account} - ${desc}` : account;
+        // --- MAPPING LOGIC START ---
+        // UI "Account" Column displays the 'category' field.
+        // User wants Excel Col A (Account) in that column.
+        const categoryVal = account;
 
+        // UI "Description" Column displays the 'description' field.
+        // User wants Excel Col B (What) in that column.
+        const descriptionVal = desc || account;
+
+        // Notes field captures extra info
         const notesParts = [];
         if (explained) notesParts.push(explained);
         if (calendar) notesParts.push(`Calendar: ${calendar}`);
         const fullNotes = notesParts.join(" | ");
+        // --- MAPPING LOGIC END ---
 
         const distribution = parseCalendarBreakout(calendar);
         const activeMonths = distribution.reduce((a, b) => a + b, 0);
@@ -149,8 +142,8 @@ async function main() {
             if (distribution[idx] === 1) {
                 budgetLinesToCreate.push({
                     projectId: project.id,
-                    category: currentCategory,
-                    description: combinedDesc,
+                    category: categoryVal,
+                    description: descriptionVal,
                     amount: monthlyAmount,
                     period: `${month} 2026`,
                     notes: fullNotes,
@@ -159,8 +152,8 @@ async function main() {
                 // Insert 0 for continuity
                 budgetLinesToCreate.push({
                     projectId: project.id,
-                    category: currentCategory,
-                    description: combinedDesc,
+                    category: categoryVal,
+                    description: descriptionVal,
                     amount: 0,
                     period: `${month} 2026`,
                     notes: fullNotes
