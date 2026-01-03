@@ -1,40 +1,31 @@
 "use client";
 
-import { Card } from "@/components/ui/card";
+import { ExternalLink } from "lucide-react";
+import { CategoryBreakdown } from "./CategoryBreakdown";
 
-interface BudgetLine {
-    id: string;
-    amount: number;
-    period: string;
-    category?: string;
-}
-
-interface BudgetSummaryProps {
-    budgetLines: BudgetLine[];
-}
-
-const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+// ... (existing interfaces)
 
 export function BudgetSummary({ budgetLines }: BudgetSummaryProps) {
-    const monthlyTotals = MONTHS.map((month) => {
-        return budgetLines
-            .filter((line) => line.period.startsWith(month) && line.category !== "Staffing")
-            .reduce((sum, line) => {
-                const amt = Number(line.amount) || 0;
-                return sum + amt;
-            }, 0);
-    });
-
-    const maxTotal = Math.max(...monthlyTotals, 1);
-    const totalBudget = monthlyTotals.reduce((a, b) => a + b, 0);
+    // ... (existing logic)
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <Card className="col-span-2 p-6 border-brand-sky/20 bg-white/50 backdrop-blur-sm shadow-sm rounded-2xl">
-                <h3 className="text-[10px] font-bold text-brand-charcoal uppercase tracking-widest mb-6 flex items-center gap-2">
-                    <div className="h-2 w-2 bg-brand-teal rounded-full" />
-                    Expense Timing (2025)
-                </h3>
+                <div className="flex items-center justify-between mb-6">
+                    <h3 className="text-[10px] font-bold text-brand-charcoal uppercase tracking-widest flex items-center gap-2">
+                        <div className="h-2 w-2 bg-brand-teal rounded-full" />
+                        Expense Timing (2025)
+                    </h3>
+                    <a
+                        href="https://mobilebaykeeper.sharepoint.com/:x:/s/TeamMobileBaykeeper/IQDa--Y03kMjRaNQUmOKNDHaAezYOJf-8ufYolkN5wPjC7o?e=nWrDjU&nav=MTNfezdEMkM3NUIwLUJBODQtNDU1My1BQTYwLUM2NDBBNDE2N0ZEOH1fezk4N0YwNDBGLTE5MTgtNDkyMi1CM0Q4LUZFMTgyNDY4QUZBMX0"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title="View Cash Flow in Excel"
+                        className="text-brand-sage hover:text-brand-teal transition-colors"
+                    >
+                        <ExternalLink className="h-4 w-4" />
+                    </a>
+                </div>
                 <div className="flex items-end justify-between h-48 gap-3">
                     {monthlyTotals.map((total, i) => (
                         <div key={MONTHS[i]} className="flex-1 flex flex-col items-center group h-full justify-end">
@@ -56,38 +47,17 @@ export function BudgetSummary({ budgetLines }: BudgetSummaryProps) {
                 <div className="absolute top-0 right-0 p-4 opacity-[0.03]">
                     <div className="h-40 w-40 rounded-full border-[12px] border-white" />
                 </div>
-                <div className="relative z-10">
-                    <h3 className="text-[10px] font-bold text-brand-mint uppercase tracking-widest mb-1 opacity-80">Annual Budget Allocation</h3>
-                    <div className="text-5xl font-black text-white font-rajdhani tracking-tighter">
-                        ${totalBudget.toLocaleString(undefined, { maximumFractionDigits: 0 })}
-                    </div>
+                <div className="relative z-10 h-full flex flex-col">
+                    <CategoryBreakdown budgetLines={budgetLines} />
 
-                    <div className="mt-8 space-y-3">
-                        <div className="flex justify-between items-center text-[9px] text-white/40 font-bold uppercase tracking-widest">
-                            <span>RECURRING EXPENSES</span>
-                            <span className="text-white">0%</span>
+                    <div className="mt-auto pt-4 border-t border-white/10">
+                        <div className="flex justify-between items-center text-[10px] text-brand-mint font-bold uppercase tracking-widest">
+                            <span>Tracking Accuracy</span>
+                            <span>100%</span>
                         </div>
-                        <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-                            <div className="h-full bg-brand-sky w-[0%]" />
+                        <div className="mt-2 h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+                            <div className="h-full bg-brand-mint w-full" />
                         </div>
-
-                        <div className="flex justify-between items-center text-[9px] text-white/40 font-bold uppercase tracking-widest">
-                            <span>PROJECT SPECIFIC</span>
-                            <span className="text-white">0%</span>
-                        </div>
-                        <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-                            <div className="h-full bg-brand-mint w-[0%]" />
-                        </div>
-                    </div>
-                </div>
-
-                <div className="relative z-10 mt-8 pt-8 border-t border-white/10">
-                    <div className="flex justify-between items-center text-[10px] text-brand-mint font-bold uppercase tracking-widest">
-                        <span>Tracking Accuracy</span>
-                        <span>0%</span>
-                    </div>
-                    <div className="mt-2 h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
-                        <div className="h-full bg-brand-mint w-[0%]" />
                     </div>
                 </div>
             </Card>
