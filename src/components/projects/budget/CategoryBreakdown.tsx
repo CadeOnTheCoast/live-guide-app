@@ -75,7 +75,7 @@ export function CategoryBreakdown({ budgetLines }: CategoryBreakdownProps) {
                             ))}
                         </Pie>
                         <Tooltip
-                            formatter={(value: any) => `$${Number(value || 0).toLocaleString()}`}
+                            formatter={(value: number | string | undefined) => `$${Number(value || 0).toLocaleString()}`}
                             contentStyle={{
                                 backgroundColor: "hsl(var(--brand-charcoal))",
                                 borderColor: "hsl(var(--brand-teal))",
