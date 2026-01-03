@@ -6,6 +6,7 @@ interface BudgetLine {
     id: string;
     amount: number;
     period: string;
+    category?: string;
 }
 
 interface BudgetSummaryProps {
@@ -17,7 +18,7 @@ const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "
 export function BudgetSummary({ budgetLines }: BudgetSummaryProps) {
     const monthlyTotals = MONTHS.map((month) => {
         return budgetLines
-            .filter((line) => line.period.startsWith(month))
+            .filter((line) => line.period.startsWith(month) && line.category !== "Staffing")
             .reduce((sum, line) => {
                 const amt = Number(line.amount) || 0;
                 return sum + amt;
