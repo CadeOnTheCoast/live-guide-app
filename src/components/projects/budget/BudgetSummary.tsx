@@ -38,7 +38,7 @@ export function BudgetSummary({ budgetLines }: BudgetSummaryProps) {
                     {monthlyTotals.map((total, i) => (
                         <div key={MONTHS[i]} className="flex-1 flex flex-col items-center group">
                             <div
-                                className="w-full bg-brand-teal/20 rounded-t-lg transition-all group-hover:bg-brand-teal/40 relative cursor-default"
+                                className="w-full bg-brand-teal/80 rounded-t-lg transition-all group-hover:bg-brand-teal relative cursor-default"
                                 style={{ height: `${(total / maxTotal) * 100}%` }}
                             >
                                 <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all bg-brand-charcoal text-white text-[10px] py-1.5 px-2.5 rounded shadow-xl whitespace-nowrap z-10 transform translate-y-2 group-hover:translate-y-0">
