@@ -24,7 +24,6 @@ const COLORS = [
 export function CategoryBreakdown({ budgetLines }: CategoryBreakdownProps) {
     const data = useMemo(() => {
         const categoryMap = new Map<string, number>();
-        let total = 0;
 
         budgetLines.forEach(line => {
             if (line.category === "Staffing") return; // Exclude Staffing
@@ -32,7 +31,6 @@ export function CategoryBreakdown({ budgetLines }: CategoryBreakdownProps) {
             const current = categoryMap.get(cat) || 0;
             const amount = Number(line.amount) || 0;
             categoryMap.set(cat, current + amount);
-            total += amount;
         });
 
         const sorted = Array.from(categoryMap.entries())

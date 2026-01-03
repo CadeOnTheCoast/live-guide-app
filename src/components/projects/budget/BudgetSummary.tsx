@@ -2,6 +2,7 @@
 
 import { ExternalLink } from "lucide-react";
 import { CategoryBreakdown } from "./CategoryBreakdown";
+import { Card } from "@/components/ui/card";
 
 // ... (existing interfaces)
 
