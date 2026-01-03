@@ -4,10 +4,32 @@ import { ExternalLink } from "lucide-react";
 import { CategoryBreakdown } from "./CategoryBreakdown";
 import { Card } from "@/components/ui/card";
 
-// ... (existing interfaces)
+interface BudgetLine {
+    id: string;
+    amount: number;
+    period: string;
+    category?: string;
+}
+
+interface BudgetSummaryProps {
+    budgetLines: BudgetLine[];
+}
+
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 export function BudgetSummary({ budgetLines }: BudgetSummaryProps) {
-    // ... (existing logic)
+    const monthlyTotals = MONTHS.map((month) => {
+        return budgetLines
+            .filter((line) => line.period.startsWith(month) && line.category !== "Staffing")
+            .reduce((sum, line) => {
+                const amt = Number(line.amount) || 0;
+                return sum + amt;
+            }, 0);
+    });
+
+    const maxTotal = Math.max(...monthlyTotals, 1);
+    // Removed unused totalBudget variable to avoid linter error
+
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
