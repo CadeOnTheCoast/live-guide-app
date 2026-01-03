@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import { updateBudgetLine, addBudgetComment } from "@/app/projects/[projectSlug]/budget/actions";
-import { MessageSquare, Info } from "lucide-react";
+import { MessageSquare, Info, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
     Dialog,
@@ -115,7 +115,17 @@ export function BudgetTable({ budgetLines, projectSlug, canEdit }: BudgetTablePr
                                 <TableHead key={m} className="w-[100px] text-center font-bold text-brand-charcoal text-[10px] uppercase tracking-widest">{m}</TableHead>
                             ))}
                             <TableHead className="w-[120px] text-right font-bold text-brand-charcoal text-[10px] uppercase tracking-widest">Total</TableHead>
-                            <TableHead className="w-[50px]"></TableHead>
+                            <TableHead className="w-[50px] text-center">
+                                <a
+                                    href="https://mobilebaykeeper.sharepoint.com/sites/TeamMobileBaykeeper/Shared%20Documents/2026%20Budget.xlsx"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    title="Open Source File in Excel"
+                                    className="text-brand-sage hover:text-brand-teal transition-colors"
+                                >
+                                    <ExternalLink className="h-4 w-4" />
+                                </a>
+                            </TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
